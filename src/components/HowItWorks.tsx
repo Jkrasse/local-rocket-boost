@@ -1,4 +1,6 @@
-import { Handshake, Search, PhoneIncoming, TrendingUp } from "lucide-react";
+import { Handshake, Search, PhoneIncoming, TrendingUp, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const steps = [
   {
@@ -52,6 +54,15 @@ const HowItWorks = () => {
               <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
             </div>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link to="/sa-fungerar-det">
+            <Button variant="outline" size="lg">
+              Läs mer om hur det fungerar
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
