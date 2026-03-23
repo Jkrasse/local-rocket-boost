@@ -32,7 +32,7 @@ const HeroSection = () => {
         </div>
 
         {/* Hero image */}
-        <div className="max-w-5xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+        <div className="max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
           <div className="rounded-2xl overflow-hidden shadow-2xl border border-border">
             <img
               src={heroDashboard}
