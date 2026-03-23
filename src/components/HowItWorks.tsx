@@ -55,6 +55,15 @@ const HowItWorks = () => {
             </div>
           ))}
         </div>
+
+        <div className="text-center mt-12">
+          <Link to="/sa-fungerar-det">
+            <Button variant="outline" size="lg">
+              Läs mer om hur det fungerar
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   );
