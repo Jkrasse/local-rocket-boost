@@ -76,7 +76,6 @@ const Footer = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-accent-foreground/40">
           <p>© {new Date().getFullYear()} J.Krasse Marketing AB. Alla rättigheter förbehållna.</p>
-          <p>Organisationsnummer anges vid förfrågan</p>
         </div>
       </div>
     </footer>
