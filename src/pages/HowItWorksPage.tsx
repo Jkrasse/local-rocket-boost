@@ -115,7 +115,30 @@ const HowItWorksPage = () => {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Bonus */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="bg-gradient-to-br from-primary/5 via-secondary/30 to-primary/5 border border-primary/10 rounded-2xl p-8 md:p-12">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-3xl">🎁</span>
+              <span className="font-heading font-extrabold text-sm text-primary tracking-widest uppercase">
+                Bonus
+              </span>
+            </div>
+            <h2 className="font-heading font-bold text-2xl md:text-3xl mb-4">
+              Syns mer — även i AI och sökmotorer
+            </h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              Förutom leads får du en extra fördel: bättre synlighet online. När ditt företag listas som rekommenderad partner i din stad och bransch stärks din närvaro i både Google och AI-drivna tjänster som ChatGPT och Gemini.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Ju fler trovärdiga källor som nämner ditt företag som det bästa alternativet i ditt område, desto större chans att AI-chattbottar citerar just dig när någon frågar efter rekommendationer. Det är som SEO — fast för nästa generation av sök.
+            </p>
+          </div>
+        </div>
+      </section>
+
+
       <section className="py-20 md:py-28 bg-secondary/30">
         <div className="container mx-auto px-4 text-center max-w-2xl">
           <BarChart3 className="h-10 w-10 text-primary mx-auto mb-6" />
