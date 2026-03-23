@@ -1,25 +1,25 @@
-import { Search, Globe, TrendingUp, Users } from "lucide-react";
+import { Handshake, Search, PhoneIncoming, TrendingUp } from "lucide-react";
 
 const steps = [
   {
-    icon: Globe,
-    title: "Vi bygger din nisch-sida",
-    description: "Vi skapar en professionell directory-sida inom din bransch — t.ex. städfirmor, flyttfirmor eller bilhandlare i ditt område.",
+    icon: Handshake,
+    title: "Bli rekommenderad partner",
+    description: "Du blir vår rekommenderade partner i din stad. Alla leads från directory-sidan i ditt område skickas direkt till dig.",
   },
   {
     icon: Search,
-    title: "Vi driver kvalificerad trafik",
-    description: "Genom Google Ads, Meta Ads och organisk SEO ser vi till att potentiella kunder hittar din sida.",
+    title: "Vi driver trafik till ditt företag",
+    description: "Genom Google Ads, Meta Ads och organisk SEO ser vi till att potentiella kunder hittar ditt företag.",
+  },
+  {
+    icon: PhoneIncoming,
+    title: "Leads direkt till dig",
+    description: "Alla leads som kommer in pekas till ert företag — via kontaktformulär, klick på telefonnummer och andra kontaktvägar.",
   },
   {
     icon: TrendingUp,
-    title: "Leads direkt till dig",
-    description: "Intresserade kunder kontaktar dig direkt. Du får notiser i realtid via vårt CRM-system.",
-  },
-  {
-    icon: Users,
     title: "Du växer — vi optimerar",
-    description: "Vi analyserar och optimerar löpande för att maximera antalet leads och din avkastning.",
+    description: "Vi analyserar och optimerar löpande för att maximera antalet leads och din avkastning. Du får regelbundna rapporter skickade.",
   },
 ];
 

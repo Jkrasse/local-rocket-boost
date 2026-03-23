@@ -10,9 +10,6 @@ const HeroSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-medium mb-6 animate-fade-in-up">
-            🚀 Fler leads till lokala företag
-          </div>
           <h1 className="font-heading font-extrabold text-4xl md:text-6xl lg:text-7xl tracking-tight leading-[1.1] mb-6 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
             Få fler kunder med{" "}
             <span className="text-gradient">Local Rocket</span>

@@ -3,46 +3,35 @@ import { Check, ArrowRight } from "lucide-react";
 
 const plans = [
   {
-    name: "Starter",
-    price: "2 990",
-    period: "/mån",
-    description: "Perfekt för dig som vill testa och komma igång snabbt.",
-    features: [
-      "1 directory-sida",
-      "Google Ads-kampanj",
-      "Grundläggande CRM",
-      "Månatlig rapport",
-      "E-postsupport",
-    ],
-    popular: false,
-  },
-  {
     name: "Growth",
-    price: "5 990",
+    price: "5 000",
     period: "/mån",
-    description: "För företag som vill skala upp sin leadgenerering.",
+    vat: "exkl. moms",
+    description: "Allt du behöver för att börja generera leads i din stad.",
     features: [
-      "Upp till 3 directory-sidor",
-      "Google Ads + Meta Ads",
-      "Fullt CRM-system",
-      "Veckorapporter",
-      "Prioriterad support",
+      "1 stad + alla undersidor",
+      "Google Ads (inkl. 1 000 kr spend)",
+      "Meta Ads (inkl. 1 000 kr spend)",
+      "Månadsrapporter",
       "A/B-testning",
+      "Löpande optimering av annonser och landningssidor",
     ],
     popular: true,
   },
   {
-    name: "Enterprise",
-    price: "Offert",
-    period: "",
-    description: "Skräddarsydd lösning för större organisationer.",
+    name: "Premium",
+    price: "9 000",
+    period: "/mån",
+    vat: "exkl. moms",
+    description: "Allt i Growth plus exklusiv domän och högre annonsbudget.",
     features: [
-      "Obegränsat antal sidor",
-      "Alla annonskanaler",
-      "White-label CRM",
-      "Dedikerad kontaktperson",
-      "API-tillgång",
-      "Anpassad rapportering",
+      "Allt som ingår i Growth",
+      "Exaktmatchad domän som promotar ert företag",
+      "Google Ads (inkl. 2 000 kr spend)",
+      "Meta Ads (inkl. 2 000 kr spend)",
+      "Månadsrapporter",
+      "A/B-testning",
+      "Löpande optimering av annonser och landningssidor",
     ],
     popular: false,
   },
@@ -61,13 +50,13 @@ const PricingSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {plans.map((plan) => (
             <div
               key={plan.name}
               className={`relative bg-card rounded-2xl p-8 border transition-all duration-300 hover:-translate-y-1 ${
                 plan.popular
-                  ? "border-primary shadow-xl shadow-primary/10 scale-105"
+                  ? "border-primary shadow-xl shadow-primary/10"
                   : "border-border hover:shadow-lg"
               }`}
             >
@@ -78,12 +67,11 @@ const PricingSection = () => {
               )}
               <h3 className="font-heading font-bold text-xl mb-1">{plan.name}</h3>
               <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
-              <div className="flex items-baseline gap-1 mb-6">
+              <div className="flex items-baseline gap-1 mb-1">
                 <span className="font-heading font-extrabold text-4xl">{plan.price}</span>
-                {plan.period && (
-                  <span className="text-muted-foreground text-sm">kr{plan.period}</span>
-                )}
+                <span className="text-muted-foreground text-sm">kr{plan.period}</span>
               </div>
+              <p className="text-muted-foreground text-xs mb-6">{plan.vat}</p>
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-2 text-sm">
@@ -97,7 +85,7 @@ const PricingSection = () => {
                 size="lg"
                 className="w-full"
               >
-                {plan.price === "Offert" ? "Kontakta oss" : "Kom igång"}
+                Kom igång
                 <ArrowRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
