@@ -20,6 +20,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/sa-fungerar-det" element={<HowItWorksPage />} />
+          <Route path="/integritetspolicy" element={<PrivacyPolicy />} />
+          <Route path="/villkor" element={<TermsOfService />} />
+          <Route path="/cookies" element={<CookiePolicy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
