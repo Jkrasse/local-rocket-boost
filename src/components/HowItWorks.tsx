@@ -1,4 +1,6 @@
-import { Handshake, Search, PhoneIncoming, TrendingUp } from "lucide-react";
+import { Handshake, Search, PhoneIncoming, TrendingUp, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const steps = [
   {
