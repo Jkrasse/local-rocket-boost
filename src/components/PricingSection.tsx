@@ -1,92 +1,126 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight } from "lucide-react";
 
 const plans = [
   {
+    name: "Start",
+    monthly: "2 500",
+    annual: "1 925",
+    description: "För dig som vill testa kanalen.",
+    features: [
+      "1 directory-listning",
+      "Grundläggande synlighet",
+      "Månadsrapport",
+      "E-postsupport",
+    ],
+    featured: false,
+  },
+  {
     name: "Growth",
-    price: "5 000",
-    period: "/mån",
-    vat: "exkl. moms",
-    description: "Allt du behöver för att börja generera leads i din stad.",
+    monthly: "5 000",
+    annual: "3 850",
+    description: "Allt du behöver för att börja generera leads.",
     features: [
       "1 stad + alla undersidor",
       "Google Ads (inkl. 1 000 kr spend)",
       "Meta Ads (inkl. 1 000 kr spend)",
       "Månadsrapporter",
       "A/B-testning",
-      "Löpande optimering av annonser och landningssidor",
+      "Löpande optimering",
     ],
-    popular: true,
+    featured: true,
   },
   {
     name: "Premium",
-    price: "9 000",
-    period: "/mån",
-    vat: "exkl. moms",
-    description: "Allt i Growth plus exklusiv domän och högre annonsbudget.",
+    monthly: "9 000",
+    annual: "6 930",
+    description: "Allt i Growth + exklusiv exaktmatchad domän.",
     features: [
       "Allt som ingår i Growth",
-      "Exaktmatchad domän som promotar ert företag",
+      "Exaktmatchad domän",
       "Google Ads (inkl. 2 000 kr spend)",
       "Meta Ads (inkl. 2 000 kr spend)",
-      "Månadsrapporter",
-      "A/B-testning",
-      "Löpande optimering av annonser och landningssidor",
+      "Prioriterad support",
     ],
-    popular: false,
+    featured: false,
   },
 ];
 
 const PricingSection = () => {
+  const [annual, setAnnual] = useState(false);
+
   return (
-    <section id="pricing" className="py-20 md:py-32">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="font-heading font-extrabold text-3xl md:text-5xl tracking-tight mb-4">
-            Enkel & transparent prissättning
+    <section id="pricing" className="py-24 md:py-32">
+      <div className="container mx-auto px-4 max-w-container">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="eyebrow mb-5">Priser</div>
+          <h2 className="font-serif text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
+            Betala för <span className="italic-accent">resultat</span>, inte löften
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Välj den plan som passar ditt företag bäst. Inga dolda avgifter.
+          <p className="text-ink-soft text-lg">
+            Fast månadsavgift för plattformen, rörlig kostnad per kvalificerad lead. Ingen bindningstid.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex items-center bg-warm rounded-pill p-1">
+            <button
+              onClick={() => setAnnual(false)}
+              className={`px-5 py-2 rounded-pill text-sm transition-colors ${!annual ? "bg-primary text-primary-foreground" : "text-ink-soft"}`}
+            >
+              Månadsvis
+            </button>
+            <button
+              onClick={() => setAnnual(true)}
+              className={`px-5 py-2 rounded-pill text-sm transition-colors ${annual ? "bg-primary text-primary-foreground" : "text-ink-soft"}`}
+            >
+              Årsvis · spara 23%
+            </button>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative bg-card rounded-2xl p-8 border transition-all duration-300 hover:-translate-y-1 ${
-                plan.popular
-                  ? "border-primary shadow-xl shadow-primary/10"
-                  : "border-border hover:shadow-lg"
+              className={`relative rounded-[24px] p-8 border transition-all ${
+                plan.featured
+                  ? "bg-foreground text-background border-foreground shadow-lg md:-translate-y-3"
+                  : "bg-background-elevated border-border hover:shadow-md"
               }`}
+              style={!plan.featured ? { backgroundColor: "hsl(var(--background-elevated))" } : undefined}
             >
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
-                  Populärast
+              {plan.featured && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-eyebrow bg-primary text-primary-foreground px-3 py-1.5 rounded-pill">
+                  POPULÄR
                 </div>
               )}
-              <h3 className="font-heading font-bold text-xl mb-1">{plan.name}</h3>
-              <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
+              <h3 className="font-serif text-3xl mb-2">{plan.name}</h3>
+              <p className={`text-sm mb-6 ${plan.featured ? "text-background/70" : "text-ink-soft"}`}>
+                {plan.description}
+              </p>
               <div className="flex items-baseline gap-1 mb-1">
-                <span className="font-heading font-extrabold text-4xl">{plan.price}</span>
-                <span className="text-muted-foreground text-sm">kr{plan.period}</span>
+                <span className="font-serif text-5xl tracking-tightest">{annual ? plan.annual : plan.monthly}</span>
+                <span className={`text-sm ${plan.featured ? "text-background/70" : "text-ink-mute"}`}>kr/mån</span>
               </div>
-              <p className="text-muted-foreground text-xs mb-6">{plan.vat}</p>
+              <p className={`text-xs mb-8 ${plan.featured ? "text-background/60" : "text-ink-mute"}`}>
+                exkl. moms{annual && " · faktureras årsvis"}
+              </p>
               <ul className="space-y-3 mb-8">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-sm">
-                    <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span>{feature}</span>
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-3 text-sm">
+                    <Check className={`h-4 w-4 mt-0.5 flex-shrink-0 ${plan.featured ? "text-primary" : "text-primary"}`} />
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
               <Button
-                variant={plan.popular ? "hero" : "outline"}
-                size="lg"
+                variant={plan.featured ? "hero" : "outline"}
                 className="w-full"
+                size="lg"
               >
-                Kom igång
-                <ArrowRight className="ml-1 h-4 w-4" />
+                Kom igång <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           ))}
