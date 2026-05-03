@@ -16,7 +16,7 @@ const HeroSection = () => {
           </div>
 
           <h1
-            className="font-serif text-5xl md:text-7xl lg:text-[88px] leading-[1.05] tracking-tightest mb-8 animate-fade-in-up"
+            className="font-serif text-[40px] sm:text-5xl md:text-7xl lg:text-[88px] leading-[1.05] tracking-tightest mb-8 animate-fade-in-up"
             style={{ animationDelay: "0.1s" }}
           >
             Kvalificerade leads,<br />
