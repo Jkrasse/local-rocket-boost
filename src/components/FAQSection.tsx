@@ -32,7 +32,7 @@ const FAQSection = () => {
       <div className="container mx-auto px-4 max-w-container">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="eyebrow mb-5">FAQ</div>
-          <h2 className="font-serif text-4xl md:text-6xl tracking-tightest leading-[1.05]">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05]">
             Vanliga <span className="italic-accent">frågor</span>
           </h2>
         </div>

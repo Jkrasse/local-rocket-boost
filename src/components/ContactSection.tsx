@@ -8,7 +8,7 @@ const ContactSection = () => {
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
           <div>
             <div className="font-mono text-xs tracking-eyebrow text-background/60 uppercase mb-5">Kom igång</div>
-            <h2 className="font-serif text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
               Boka en <span className="italic-accent">30-min demo</span>
             </h2>
             <p className="text-lg text-background/80 leading-relaxed mb-10">

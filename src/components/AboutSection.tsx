@@ -7,7 +7,7 @@ const AboutSection = () => {
       <div className="container mx-auto px-4 max-w-container">
         <div className="max-w-4xl mx-auto">
           <div className="eyebrow mb-5">Om oss</div>
-          <h2 className="font-serif text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-10">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-10">
             Vi är ett team av <span className="italic-accent">performance-marknadsförare</span> och utvecklare.
           </h2>
 
