@@ -16,6 +16,19 @@ export default {
       fontFamily: {
         heading: ["var(--font-heading)"],
         body: ["var(--font-body)"],
+        serif: ["var(--font-heading)"],
+        sans: ["var(--font-body)"],
+        mono: ["var(--font-mono)"],
+      },
+      maxWidth: {
+        container: "1240px",
+      },
+      letterSpacing: {
+        eyebrow: "0.14em",
+        tightest: "-0.035em",
+      },
+      borderRadius: {
+        pill: "9999px",
       },
       colors: {
         border: "hsl(var(--border))",
