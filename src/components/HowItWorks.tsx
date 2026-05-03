@@ -31,7 +31,7 @@ const HowItWorks = () => {
       <div className="container mx-auto px-4 max-w-container">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="eyebrow mb-5">Så funkar det</div>
-          <h2 className="font-serif text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
             Fyra steg från <span className="italic-accent">noll</span> till stadig leadflöde
           </h2>
           <p className="text-ink-soft text-lg">

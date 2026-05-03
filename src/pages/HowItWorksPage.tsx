@@ -53,7 +53,7 @@ const HowItWorksPage = () => {
       <section className="pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="container mx-auto px-4 max-w-container text-center">
           <div className="eyebrow mb-5">Så fungerar det</div>
-          <h1 className="font-serif text-5xl md:text-7xl tracking-tightest leading-[1.05] mb-8 max-w-3xl mx-auto">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl tracking-tightest leading-[1.05] mb-8 max-w-3xl mx-auto">
             Vi genererar <span className="italic-accent">leads</span> — inte byråtjänster.
           </h1>
           <p className="text-lg md:text-xl text-ink-soft max-w-2xl mx-auto">
@@ -124,7 +124,7 @@ const HowItWorksPage = () => {
       {/* CTA */}
       <section className="py-24 md:py-32 bg-warm">
         <div className="container mx-auto px-4 max-w-container text-center">
-          <h2 className="font-serif text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
             Redo att få fler <span className="italic-accent">kunder</span>?
           </h2>
           <p className="text-ink-soft text-lg mb-10 max-w-xl mx-auto">

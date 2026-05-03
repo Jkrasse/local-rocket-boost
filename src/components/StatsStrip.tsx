@@ -12,7 +12,7 @@ const StatsStrip = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6">
           {stats.map((s) => (
             <div key={s.label}>
-              <div className="font-serif text-5xl md:text-6xl tracking-tightest mb-2">{s.value}</div>
+              <div className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-tightest mb-2">{s.value}</div>
               <div className="eyebrow">{s.label}</div>
             </div>
           ))}
