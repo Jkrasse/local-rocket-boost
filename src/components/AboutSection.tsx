@@ -1,48 +1,35 @@
-import { Target, Zap, Heart } from "lucide-react";
-
-const values = [
-  {
-    icon: Target,
-    title: "Resultatdrivet",
-    description: "Allt vi gör mäts och optimeras. Vi fokuserar på det som faktiskt ger resultat — fler leads och fler kunder.",
-  },
-  {
-    icon: Zap,
-    title: "Snabb lansering",
-    description: "Vi vet att tid är pengar. Därför har vi en streamlinad process som gör att du kan börja få leads inom veckor.",
-  },
-  {
-    icon: Heart,
-    title: "Lokalt fokus",
-    description: "Vi brinner för lokala företag. Vår mission är att ge er samma digitala verktyg som de stora kedjorna har.",
-  },
-];
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-20 md:py-32 bg-secondary/30">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="font-heading font-extrabold text-3xl md:text-5xl tracking-tight mb-4">
-            Om Local Rocket
+    <section id="about" className="py-24 md:py-32">
+      <div className="container mx-auto px-4 max-w-container">
+        <div className="max-w-4xl mx-auto">
+          <div className="eyebrow mb-5">Om oss</div>
+          <h2 className="font-serif text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-10">
+            Vi är ett team av <span className="italic-accent">performance-marknadsförare</span> och utvecklare.
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
-            Local Rocket grundades med en enkel idé: lokala företag förtjänar samma 
-            digitala möjligheter som stora koncerner. Vi kombinerar nischade directory-sidor 
-            med datadriven annonsering för att leverera kvalificerade leads direkt till ditt företag.
-          </p>
-        </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {values.map((value) => (
-            <div key={value.title} className="text-center">
-              <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mx-auto mb-4">
-                <value.icon className="h-7 w-7" />
-              </div>
-              <h3 className="font-heading font-bold text-lg mb-2">{value.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{value.description}</p>
-            </div>
-          ))}
+          <div className="space-y-5 text-lg text-ink-soft leading-relaxed mb-10 max-w-3xl">
+            <p>
+              Local Rocket grundades 2022 av personer som tröttnade på att se lokala företag betala för dåliga
+              leads från generella plattformar.
+            </p>
+            <p>
+              Idag driver vi 57 nischade directory-sajter och levererar 14 000+ kvalificerade leads varje månad
+              till lokala företag i hela Sverige.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button variant="hero" size="lg">
+              Träffa teamet
+            </Button>
+            <Button variant="outline" size="lg">
+              Vår story <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </section>
