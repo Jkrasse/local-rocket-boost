@@ -108,14 +108,25 @@ const DirectoryPreview = () => {
     <section className="pb-16 md:pb-28">
       <div className="container mx-auto px-4 max-w-container">
         {/* Mobile: phone frame */}
-        <div className="md:hidden max-w-[320px] mx-auto">
-          <div className="relative bg-foreground rounded-[40px] p-2.5 shadow-2xl">
-            {/* Notch */}
-            <div className="absolute top-2.5 left-1/2 -translate-x-1/2 h-5 w-24 bg-foreground rounded-b-[14px] z-10" />
-            <div className="bg-background rounded-[32px] overflow-hidden">
-              <div className="pt-6">
+        <div className="md:hidden max-w-[300px] mx-auto">
+          <div className="relative bg-foreground rounded-[44px] p-[10px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)] ring-1 ring-foreground/40">
+            {/* Side buttons */}
+            <span className="absolute left-[-2px] top-[110px] h-8 w-[3px] rounded-l-sm bg-foreground/80" />
+            <span className="absolute left-[-2px] top-[160px] h-12 w-[3px] rounded-l-sm bg-foreground/80" />
+            <span className="absolute left-[-2px] top-[220px] h-12 w-[3px] rounded-l-sm bg-foreground/80" />
+            <span className="absolute right-[-2px] top-[140px] h-16 w-[3px] rounded-r-sm bg-foreground/80" />
+
+            {/* Screen */}
+            <div className="relative bg-background rounded-[36px] overflow-hidden aspect-[9/19.5]">
+              {/* Dynamic island */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 h-[26px] w-[90px] bg-foreground rounded-full z-20" />
+              {/* Status bar spacer */}
+              <div className="h-9" />
+              <div className="overflow-hidden">
                 <SiteContent compact />
               </div>
+              {/* Home indicator */}
+              <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 h-1 w-24 bg-foreground/30 rounded-full" />
             </div>
           </div>
         </div>
