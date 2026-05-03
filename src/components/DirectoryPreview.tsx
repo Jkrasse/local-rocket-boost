@@ -113,6 +113,49 @@ const SiteContent = ({ compact = false }: { compact?: boolean }) => (
         </div>
       )}
     </div>
+
+    {/* Compact-only: Andra alternativ + trust + footer */}
+    {compact && (
+      <>
+        <div className="px-3.5 pt-1 pb-3">
+          <div className="font-mono text-[8px] tracking-eyebrow text-ink-mute uppercase mb-2">
+            Fler städfirmor i Stockholm
+          </div>
+          <div className="space-y-1.5">
+            {[
+              { name: "Stockholm Städ AB", rating: "4.6", reviews: "412" },
+              { name: "Rena Hem Sthlm", rating: "4.4", reviews: "287" },
+              { name: "City Cleaning", rating: "4.2", reviews: "198" },
+            ].map((c) => (
+              <div key={c.name} className="flex items-center justify-between gap-2 p-2 rounded-md border border-border/60 bg-background-elevated" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="h-7 w-7 rounded bg-warm shrink-0" />
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-semibold truncate">{c.name}</div>
+                    <div className="text-[8px] text-ink-mute">★ {c.rating} ({c.reviews})</div>
+                  </div>
+                </div>
+                <span className="text-[8px] font-medium text-[#FF5A1F] shrink-0">Offert →</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="px-3.5 py-2.5 bg-warm border-t border-border/60 flex items-center justify-around text-[8px] text-ink-soft">
+          <span>✓ Gratis</span>
+          <span>✓ Snabb</span>
+          <span>✓ Trygg</span>
+        </div>
+
+        <div className="px-3.5 py-2.5 bg-foreground text-background flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            <div className="h-3.5 w-3.5 rounded bg-primary flex items-center justify-center text-primary-foreground text-[7px] font-bold">S</div>
+            <span className="text-[9px] font-semibold">Städfirmor.nu</span>
+          </div>
+          <span className="font-mono text-[7px] text-background/50">© 2026</span>
+        </div>
+      </>
+    )}
   </>
 );
 
@@ -143,16 +186,16 @@ const DirectoryPreview = () => {
             <span className="absolute right-[-2px] top-[140px] h-16 w-[3px] rounded-r-sm bg-foreground/80" />
 
             {/* Screen */}
-            <div className="relative bg-background rounded-[36px] overflow-hidden aspect-[9/19.5]">
+            <div className="relative bg-background rounded-[36px] overflow-hidden">
               {/* Dynamic island */}
               <div className="absolute top-2 left-1/2 -translate-x-1/2 h-[26px] w-[90px] bg-foreground rounded-full z-20" />
               {/* Status bar spacer */}
               <div className="h-9" />
-              <div className="overflow-hidden">
+              <div className="overflow-hidden pb-4">
                 <SiteContent compact />
               </div>
               {/* Home indicator */}
-              <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 h-1 w-24 bg-foreground/30 rounded-full" />
+              <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 h-1 w-24 bg-foreground/30 rounded-full z-20" />
             </div>
           </div>
         </div>
