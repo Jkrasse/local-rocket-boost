@@ -23,18 +23,18 @@ const IndustriesSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-5 max-w-5xl mx-auto">
           {industries.map((ind) => (
             <div
               key={ind.title}
-              className="bg-background-elevated rounded-[20px] p-7 flex justify-between items-start gap-6 border border-border/60 hover:shadow-md transition-shadow"
+              className="bg-background-elevated rounded-[20px] p-5 sm:p-7 flex justify-between items-start gap-4 sm:gap-6 border border-border/60 hover:shadow-md transition-shadow"
               style={{ backgroundColor: "hsl(var(--background-elevated))" }}
             >
               <div className="flex-1 min-w-0">
-                <h3 className="font-serif text-2xl mb-3">{ind.title}</h3>
-                <p className="font-mono text-xs text-ink-mute truncate">{ind.sites}</p>
+                <h3 className="font-serif text-xl sm:text-2xl mb-2 sm:mb-3 leading-tight">{ind.title}</h3>
+                <p className="font-mono text-[11px] sm:text-xs text-ink-mute truncate">{ind.sites}</p>
               </div>
-              <div className="font-mono text-[11px] tracking-eyebrow text-ink-soft bg-primary-soft/60 px-3 py-2 rounded-md whitespace-nowrap text-center">
+              <div className="font-mono text-[10px] sm:text-[11px] tracking-eyebrow text-ink-soft bg-primary-soft/60 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-md whitespace-nowrap text-center shrink-0">
                 {ind.count} <br /> sajter
               </div>
             </div>
