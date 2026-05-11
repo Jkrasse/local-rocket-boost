@@ -151,11 +151,11 @@ const SiteContent = ({ compact = false, niche }: { compact?: boolean; niche: Nic
         <div className={`font-mono text-ink-mute mb-2 ${compact ? "text-[8px]" : "text-[10px]"}`}>
           Hem › {niche.brand} › {niche.city}
         </div>
-        <h3 className={`font-sans font-bold text-foreground leading-tight mb-2 min-h-[2.4em] ${compact ? "text-[15px]" : "text-2xl md:text-3xl mb-3"}`}>
+        <h3 className={`font-sans font-bold text-foreground leading-[1.15] ${compact ? "text-[15px] mb-1.5" : "text-2xl md:text-3xl mb-2"}`}>
           {typed}
           <span className="inline-block w-[2px] h-[0.9em] bg-foreground align-middle ml-0.5 animate-pulse" />
         </h3>
-        <p className={`text-ink-soft ${compact ? "text-[10px] leading-snug mb-2.5" : "text-sm mb-4"}`}>
+        <p className={`text-ink-soft ${compact ? "text-[10px] leading-snug mb-2.5" : "text-sm leading-snug mb-3"}`}>
           {intro}
         </p>
         <div className="flex flex-wrap gap-1.5">
