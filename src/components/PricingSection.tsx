@@ -105,13 +105,24 @@ const PricingSection = () => {
               <p className={`text-sm mb-6 ${plan.featured ? "text-background/70" : "text-ink-soft"}`}>
                 {plan.description}
               </p>
-              <div className="flex items-baseline gap-1 mb-1">
-                <span className="font-serif text-5xl tracking-tightest">{annual ? plan.annual : plan.monthly}</span>
-                <span className={`text-sm ${plan.featured ? "text-background/70" : "text-ink-mute"}`}>kr/mån</span>
-              </div>
-              <p className={`text-xs mb-8 ${plan.featured ? "text-background/60" : "text-ink-mute"}`}>
-                exkl. moms{annual && " · faktureras årsvis"}
-              </p>
+              {plan.custom ? (
+                <>
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="font-serif text-5xl tracking-tightest">Offert</span>
+                  </div>
+                  <p className="text-xs mb-8 text-ink-mute">anpassat upplägg</p>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="font-serif text-5xl tracking-tightest">{annual ? plan.annual : plan.monthly}</span>
+                    <span className={`text-sm ${plan.featured ? "text-background/70" : "text-ink-mute"}`}>kr/mån</span>
+                  </div>
+                  <p className={`text-xs mb-8 ${plan.featured ? "text-background/60" : "text-ink-mute"}`}>
+                    exkl. moms{annual && " · faktureras årsvis"}
+                  </p>
+                </>
+              )}
               <ul className="space-y-3 mb-8">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm">
@@ -125,7 +136,7 @@ const PricingSection = () => {
                 className="w-full"
                 size="lg"
               >
-                Kom igång <ArrowRight className="h-4 w-4" />
+                {plan.custom ? "Kontakta oss" : "Kom igång"} <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           ))}
