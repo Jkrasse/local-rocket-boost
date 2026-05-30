@@ -1,13 +1,8 @@
-const industries = [
-  "Städfirmor",
-  "Tandläkare",
-  "Bilfirmor",
-  "Takläggare",
-  "Mäklare",
-  "Flyttfirmor",
-  "Elektriker",
-  "VVS",
-];
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+import { niches } from "@/data/niches";
+
+const list = Object.values(niches);
 
 const IndustriesSection = () => {
   return (
@@ -24,14 +19,15 @@ const IndustriesSection = () => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto">
-          {industries.map((title) => (
-            <div
-              key={title}
-              className="bg-background-elevated rounded-[20px] p-5 sm:p-7 flex items-center justify-center text-center border border-border/60 hover:shadow-md transition-shadow min-h-[110px]"
-              style={{ backgroundColor: "hsl(var(--background-elevated))" }}
+          {list.map((n) => (
+            <Link
+              key={n.slug}
+              to={`/leadsgenerering/${n.slug}`}
+              className="group bg-background-elevated rounded-[20px] p-5 sm:p-7 flex items-center justify-between text-left border border-border/60 hover:shadow-md hover:border-primary/40 transition-all min-h-[110px]"
             >
-              <h3 className="font-serif text-lg sm:text-xl md:text-2xl leading-tight">{title}</h3>
-            </div>
+              <h3 className="font-serif text-lg sm:text-xl md:text-2xl leading-tight">{n.name}</h3>
+              <ArrowUpRight className="w-5 h-5 text-ink-mute group-hover:text-primary transition-colors shrink-0" />
+            </Link>
           ))}
         </div>
       </div>
