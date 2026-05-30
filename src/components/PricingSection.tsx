@@ -26,8 +26,8 @@ const plans = [
     description: "Allt du behöver för att börja generera leads.",
     features: [
       "1 stad + alla undersidor",
-      "Google Ads (inkl. 2 000 kr spend)",
-      "Meta Ads (inkl. 2 000 kr spend)",
+      "Google Ads (inkl. 1 000 kr spend)",
+      "Meta Ads (inkl. 1 000 kr spend)",
       "Månadsrapporter",
       "A/B-testning",
       "Löpande optimering",
