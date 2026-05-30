@@ -41,7 +41,7 @@ const App = () => (
               path="/dashboard"
               element={
                 <ProtectedRoute requireRole="user">
-                  <DashboardPlaceholder />
+                  <Dashboard />
                 </ProtectedRoute>
               }
             />
