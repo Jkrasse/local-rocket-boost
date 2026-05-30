@@ -18,6 +18,7 @@ import AdminPlaceholder from "./pages/AdminPlaceholder.tsx";
 import Onboarding from "./pages/Onboarding.tsx";
 import OnboardingDone from "./pages/OnboardingDone.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import NicheLanding from "./pages/NicheLanding.tsx";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/leadsgenerering/:slug" element={<NicheLanding />} />
             <Route path="/sa-fungerar-det" element={<HowItWorksPage />} />
             <Route path="/integritetspolicy" element={<PrivacyPolicy />} />
             <Route path="/villkor" element={<TermsOfService />} />
