@@ -4,22 +4,6 @@ import { Check, ArrowRight } from "lucide-react";
 
 const plans = [
   {
-    name: "Growth",
-    monthly: "5 000",
-    annual: "3 850",
-    description: "Allt du behöver för att börja generera leads.",
-    features: [
-      "1 stad + alla undersidor",
-      "Google Ads (inkl. 2 000 kr spend)",
-      "Meta Ads (inkl. 2 000 kr spend)",
-      "Månadsrapporter",
-      "A/B-testning",
-      "Löpande optimering",
-    ],
-    featured: false,
-    custom: false,
-  },
-  {
     name: "Premium",
     monthly: "5 000",
     annual: "3 850",
@@ -28,6 +12,22 @@ const plans = [
       "1 stad + alla undersidor",
       "Google Ads (inkl. 1 000 kr spend)",
       "Meta Ads (inkl. 1 000 kr spend)",
+      "Månadsrapporter",
+      "A/B-testning",
+      "Löpande optimering",
+    ],
+    featured: false,
+    custom: false,
+  },
+  {
+    name: "Growth",
+    monthly: "8 000",
+    annual: "6 160",
+    description: "Allt du behöver för att börja generera leads.",
+    features: [
+      "1 stad + alla undersidor",
+      "Google Ads (inkl. 2 000 kr spend)",
+      "Meta Ads (inkl. 2 000 kr spend)",
       "Månadsrapporter",
       "A/B-testning",
       "Löpande optimering",
