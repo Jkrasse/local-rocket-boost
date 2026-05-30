@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Rocket, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, isAdmin, signOut, loading } = useAuth();
+  const navigate = useNavigate();
 
   const navLinks = [
     { label: "Så funkar det", href: "/sa-fungerar-det", internal: true },
@@ -13,6 +16,12 @@ const Navbar = () => {
     { label: "Om oss", href: "/#about" },
     { label: "FAQ", href: "/#faq" },
   ];
+
+  async function handleSignOut() {
+    await signOut();
+    setIsOpen(false);
+    navigate("/");
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/60">
@@ -34,13 +43,30 @@ const Navbar = () => {
               </a>
             ),
           )}
-          <a href="#" className="text-sm text-ink-soft hover:text-foreground transition-colors">Logga in</a>
-          <Button variant="hero">
-            Kom igång <ArrowRight className="h-4 w-4" />
-          </Button>
+          {loading ? null : user ? (
+            <>
+              <Link to={isAdmin ? "/admin" : "/dashboard"} className="text-sm text-ink-soft hover:text-foreground transition-colors">
+                Min portal
+              </Link>
+              <button onClick={handleSignOut} className="text-sm text-ink-soft hover:text-foreground transition-colors">
+                Logga ut
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-sm text-ink-soft hover:text-foreground transition-colors">
+                Logga in
+              </Link>
+              <Button variant="hero" asChild>
+                <Link to="/signup">
+                  Kom igång <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </>
+          )}
         </div>
 
-        <button className="md:hidden text-foreground" onClick={() => setIsOpen(!isOpen)}>
+        <button className="md:hidden text-foreground" onClick={() => setIsOpen(!isOpen)} aria-label="Meny">
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
@@ -53,7 +79,27 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <Button variant="hero" className="w-full">Kom igång</Button>
+            {user ? (
+              <>
+                <Link to={isAdmin ? "/admin" : "/dashboard"} onClick={() => setIsOpen(false)} className="text-sm text-ink-soft">
+                  Min portal
+                </Link>
+                <Button variant="outline" className="w-full" onClick={handleSignOut}>
+                  Logga ut
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={() => setIsOpen(false)} className="text-sm text-ink-soft">
+                  Logga in
+                </Link>
+                <Button variant="hero" asChild className="w-full">
+                  <Link to="/signup" onClick={() => setIsOpen(false)}>
+                    Kom igång
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       )}
