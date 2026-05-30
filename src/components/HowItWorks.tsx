@@ -5,23 +5,23 @@ import { ArrowRight } from "lucide-react";
 const steps = [
   {
     n: "01",
-    title: "Vi väljer din nisch",
-    desc: "Vi analyserar din bransch och region — identifierar sökvolym, konkurrens och var pengarna finns. Du får en rapport med exakt vilken directory-sajt vi listar dig på.",
+    title: "Du blir rekommenderad partner",
+    desc: "Ditt företag listas som rekommenderad partner i din stad på vår etablerade directory-sajt — med logotyp, beskrivning och kontaktvägar. Vi har bara en partner per bransch och stad.",
   },
   {
     n: "02",
-    title: "Du blir rekommenderad partner",
-    desc: "Ditt företag listas som rekommenderad partner i din stad på vår etablerade directory-sajt — med logotyp, beskrivning och kontaktvägar.",
-  },
-  {
-    n: "03",
     title: "Vi driver trafiken",
     desc: "Vi kör Google Ads, Meta Ads och SEO mot directory-sajten. All trafik som söker efter din tjänst i ditt område hittar dig först.",
   },
   {
-    n: "04",
+    n: "03",
     title: "Leads landar hos dig",
-    desc: "Varje lead — formulär, samtal, e-post — skickas direkt till ditt företag. Vi optimerar löpande och rapporterar varje månad.",
+    desc: "Varje lead — formulär, samtal, e-post — skickas direkt till ditt företag. Du missar aldrig en potentiell kund.",
+  },
+  {
+    n: "04",
+    title: "Rapportering via dashboard",
+    desc: "Du får full insyn i din egen dashboard med leads, klick, konverteringar och kostnad per lead. Vi optimerar löpande månad för månad.",
   },
 ];
 

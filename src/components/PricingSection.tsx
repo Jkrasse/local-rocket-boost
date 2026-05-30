@@ -4,20 +4,23 @@ import { Check, ArrowRight } from "lucide-react";
 
 const plans = [
   {
-    name: "Start",
-    monthly: "2 500",
-    annual: "1 925",
-    description: "För dig som vill testa kanalen.",
+    name: "Growth",
+    monthly: "5 000",
+    annual: "3 850",
+    description: "Allt du behöver för att börja generera leads.",
     features: [
-      "1 directory-listning",
-      "Grundläggande synlighet",
-      "Månadsrapport",
-      "E-postsupport",
+      "1 stad + alla undersidor",
+      "Google Ads (inkl. 2 000 kr spend)",
+      "Meta Ads (inkl. 2 000 kr spend)",
+      "Månadsrapporter",
+      "A/B-testning",
+      "Löpande optimering",
     ],
     featured: false,
+    custom: false,
   },
   {
-    name: "Growth",
+    name: "Premium",
     monthly: "5 000",
     annual: "3 850",
     description: "Allt du behöver för att börja generera leads.",
@@ -29,21 +32,23 @@ const plans = [
       "A/B-testning",
       "Löpande optimering",
     ],
-    featured: true,
+    featured: false,
+    custom: false,
   },
   {
-    name: "Premium",
-    monthly: "9 000",
-    annual: "6 930",
-    description: "Allt i Growth + exklusiv exaktmatchad domän.",
+    name: "Skräddarsydd",
+    monthly: null,
+    annual: null,
+    description: "För dig som vill synas i flera städer eller bestämma egen annonsspend.",
     features: [
-      "Allt som ingår i Growth",
-      "Exaktmatchad domän",
-      "Google Ads (inkl. 2 000 kr spend)",
-      "Meta Ads (inkl. 2 000 kr spend)",
+      "Flera städer eller regioner",
+      "Egen vald annonsspend",
+      "Anpassat upplägg",
+      "Dedikerad kontaktperson",
       "Prioriterad support",
     ],
     featured: false,
+    custom: true,
   },
 ];
 
@@ -100,13 +105,24 @@ const PricingSection = () => {
               <p className={`text-sm mb-6 ${plan.featured ? "text-background/70" : "text-ink-soft"}`}>
                 {plan.description}
               </p>
-              <div className="flex items-baseline gap-1 mb-1">
-                <span className="font-serif text-5xl tracking-tightest">{annual ? plan.annual : plan.monthly}</span>
-                <span className={`text-sm ${plan.featured ? "text-background/70" : "text-ink-mute"}`}>kr/mån</span>
-              </div>
-              <p className={`text-xs mb-8 ${plan.featured ? "text-background/60" : "text-ink-mute"}`}>
-                exkl. moms{annual && " · faktureras årsvis"}
-              </p>
+              {plan.custom ? (
+                <>
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="font-serif text-5xl tracking-tightest">Offert</span>
+                  </div>
+                  <p className="text-xs mb-8 text-ink-mute">anpassat upplägg</p>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="font-serif text-5xl tracking-tightest">{annual ? plan.annual : plan.monthly}</span>
+                    <span className={`text-sm ${plan.featured ? "text-background/70" : "text-ink-mute"}`}>kr/mån</span>
+                  </div>
+                  <p className={`text-xs mb-8 ${plan.featured ? "text-background/60" : "text-ink-mute"}`}>
+                    exkl. moms{annual && " · faktureras årsvis"}
+                  </p>
+                </>
+              )}
               <ul className="space-y-3 mb-8">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm">
@@ -120,7 +136,7 @@ const PricingSection = () => {
                 className="w-full"
                 size="lg"
               >
-                Kom igång <ArrowRight className="h-4 w-4" />
+                {plan.custom ? "Kontakta oss" : "Kom igång"} <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           ))}
