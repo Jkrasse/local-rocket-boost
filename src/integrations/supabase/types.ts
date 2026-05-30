@@ -286,6 +286,7 @@ export type Database = {
           current_period_end: string | null
           current_period_start: string | null
           customer_id: string
+          environment: string
           id: string
           niche_id: string
           plan: string
@@ -301,6 +302,7 @@ export type Database = {
           current_period_end?: string | null
           current_period_start?: string | null
           customer_id: string
+          environment?: string
           id?: string
           niche_id: string
           plan: string
@@ -316,6 +318,7 @@ export type Database = {
           current_period_end?: string | null
           current_period_start?: string | null
           customer_id?: string
+          environment?: string
           id?: string
           niche_id?: string
           plan?: string
@@ -379,6 +382,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_slot_available: {
+        Args: { _city_id: string; _env?: string; _niche_id: string }
         Returns: boolean
       }
     }
