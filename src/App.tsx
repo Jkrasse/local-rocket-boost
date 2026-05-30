@@ -15,6 +15,8 @@ import Signup from "./pages/Signup.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import DashboardPlaceholder from "./pages/DashboardPlaceholder.tsx";
 import AdminPlaceholder from "./pages/AdminPlaceholder.tsx";
+import Onboarding from "./pages/Onboarding.tsx";
+import OnboardingDone from "./pages/OnboardingDone.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -51,6 +53,15 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/onboarding"
+              element={
+                <ProtectedRoute requireRole="user">
+                  <Onboarding />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/onboarding/klar" element={<OnboardingDone />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

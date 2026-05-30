@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight } from "lucide-react";
 
@@ -132,11 +133,14 @@ const PricingSection = () => {
                 ))}
               </ul>
               <Button
+                asChild
                 variant={plan.featured ? "hero" : "outline"}
                 className="w-full"
                 size="lg"
               >
-                {plan.custom ? "Kontakta oss" : "Kom igång"} <ArrowRight className="h-4 w-4" />
+                <Link to={plan.custom ? "/#kontakt" : "/onboarding"}>
+                  {plan.custom ? "Kontakta oss" : "Kom igång"} <ArrowRight className="h-4 w-4" />
+                </Link>
               </Button>
             </div>
           ))}
