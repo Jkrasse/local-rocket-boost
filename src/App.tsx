@@ -13,7 +13,7 @@ import CookiePolicy from "./pages/CookiePolicy.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
-import DashboardPlaceholder from "./pages/DashboardPlaceholder.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
 import AdminPlaceholder from "./pages/AdminPlaceholder.tsx";
 import Onboarding from "./pages/Onboarding.tsx";
 import OnboardingDone from "./pages/OnboardingDone.tsx";
@@ -41,7 +41,7 @@ const App = () => (
               path="/dashboard"
               element={
                 <ProtectedRoute requireRole="user">
-                  <DashboardPlaceholder />
+                  <Dashboard />
                 </ProtectedRoute>
               }
             />
