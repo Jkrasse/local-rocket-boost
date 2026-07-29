@@ -6,7 +6,7 @@ const steps = [
   {
     n: "01",
     title: "Du blir rekommenderad partner",
-    desc: "Ditt företag listas som rekommenderad partner i din stad på vår etablerade directory-sajt — med logotyp, beskrivning och kontaktvägar. Vi har bara en partner per bransch och stad.",
+    desc: "Ditt företag listas som rekommenderad partner i din stad på vår etablerade directory-sajt, med logotyp, beskrivning och kontaktvägar. Vi har bara en partner per bransch och stad.",
   },
   {
     n: "02",
@@ -16,7 +16,7 @@ const steps = [
   {
     n: "03",
     title: "Leads landar hos dig",
-    desc: "Varje lead — formulär, samtal, e-post — skickas direkt till ditt företag. Du missar aldrig en potentiell kund.",
+    desc: "Varje lead, oavsett om den kommer via formulär, samtal eller e-post, skickas direkt till ditt företag. Du missar aldrig en potentiell kund.",
   },
   {
     n: "04",
@@ -32,7 +32,7 @@ const HowItWorks = () => {
         <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="eyebrow mb-5">Så funkar det</div>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
-            Fyra steg från <span className="italic-accent">noll</span> till stadig leadflöde
+            Fyra steg från <span className="italic-accent">noll</span> till stadigt leadflöde
           </h2>
           <p className="text-ink-soft text-lg">
             Vi bygger systemet, sköter trafiken och levererar leads direkt till dig. Du fokuserar på att stänga affärer.

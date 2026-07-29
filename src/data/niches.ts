@@ -15,11 +15,11 @@ export type NicheContent = {
 const baseFaq = (n: string, plural: string) => [
   {
     q: `Vad kostar det att få leads via Local Rocket som ${n}?`,
-    a: `Vi har två fasta paket: Premium från 3 850 kr/mån (årsbetalning) och Growth från 6 160 kr/mån (årsbetalning). Ingen startavgift, ingen bindningstid utöver perioden – och du betalar aldrig per lead.`,
+    a: `Vi har två fasta paket: Premium från 3 850 kr/mån (årsbetalning) och Growth från 6 160 kr/mån (årsbetalning). Ingen startavgift, ingen bindningstid utöver perioden. Du betalar aldrig per lead.`,
   },
   {
     q: `Hur snabbt börjar jag få leads?`,
-    a: `De flesta ${plural} får sina första förfrågningar inom 2–4 veckor efter lansering. Vi sätter upp annonser, landningssida och spårning samma vecka du tecknar avtal.`,
+    a: `Sajten och annonserna lanseras inom 14 dagar från avtal. Därefter brukar de första förfrågningarna komma inom de närmaste veckorna, beroende på bransch och stad.`,
   },
   {
     q: `Är leadsen exklusiva för mig?`,
@@ -27,7 +27,7 @@ const baseFaq = (n: string, plural: string) => [
   },
   {
     q: `Vad händer om jag inte är nöjd?`,
-    a: `Du kan säga upp när som helst inför nästa period. Vi tror på att leverera resultat – inte att låsa in dig.`,
+    a: `Du kan säga upp när som helst inför nästa period. Vi tror på att leverera resultat, inte på att låsa in dig.`,
   },
 ];
 
@@ -42,7 +42,7 @@ export const niches: Record<string, NicheContent> = {
     searchPhrases: ["elektriker stockholm", "akut elektriker", "behörig elektriker nära mig"],
     city: "Stockholm",
     benefits: [
-      { title: "Kunder som redan söker", body: "Vi fångar upp människor mitt i Google-sökningen efter en elektriker – inte kalla listor eller massutskick." },
+      { title: "Kunder som redan söker", body: "Vi fångar upp människor mitt i Google-sökningen efter en elektriker. Inga kalla listor eller massutskick." },
       { title: "ROT-redo förfrågningar", body: "Vårt formulär kvalificerar adress, jobbtyp och tidsfönster så att du kan lämna pris direkt." },
       { title: "En per stad", body: "Bara en elektriker per stad får trafiken. När platsen är din är den låst." },
     ],
@@ -58,7 +58,7 @@ export const niches: Record<string, NicheContent> = {
     searchPhrases: ["rörmokare stockholm", "akut vvs jour", "vvs badrumsrenovering"],
     city: "Stockholm",
     benefits: [
-      { title: "Akuta jobb i realtid", body: "När någon googlar 'rörmokare akut' är det du som syns – och får samtalet inom minuter." },
+      { title: "Akuta jobb i realtid", body: "När någon googlar 'rörmokare akut' är det du som syns och får samtalet inom minuter." },
       { title: "Kvalificerade förfrågningar", body: "Vi frågar om jobbtyp, fastighet och adress innan leadet skickas så du slipper tomma offerter." },
       { title: "Geografisk ensamrätt", body: "En VVS-firma per stad. Konkurrenterna är ute." },
     ],
@@ -74,9 +74,9 @@ export const niches: Record<string, NicheContent> = {
     searchPhrases: ["städfirma stockholm", "flyttstädning pris", "hemstädning rut"],
     city: "Stockholm",
     benefits: [
-      { title: "Trafik från RUT-kunder", body: "Vi når privatpersoner som vill ha hemstädning med RUT – inte tidsslukande kontorsoffert-jakter." },
+      { title: "Trafik från RUT-kunder", body: "Vi når privatpersoner som vill ha hemstädning med RUT, inte tidsslukande kontorsoffert-jakter." },
       { title: "Återkommande kunder", body: "Vårt formulär filtrerar engångsuppdrag från abonnemang så du kan prioritera lönsamma leads." },
-      { title: "Endast en städfirma per stad", body: "Du äger trafiken i din stad – konkurrenter syns inte hos oss." },
+      { title: "Endast en städfirma per stad", body: "Du äger trafiken i din stad. Konkurrenter syns inte hos oss." },
     ],
     faq: baseFaq("städfirma", "städfirmor"),
   },
@@ -91,7 +91,7 @@ export const niches: Record<string, NicheContent> = {
     city: "Stockholm",
     benefits: [
       { title: "Förfrågningar med datum", body: "Varje lead har önskat flyttdatum, adresser och rumsantal så du kan offerera direkt." },
-      { title: "Hög ordervärde-snitt", body: "Vi prioriterar bohags- och kontorsflytt framför 'flytta en soffa'-frågor." },
+      { title: "Högt ordervärde i snitt", body: "Vi prioriterar bohags- och kontorsflytt framför 'flytta en soffa'-frågor." },
       { title: "Ensam i din stad", body: "En flyttfirma per ort. Konkurrenterna har ingen kanal in." },
     ],
     faq: baseFaq("flyttfirma", "flyttfirmor"),
@@ -106,7 +106,7 @@ export const niches: Record<string, NicheContent> = {
     searchPhrases: ["takläggare stockholm", "takbyte pris", "takrenovering"],
     city: "Stockholm",
     benefits: [
-      { title: "Stora jobb, hög marginal", body: "Vi riktar in oss på takbyten och fullrenoveringar – inte småfix." },
+      { title: "Stora jobb, hög marginal", body: "Vi riktar in oss på takbyten och fullrenoveringar, inte småfix." },
       { title: "Förkvalificerade adresser", body: "Vi frågar efter fastighetstyp, takyta och tidsplan så du vet att offerten är värd att räkna på." },
       { title: "En takläggare per stad", body: "Du tar hela trafiken i ditt område." },
     ],
@@ -122,9 +122,9 @@ export const niches: Record<string, NicheContent> = {
     searchPhrases: ["värdering bostad stockholm", "mäklare stockholm", "sälja lägenhet"],
     city: "Stockholm",
     benefits: [
-      { title: "Säljklara värderingsleads", body: "Vi når människor som funderar på att sälja – inte de som bara är nyfikna på prisstatistik." },
+      { title: "Säljklara värderingsleads", body: "Vi når människor som funderar på att sälja, inte de som bara är nyfikna på prisstatistik." },
       { title: "Lokala sökningar", body: "Trafiken riktas på stadsdel så du får relevanta intag för ditt område." },
-      { title: "En mäklare per stad", body: "Endast en mäklare per ort får tillgång – konkurrenterna är låsta ute." },
+      { title: "En mäklare per stad", body: "Endast en mäklare per ort får tillgång. Konkurrenterna är låsta ute." },
     ],
     faq: baseFaq("mäklare", "mäklare"),
   },
@@ -139,27 +139,32 @@ export const niches: Record<string, NicheContent> = {
     city: "Stockholm",
     benefits: [
       { title: "Nya patienter, inte besökare", body: "Vi optimerar för bokade tider, inte för klick eller broschyrnedladdningar." },
-      { title: "Hög-värde behandlingar", body: "Vi prioriterar implantat, estetik och akuttand – behandlingar som faktiskt täcker annonskostnaden." },
-      { title: "En klinik per stad", body: "Du syns ensam i din stad – konkurrenterna är ute ur vår kanal." },
+      { title: "Behandlingar med högt värde", body: "Vi prioriterar implantat, estetik och akuttand. Behandlingar som faktiskt täcker annonskostnaden." },
+      { title: "En klinik per stad", body: "Du syns ensam i din stad. Konkurrenterna är ute ur vår kanal." },
     ],
     faq: baseFaq("tandläkarklinik", "tandläkarkliniker"),
   },
-  bilfirmor: {
-    slug: "bilfirmor",
-    name: "Bilfirmor",
-    nameSingular: "bilfirma",
-    nameSingularDef: "bilfirman",
-    audienceTitle: "bilfirmor",
+  bilhandlare: {
+    slug: "bilhandlare",
+    name: "Bilhandlare",
+    nameSingular: "bilhandlare",
+    nameSingularDef: "bilhandlaren",
+    audienceTitle: "bilhandlare",
     service: "bilförsäljning och bilinköp",
-    searchPhrases: ["sälja bil snabbt", "köpa begagnad bil stockholm", "bilfirma värdering"],
+    searchPhrases: ["sälja bil snabbt", "köpa begagnad bil stockholm", "bilhandlare värdering"],
     city: "Stockholm",
     benefits: [
-      { title: "Säljare som vill bli av med bilen", body: "Vi når privatpersoner som söker efter snabb försäljning – med reg.nr och prisförväntan ifyllt." },
+      { title: "Säljare som vill bli av med bilen", body: "Vi når privatpersoner som söker efter snabb försäljning, med reg.nr och prisförväntan ifyllt." },
       { title: "Köpare med budget", body: "För dig som säljer riktar vi trafik från köpare med konkret budget och bilmodell i åtanke." },
-      { title: "Geografisk ensamrätt", body: "En bilfirma per stad. Konkurrenterna är ute ur vår kanal." },
+      { title: "Geografisk ensamrätt", body: "En bilhandlare per stad. Konkurrenterna är ute ur vår kanal." },
     ],
-    faq: baseFaq("bilfirma", "bilfirmor"),
+    faq: baseFaq("bilhandlare", "bilhandlare"),
   },
+};
+
+// Gamla slugs som ska skickas vidare till nya adresser (behåller ev. indexerade länkar)
+export const legacySlugRedirects: Record<string, string> = {
+  bilfirmor: "bilhandlare",
 };
 
 export const allNicheSlugs = Object.keys(niches);

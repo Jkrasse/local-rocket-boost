@@ -1,23 +1,28 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { ArrowRight, Check, MapPin, Search, ShieldCheck, Zap } from "lucide-react";
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { getNiche } from "@/data/niches";
+import { getNiche, legacySlugRedirects } from "@/data/niches";
 
 const BASE_URL = "https://localrocket.se";
 
 const NicheLanding = () => {
   const { slug = "" } = useParams<{ slug: string }>();
+
+  if (legacySlugRedirects[slug]) {
+    return <Navigate to={`/leadsgenerering/${legacySlugRedirects[slug]}`} replace />;
+  }
+
   const niche = getNiche(slug);
 
   if (!niche) return <Navigate to="/" replace />;
 
   const url = `${BASE_URL}/leadsgenerering/${niche.slug}`;
-  const title = `Leadsgenerering för ${niche.name.toLowerCase()} – exklusiva förfrågningar | Local Rocket`;
-  const description = `Få kvalificerade kundförfrågningar varje vecka. Local Rocket levererar exklusiva leads till ${niche.audienceTitle} i Sverige – en kund per stad, fast pris, ingen bindningstid.`;
+  const title = `Leadsgenerering för ${niche.name.toLowerCase()}: exklusiva förfrågningar | Local Rocket`;
+  const description = `Få kvalificerade kundförfrågningar varje vecka. Local Rocket levererar exklusiva leads till ${niche.audienceTitle} i Sverige. En kund per stad, fast pris, ingen bindningstid.`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -42,18 +47,7 @@ const NicheLanding = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <link rel="canonical" href={url} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={url} />
-        <meta property="og:type" content="website" />
-        <html lang="sv" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-        <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
-      </Helmet>
+      <Seo title={title} description={description} canonical={url} jsonLd={[jsonLd, faqLd]} />
 
       <Navbar />
 
@@ -69,7 +63,7 @@ const NicheLanding = () => {
                 Bli den enda <span className="italic-accent">{niche.nameSingular}</span> i din stad som syns när kunderna söker.
               </h1>
               <p className="text-ink-soft text-lg md:text-xl max-w-2xl mb-8">
-                Local Rocket driver trafik från Google och Meta till en optimerad sajt i din nisch. Du får kvalificerade förfrågningar för {niche.service} – levererade direkt till mejl eller telefon.
+                Local Rocket driver trafik från Google och Meta till en optimerad sajt i din nisch. Du får kvalificerade förfrågningar för {niche.service}, levererade direkt till mejl eller telefon.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg" className="rounded-full">
@@ -102,7 +96,7 @@ const NicheLanding = () => {
                   Dina nästa kunder googlar <span className="italic-accent">just nu</span>.
                 </h2>
                 <p className="text-ink-soft text-lg">
-                  Vi placerar dig högst upp i resultaten på de sökningar som faktiskt leder till bokningar – inte vaga klick.
+                  Vi placerar dig högst upp i resultaten på de sökningar som faktiskt leder till bokningar, inte vaga klick.
                 </p>
               </div>
               <div className="space-y-3">
@@ -155,7 +149,7 @@ const NicheLanding = () => {
             <div className="grid md:grid-cols-4 gap-6">
               {[
                 { n: "01", t: "Du säkrar staden", d: "Välj din stad i checkout. Platsen reserveras till dig direkt." },
-                { n: "02", t: "Vi bygger sajten", d: `En lokal sajt för ${niche.nameSingular} i ${niche.city} – designad för konvertering.` },
+                { n: "02", t: "Vi bygger sajten", d: `En lokal sajt för ${niche.nameSingular} i ${niche.city}, designad för konvertering.` },
                 { n: "03", t: "Annonser lanseras", d: "Google Ads och Meta Ads sätts upp och optimeras varje vecka." },
                 { n: "04", t: "Leads till dig", d: "Förfrågningar mejlas eller skickas via SMS direkt när de kommer in." },
               ].map((s) => (
@@ -174,7 +168,7 @@ const NicheLanding = () => {
           <div className="container mx-auto px-4 max-w-container">
             <div className="bg-dark-section text-dark-section-foreground rounded-[28px] p-10 md:p-16 text-center">
               <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05] mb-5 max-w-2xl mx-auto">
-                Bara <span className="italic-accent">en {niche.nameSingular}</span> per stad – är du den?
+                Bara <span className="italic-accent">en {niche.nameSingular}</span> per stad. Är du den?
               </h2>
               <p className="text-lg opacity-80 max-w-xl mx-auto mb-8">
                 Vi släpper bara in ett företag per ort. När platsen är tagen är konkurrenterna utestängda.
@@ -205,6 +199,13 @@ const NicheLanding = () => {
                 </AccordionItem>
               ))}
             </Accordion>
+
+            <p className="text-center text-ink-soft mt-10">
+              Vill du hellre läsa om hur vi jobbar med synlighet i Google?{" "}
+              <Link to={`/seo/${niche.slug}`} className="text-primary underline underline-offset-4 hover:no-underline">
+                SEO för {niche.audienceTitle}
+              </Link>
+            </p>
           </div>
         </section>
       </main>

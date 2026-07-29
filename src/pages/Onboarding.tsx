@@ -158,7 +158,7 @@ export default function Onboarding() {
             <section>
               <h1 className="font-serif text-2xl md:text-3xl mb-1.5">Vilken bransch är du i?</h1>
               <p className="text-ink-soft text-sm mb-6">
-                En partner per stad och bransch — välj din nisch.
+                En partner per stad och bransch. Välj din nisch.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {niches.map((n) => (
@@ -273,7 +273,7 @@ export default function Onboarding() {
             <section>
               <h1 className="font-serif text-2xl md:text-3xl mb-1.5">Slutför beställning</h1>
               <p className="text-ink-soft text-sm mb-6">
-                {selectedPlan.name} — {selectedPlan.price} för {selectedNiche?.name} i{" "}
+                {selectedPlan.name}, {selectedPlan.price} för {selectedNiche?.name} i{" "}
                 {selectedCity?.name}.
               </p>
 

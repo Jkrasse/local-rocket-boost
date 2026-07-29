@@ -14,7 +14,7 @@ const IndustriesSection = () => {
             Vi finns där dina kunder <span className="italic-accent">söker</span>
           </h2>
           <p className="text-ink-soft text-lg">
-            En dedikerad directory-sajt per bransch — och vi lanserar nya löpande.
+            En dedikerad directory-sajt per bransch, och vi lanserar nya löpande.
           </p>
         </div>
 

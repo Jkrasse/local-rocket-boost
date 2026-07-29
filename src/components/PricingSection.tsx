@@ -8,7 +8,7 @@ const plans = [
     name: "Premium",
     monthly: "5 000",
     annual: "3 850",
-    description: "Allt du behöver för att börja generera leads.",
+    description: "Allt du behöver för att börja generera leads i en stad.",
     features: [
       "1 stad + alla undersidor",
       "Google Ads (inkl. 1 000 kr spend)",
@@ -24,7 +24,7 @@ const plans = [
     name: "Growth",
     monthly: "8 000",
     annual: "6 160",
-    description: "Allt du behöver för att börja generera leads.",
+    description: "Dubbel annonsbudget för dig som vill växa snabbare.",
     features: [
       "1 stad + alla undersidor",
       "Google Ads (inkl. 2 000 kr spend)",
@@ -33,7 +33,7 @@ const plans = [
       "A/B-testning",
       "Löpande optimering",
     ],
-    featured: false,
+    featured: true,
     custom: false,
   },
   {
@@ -62,10 +62,10 @@ const PricingSection = () => {
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="eyebrow mb-5">Priser</div>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
-            Betala för <span className="italic-accent">resultat</span>, inte löften
+            Ett fast pris, allt <span className="italic-accent">ingår</span>
           </h2>
           <p className="text-ink-soft text-lg">
-            Fast månadsavgift för plattformen, rörlig kostnad per kvalificerad lead. Ingen bindningstid.
+            Fast månadspris med annonsbudget inkluderad. Du betalar aldrig per lead.
           </p>
         </div>
 

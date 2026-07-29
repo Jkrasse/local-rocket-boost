@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-const faqs = [
+export const faqs = [
   {
     q: "Hur snabbt får jag mina första leads?",
-    a: "I snitt levererar vi första kvalificerade lead inom 23 dagar från avtal. Sajten lanseras inom 14 dagar och därefter ramper trafik och konvertering snabbt upp.",
+    a: "Sajten och annonserna lanseras inom 14 dagar från avtal. Därefter brukar de första förfrågningarna komma inom de närmaste veckorna, beroende på bransch och stad.",
   },
   {
     q: "Vad är en \"kvalificerad lead\"?",
-    a: "En lead som matchar din bransch, region och tjänst — inkommen via formulär, samtal eller e-post från en person med faktisk köpintention.",
+    a: "En lead som matchar din bransch, region och tjänst, inkommen via formulär, samtal eller e-post från en person med faktisk köpintention.",
   },
   {
     q: "Måste jag ha ett befintligt varumärke eller hemsida?",
-    a: "Nej. Vi listar dig på vår etablerade directory-sajt — du behöver ingen egen hemsida för att börja få leads.",
+    a: "Nej. Vi listar dig på vår etablerade directory-sajt. Du behöver ingen egen hemsida för att börja få leads.",
   },
   {
     q: "Är jag bunden till något avtal?",
@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: "Vad händer om jag inte är nöjd med leadkvaliteten?",
-    a: "Vi optimerar löpande och har en transparent dialog. Om en lead är uppenbart felaktig krediteras den.",
+    a: "Vi optimerar löpande och har en transparent dialog. Ser vi att förfrågningarna inte håller måttet justerar vi annonser, formulär och målgrupper tills de gör det.",
   },
 ];
 

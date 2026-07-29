@@ -1,3 +1,4 @@
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,7 @@ const steps = [
     number: "01",
     title: "Bli rekommenderad partner i din stad",
     description:
-      "Vi har redan etablerade directory-sajter inom olika branscher. När du blir partner listas ditt företag som rekommenderad i din stad — med logotyp, beskrivning och direktlänk till kontakt.",
+      "Vi har redan etablerade directory-sajter inom olika branscher. När du blir partner listas ditt företag som rekommenderad i din stad, med logotyp, beskrivning och direktlänk till kontakt.",
     note: "Vi är inte en byrå. Vi fokuserar enbart på att generera leads till lokala företag genom våra egna plattformar.",
     imagePlaceholder: "Screenshot: Så ser det ut när ditt företag visas som rekommenderad partner.",
   },
@@ -32,14 +33,14 @@ const steps = [
     number: "04",
     title: "Alla leads pekas till dig",
     description:
-      "Varje lead som kommer in via directory-sidan skickas direkt till ditt företag — via formulär, telefon, e-post eller andra kontaktvägar. Du missar aldrig en potentiell kund.",
+      "Varje lead som kommer in via directory-sidan skickas direkt till ditt företag, oavsett om den kommer via formulär, telefon eller e-post. Du missar aldrig en potentiell kund.",
     imagePlaceholder: "Screenshot: Kontaktformulär och klick-att-ringa.",
   },
   {
     number: "05",
-    title: "Du växer — vi optimerar",
+    title: "Du växer, vi optimerar",
     description:
-      "Vi analyserar löpande vilka annonser och landningssidor som presterar bäst och optimerar för att maximera antalet leads. Du får regelbundna rapporter med fullt insyn.",
+      "Vi analyserar löpande vilka annonser och landningssidor som presterar bäst och optimerar för att maximera antalet leads. Du får regelbundna rapporter med full insyn.",
     imagePlaceholder: "Screenshot: Månadsrapport med leads, klick och konverteringar.",
   },
 ];
@@ -47,6 +48,11 @@ const steps = [
 const HowItWorksPage = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Så fungerar det: från partner till leads på 14 dagar | Local Rocket"
+        description="Så fungerar Local Rocket: ditt företag blir rekommenderad partner på vår directory-sajt, vi driver trafik via Google Ads, Meta Ads och SEO, och alla leads skickas direkt till dig."
+        canonical="https://localrocket.se/sa-fungerar-det"
+      />
       <Navbar />
 
       {/* Hero */}
@@ -54,7 +60,7 @@ const HowItWorksPage = () => {
         <div className="container mx-auto px-4 max-w-container text-center">
           <div className="eyebrow mb-5">Så fungerar det</div>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl tracking-tightest leading-[1.05] mb-8 max-w-3xl mx-auto">
-            Vi genererar <span className="italic-accent">leads</span> — inte byråtjänster.
+            Vi genererar <span className="italic-accent">leads</span>. Inte byråtjänster.
           </h1>
           <p className="text-lg md:text-xl text-ink-soft max-w-2xl mx-auto">
             Vi är inte en traditionell byrå. Vi bygger egna plattformar och skickar leads direkt till dig som rekommenderad partner i din stad.
@@ -109,7 +115,7 @@ const HowItWorksPage = () => {
               🎁 Bonus
             </div>
             <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05] mb-6">
-              Syns mer — även i <span className="italic-accent">AI och sökmotorer</span>
+              Syns mer, även i <span className="italic-accent">AI och sökmotorer</span>
             </h2>
             <p className="text-background/80 text-lg leading-relaxed mb-4">
               Förutom leads får du en extra fördel: bättre synlighet online. När ditt företag listas som rekommenderad partner stärks din närvaro i både Google och AI-drivna tjänster som ChatGPT och Gemini.

@@ -1,8 +1,8 @@
 const stats = [
-  { value: "14 000+", label: "Leads / månad" },
-  { value: "87", label: "Kunder i Sverige" },
-  { value: "4.2×", label: "ROI i snitt" },
-  { value: "23 dgr", label: "Tid till första leaden" },
+  { value: "1", label: "Partner per bransch och stad" },
+  { value: "100%", label: "Av dina leads är exklusiva" },
+  { value: "14 dgr", label: "Från avtal till lansering" },
+  { value: "0 kr", label: "Startavgift, ingen bindningstid" },
 ];
 
 const StatsStrip = () => {

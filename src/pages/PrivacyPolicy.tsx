@@ -1,14 +1,16 @@
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo title="Integritetspolicy | Local Rocket" canonical="https://localrocket.se/integritetspolicy" />
       <Navbar />
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-4 max-w-3xl">
           <h1 className="font-heading text-4xl font-bold mb-8">Integritetspolicy</h1>
-          <p className="text-muted-foreground mb-6">Senast uppdaterad: {new Date().toLocaleDateString('sv-SE')}</p>
+          <p className="text-muted-foreground mb-6">Senast uppdaterad: 2026-07-29</p>
 
           <div className="prose prose-lg max-w-none space-y-6 text-foreground/85">
             <section>
@@ -47,9 +49,9 @@ const PrivacyPolicy = () => {
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">4. Rättslig grund</h2>
               <p>Vi behandlar dina uppgifter baserat på:</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li>Fullgörande av avtal — när du köper våra tjänster</li>
-                <li>Berättigat intresse — för att förbättra vår verksamhet</li>
-                <li>Samtycke — för marknadsföring och cookies</li>
+                <li>Fullgörande av avtal: när du köper våra tjänster</li>
+                <li>Berättigat intresse: för att förbättra vår verksamhet</li>
+                <li>Samtycke: för marknadsföring och cookies</li>
               </ul>
             </section>
 

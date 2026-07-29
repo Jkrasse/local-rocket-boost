@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index.tsx";
 import HowItWorksPage from "./pages/HowItWorksPage.tsx";
+import SeoNiche from "./pages/SeoNiche.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import TermsOfService from "./pages/TermsOfService.tsx";
 import CookiePolicy from "./pages/CookiePolicy.tsx";
@@ -32,6 +33,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/leadsgenerering/:slug" element={<NicheLanding />} />
+            <Route path="/seo/:slug" element={<SeoNiche />} />
             <Route path="/sa-fungerar-det" element={<HowItWorksPage />} />
             <Route path="/integritetspolicy" element={<PrivacyPolicy />} />
             <Route path="/villkor" element={<TermsOfService />} />

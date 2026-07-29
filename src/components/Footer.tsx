@@ -1,5 +1,8 @@
 import { Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
+import { niches } from "@/data/niches";
+
+const nicheList = Object.values(niches);
 
 const Footer = () => {
   const cols = [
@@ -9,26 +12,23 @@ const Footer = () => {
         { label: "Så funkar det", to: "/sa-fungerar-det" },
         { label: "Branscher", to: "/#industries" },
         { label: "Priser", to: "/#pricing" },
-        { label: "Resultatgaranti", to: "#" },
-      ],
-    },
-    {
-      title: "Företag",
-      links: [
-        { label: "Om oss", to: "/#about" },
-        { label: "Karriär", to: "#" },
+        { label: "FAQ", to: "/#faq" },
         { label: "Kontakt", to: "/#contact" },
-        { label: "Press", to: "#" },
       ],
     },
     {
-      title: "Resurser",
-      links: [
-        { label: "Blogg", to: "#" },
-        { label: "Case studies", to: "#" },
-        { label: "Lead-kalkylator", to: "#" },
-        { label: "Hjälpcenter", to: "#" },
-      ],
+      title: "Leadsgenerering",
+      links: nicheList.map((n) => ({
+        label: `Leads för ${n.name.toLowerCase()}`,
+        to: `/leadsgenerering/${n.slug}`,
+      })),
+    },
+    {
+      title: "SEO per bransch",
+      links: nicheList.map((n) => ({
+        label: `SEO för ${n.name.toLowerCase()}`,
+        to: `/seo/${n.slug}`,
+      })),
     },
   ];
 
@@ -42,7 +42,7 @@ const Footer = () => {
               <span>Local<span className="font-semibold">Rocket</span></span>
             </Link>
             <p className="text-sm text-ink-soft leading-relaxed max-w-xs">
-              Lead generation för lokala företag. Nischade directory-sajter över hela Sverige.
+              Leadsgenerering för lokala företag. Nischade directory-sajter över hela Sverige.
             </p>
           </div>
 

@@ -8,14 +8,15 @@ type Niche = {
   initial: string;
   category: string;
   city: string;
-  partner: string;
   intro: string;
   introShort: string;
   description: string;
-  phone: string;
   address: string;
   reviews: string;
 };
+
+const PARTNER_NAME = "Ditt Företag AB";
+const PARTNER_PHONE = "070-123 45 67";
 
 const NICHES: Niche[] = [
   {
@@ -25,15 +26,13 @@ const NICHES: Niche[] = [
     initial: "S",
     category: "städfirman",
     city: "Stockholm",
-    partner: "Freska Sweden AB",
     intro:
-      "Letar du efter en pålitlig städfirma? Vi hjälper dig hitta kvalitetsgranskade städföretag — från hemstäd till kontorsstäd.",
+      "Letar du efter en pålitlig städfirma? Vi hjälper dig hitta kvalitetsgranskade städföretag, från hemstäd till kontorsstäd.",
     introShort:
-      "Pålitliga, kvalitetsgranskade städföretag — hem, flytt och kontor.",
+      "Pålitliga, kvalitetsgranskade städföretag. Hem, flytt och kontor.",
     description:
-      "Pålitlig städfirma i Stockholm med erfaren personal och fokus på kvalitet och kundnöjdhet.",
-    phone: "+46 20 10 00 15",
-    address: "Kungsgatan 12, Stockholm",
+      "Här visas din beskrivning: vad ni gör, vad ni är bäst på och varför kunderna i Stockholm ska välja er.",
+    address: "Din adress, Stockholm",
     reviews: "3 564",
   },
   {
@@ -43,33 +42,29 @@ const NICHES: Niche[] = [
     initial: "T",
     category: "tandläkaren",
     city: "Göteborg",
-    partner: "Smile Dental AB",
     intro:
       "Söker du en tandläkare i Göteborg? Vi listar de mest betrodda klinikerna med modern utrustning och hög patientnöjdhet.",
     introShort:
-      "Trygga tandläkare i Göteborg — moderna kliniker, goda omdömen.",
+      "Trygga tandläkare i Göteborg. Moderna kliniker, goda omdömen.",
     description:
-      "Modern tandvårdsklinik i centrala Göteborg med specialister inom estetik och implantat.",
-    phone: "+46 31 12 34 56",
-    address: "Avenyn 22, Göteborg",
+      "Här visas din beskrivning: er klinik, era behandlingar och varför patienterna i Göteborg ska boka hos er.",
+    address: "Din adress, Göteborg",
     reviews: "2 187",
   },
   {
-    domain: "bilhandlaren.nu",
-    domainShort: "Bilhandlaren.nu",
+    domain: "bilhandlare.nu",
+    domainShort: "Bilhandlare.nu",
     brand: "Bilhandlare",
     initial: "B",
     category: "bilhandlaren",
     city: "Umeå",
-    partner: "Norrlands Bil AB",
     intro:
       "Letar du efter en pålitlig bilhandlare i Umeå? Vi listar auktoriserade aktörer med transparenta priser och garanti.",
     introShort:
-      "Auktoriserade bilhandlare i Umeå — transparenta priser, garanti.",
+      "Auktoriserade bilhandlare i Umeå. Transparenta priser, garanti.",
     description:
-      "Auktoriserad bilhandlare med över 200 begagnade bilar och fullständig kvalitetsgaranti.",
-    phone: "+46 90 18 22 00",
-    address: "Industrivägen 8, Umeå",
+      "Här visas din beskrivning: ert utbud, era garantier och varför bilköparna i Umeå ska välja er.",
+    address: "Din adress, Umeå",
     reviews: "942",
   },
   {
@@ -79,15 +74,13 @@ const NICHES: Niche[] = [
     initial: "T",
     category: "takläggaren",
     city: "Malmö",
-    partner: "Skåne Tak AB",
     intro:
       "Behöver du lägga om taket? Vi hjälper dig hitta certifierade takläggare i Malmö med försäkring och dokumenterad erfarenhet.",
     introShort:
-      "Certifierade takläggare i Malmö — försäkrade och erfarna.",
+      "Certifierade takläggare i Malmö. Försäkrade och erfarna.",
     description:
-      "Certifierad takläggare med 15+ års erfarenhet av tegel-, plåt- och papptak i Skåne.",
-    phone: "+46 40 55 11 22",
-    address: "Industrigatan 14, Malmö",
+      "Här visas din beskrivning: era takarbeten, era certifikat och varför husägarna i Malmö ska anlita er.",
+    address: "Din adress, Malmö",
     reviews: "1 421",
   },
 ];
@@ -108,13 +101,22 @@ const useTypewriter = (text: string, speed = 35) => {
   return out;
 };
 
-const useNicheRotation = (intervalMs = 5000) => {
+const useNicheRotation = (intervalMs = 6000) => {
   const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+
   useEffect(() => {
+    if (paused) return;
     const id = setInterval(() => setIdx((p) => (p + 1) % NICHES.length), intervalMs);
     return () => clearInterval(id);
-  }, [intervalMs]);
-  return NICHES[idx];
+  }, [intervalMs, paused]);
+
+  const select = (i: number) => {
+    setIdx(i);
+    setPaused(true);
+  };
+
+  return { niche: NICHES[idx], idx, select };
 };
 
 /* ---------- Site content ---------- */
@@ -175,8 +177,8 @@ const SiteContent = ({ compact = false, niche }: { compact?: boolean; niche: Nic
           {compact ? (
             <>
               <div className="flex gap-2.5">
-                <div className="rounded-md border-2 border-dashed border-border flex items-center justify-center font-mono text-[8px] text-ink-mute shrink-0 h-14 w-14">
-                  LOGO
+                <div className="rounded-md border-2 border-dashed border-border flex items-center justify-center font-mono text-[8px] text-ink-mute shrink-0 h-14 w-14 text-center leading-tight">
+                  DIN<br />LOGO
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap gap-1 mb-1">
@@ -185,21 +187,21 @@ const SiteContent = ({ compact = false, niche }: { compact?: boolean; niche: Nic
                       <Check className="h-2 w-2" /> Verifierad
                     </span>
                   </div>
-                  <h4 className="font-sans font-bold text-[13px] leading-tight truncate">{niche.partner}</h4>
+                  <h4 className="font-sans font-bold text-[13px] leading-tight truncate">{PARTNER_NAME}</h4>
                   <div className="text-ink-soft text-[9px]">
                     ★★★★☆ <span className="font-semibold text-foreground">4.3</span> (611)
                   </div>
                 </div>
               </div>
               <div className="mt-2.5 pt-2.5 border-t border-border/60 flex flex-wrap gap-x-3 gap-y-1 text-[9px] text-ink-soft">
-                <span>📞 {niche.phone}</span>
+                <span>📞 {PARTNER_PHONE}</span>
                 <span>📍 {niche.address}</span>
               </div>
             </>
           ) : (
             <>
-              <div className="rounded-md border-2 border-dashed border-border flex items-center justify-center font-mono text-[10px] text-ink-mute shrink-0 h-20 w-24">
-                LOGO
+              <div className="rounded-md border-2 border-dashed border-border flex items-center justify-center font-mono text-[10px] text-ink-mute shrink-0 h-20 w-24 text-center leading-tight">
+                DIN<br />LOGO
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap gap-1 mb-1.5">
@@ -208,13 +210,13 @@ const SiteContent = ({ compact = false, niche }: { compact?: boolean; niche: Nic
                     <Check className="h-2.5 w-2.5" /> Verifierad
                   </span>
                 </div>
-                <h4 className="font-sans font-bold text-lg mb-1">{niche.partner}</h4>
+                <h4 className="font-sans font-bold text-lg mb-1">{PARTNER_NAME}</h4>
                 <div className="text-ink-soft text-xs mb-2">
                   ★★★★☆ <span className="font-semibold text-foreground">4.3</span> (611)
                 </div>
                 <p className="text-xs text-ink-soft mb-2">{niche.description}</p>
                 <div className="flex flex-wrap gap-4 text-[11px] text-ink-soft">
-                  <span>📞 {niche.phone}</span>
+                  <span>📞 {PARTNER_PHONE}</span>
                   <span>📍 {niche.address}</span>
                 </div>
               </div>
@@ -244,7 +246,7 @@ const SiteContent = ({ compact = false, niche }: { compact?: boolean; niche: Nic
               <div className="flex items-center gap-1.5 min-w-0">
                 <Award className="h-3 w-3 text-[#FF5A1F] shrink-0" />
                 <span className="text-[9px] font-medium truncate">
-                  Varför är {niche.partner} bäst i {niche.city}?
+                  Varför är {PARTNER_NAME} bäst i {niche.city}?
                 </span>
               </div>
               <ChevronDown className="h-3 w-3 text-ink-mute shrink-0" />
@@ -253,7 +255,7 @@ const SiteContent = ({ compact = false, niche }: { compact?: boolean; niche: Nic
               <div className="flex items-center gap-1.5 min-w-0">
                 <Quote className="h-3 w-3 text-ink-mute shrink-0" />
                 <span className="text-[9px] font-medium truncate">
-                  Vad säger användare om {niche.partner}?
+                  Vad säger användare om {PARTNER_NAME}?
                 </span>
               </div>
               <ChevronDown className="h-3 w-3 text-ink-mute shrink-0" />
@@ -298,18 +300,48 @@ const BrowserBar = ({ niche }: { niche: Niche }) => {
         <span className="h-3 w-3 rounded-full bg-[#28C840]" />
       </div>
       <div className="flex-1 ml-4 font-mono text-xs text-ink-soft truncate">{url}</div>
+      <div className="hidden sm:flex items-center gap-1.5 font-mono text-[10px] text-primary">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+        </span>
+        LIVE
+      </div>
     </div>
   );
 };
 
+const NicheTabs = ({ idx, onSelect }: { idx: number; onSelect: (i: number) => void }) => (
+  <div className="flex flex-wrap justify-center gap-2 mb-8 md:mb-10">
+    {NICHES.map((n, i) => (
+      <button
+        key={n.domain}
+        onClick={() => onSelect(i)}
+        className={`px-4 py-2 rounded-pill text-xs md:text-sm transition-all border ${
+          i === idx
+            ? "bg-foreground text-background border-foreground shadow-sm"
+            : "bg-background-elevated text-ink-soft border-border/60 hover:border-foreground/30"
+        }`}
+        style={i !== idx ? { backgroundColor: "hsl(var(--background-elevated))" } : undefined}
+        aria-pressed={i === idx}
+      >
+        {n.brand}
+      </button>
+    ))}
+  </div>
+);
+
 const DirectoryPreview = () => {
-  const niche = useNicheRotation(5000);
+  const { niche, idx, select } = useNicheRotation(6000);
 
   return (
     <section className="pb-16 md:pb-28">
       <div className="container mx-auto px-4 max-w-container">
+        <NicheTabs idx={idx} onSelect={select} />
+
         {/* Mobile: phone frame */}
-        <div className="md:hidden max-w-[300px] mx-auto">
+        <div className="md:hidden max-w-[300px] mx-auto relative">
+          <div className="absolute inset-x-[-40px] top-10 bottom-10 rounded-full bg-primary-soft/50 blur-3xl pointer-events-none" />
           <div className="relative bg-foreground rounded-[44px] p-[10px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)] ring-1 ring-foreground/40">
             <span className="absolute left-[-2px] top-[110px] h-8 w-[3px] rounded-l-sm bg-foreground/80" />
             <span className="absolute left-[-2px] top-[160px] h-12 w-[3px] rounded-l-sm bg-foreground/80" />
@@ -319,7 +351,7 @@ const DirectoryPreview = () => {
             <div className="relative bg-background rounded-[36px] overflow-hidden">
               <div className="absolute top-2 left-1/2 -translate-x-1/2 h-[26px] w-[90px] bg-foreground rounded-full z-20" />
               <div className="h-9" />
-              <div className="overflow-hidden pb-4">
+              <div key={niche.domain} className="overflow-hidden pb-4 animate-fade-in">
                 <SiteContent compact niche={niche} />
               </div>
               <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 h-1 w-24 bg-foreground/30 rounded-full z-20" />
@@ -330,14 +362,17 @@ const DirectoryPreview = () => {
         {/* Desktop: laptop frame */}
         <div className="hidden md:block max-w-5xl mx-auto">
           <div className="relative">
-            <div className="bg-foreground rounded-t-[20px] p-3 shadow-2xl">
+            <div className="absolute inset-x-8 top-16 bottom-0 rounded-full bg-primary-soft/60 blur-3xl pointer-events-none" />
+            <div className="relative bg-foreground rounded-t-[20px] p-3 shadow-2xl">
               <div className="bg-background rounded-[12px] overflow-hidden">
                 <BrowserBar niche={niche} />
-                <SiteContent niche={niche} />
+                <div key={niche.domain} className="animate-fade-in">
+                  <SiteContent niche={niche} />
+                </div>
               </div>
             </div>
-            <div className="h-3 bg-foreground/90 rounded-b-[6px] mx-[-12px]" />
-            <div className="h-1.5 bg-foreground/60 rounded-b-[20px] mx-[-24px]" />
+            <div className="relative h-3 bg-foreground/90 rounded-b-[6px] mx-[-12px]" />
+            <div className="relative h-1.5 bg-foreground/60 rounded-b-[20px] mx-[-24px]" />
           </div>
         </div>
 

@@ -1,14 +1,16 @@
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo title="Allmänna villkor | Local Rocket" canonical="https://localrocket.se/villkor" />
       <Navbar />
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-4 max-w-3xl">
           <h1 className="font-heading text-4xl font-bold mb-8">Allmänna villkor</h1>
-          <p className="text-muted-foreground mb-6">Senast uppdaterad: {new Date().toLocaleDateString('sv-SE')}</p>
+          <p className="text-muted-foreground mb-6">Senast uppdaterad: 2026-07-29</p>
 
           <div className="prose prose-lg max-w-none space-y-6 text-foreground/85">
             <section>
