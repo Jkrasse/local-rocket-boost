@@ -10,7 +10,7 @@ const fields = [
 
 const LeadExampleSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-dark-section">
+    <section className="py-24 md:py-32 bg-dark-section overflow-hidden">
       <div className="container mx-auto px-4 max-w-container">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center max-w-5xl mx-auto">
           <div>

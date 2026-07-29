@@ -335,7 +335,7 @@ const DirectoryPreview = () => {
   const { niche, idx, select } = useNicheRotation(6000);
 
   return (
-    <section className="pb-16 md:pb-28">
+    <section className="pb-16 md:pb-28 overflow-hidden">
       <div className="container mx-auto px-4 max-w-container">
         <NicheTabs idx={idx} onSelect={select} />
 
