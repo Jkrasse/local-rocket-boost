@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowRight, Check, Clock, Globe, Search, Sparkles, TrendingUp } from "lucide-react";
+import { ArrowRight, Check, Clock, FileText, Globe, MapPin, Search, Settings, Sparkles, TrendingUp } from "lucide-react";
 import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,13 +21,51 @@ const SeoNiche = () => {
   if (!niche) return <Navigate to="/" replace />;
 
   const url = `${BASE_URL}/seo/${niche.slug}`;
-  const title = `SEO för ${niche.audienceTitle}: syns i Google utan eget SEO-arbete | Local Rocket`;
-  const description = `SEO för ${niche.audienceTitle} utan månader av eget arbete. Ditt företag listas som rekommenderad partner på vår sökoptimerade nischsajt och tar emot förfrågningarna i din stad.`;
+  const nameLower = niche.name === "VVS" ? "VVS" : niche.name.toLowerCase();
+  const title = `SEO för ${nameLower}: syns i Google och få fler kunder | Local Rocket`;
+  const description = `SEO för ${nameLower} som ger förfrågningar, inte bara trafik. Syns på sökningar som "${niche.searchPhrases[0]}" via vår sökoptimerade nischsajt. En partner per stad, fast pris.`;
+
+  const included = [
+    {
+      icon: FileText,
+      title: "Sökordsoptimerat innehåll",
+      body: `Sidor byggda runt sökningar som "${niche.searchPhrases[0]}" och "${niche.searchPhrases[1]}", skrivna för att både ranka och konvertera.`,
+    },
+    {
+      icon: MapPin,
+      title: "Lokala landningssidor",
+      body: `Egna sidor per stad och tjänst, så att sajten fångar sökningar efter ${niche.service} exakt där dina kunder finns.`,
+    },
+    {
+      icon: Settings,
+      title: "Teknisk SEO",
+      body: "Snabb sajt, korrekt struktur, schema-markup och sitemaps. Grunderna som gör att Google förstår och litar på innehållet.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Löpande optimering",
+      body: "Vi följer sökdata varje månad och bygger ut det som fungerar: nya sidor, bättre innehåll, starkare positioner.",
+    },
+    {
+      icon: Sparkles,
+      title: "Synlighet i AI-svar",
+      body: "En trovärdig nischsajt som lyfter fram dig ökar chansen att AI-tjänster som ChatGPT och Gemini rekommenderar just ditt företag.",
+    },
+    {
+      icon: Globe,
+      title: "SEO på din egen webbplats",
+      body: "Vill du även stärka din egen sajt? Vi erbjuder SEO där som tilläggstjänst för partners. Ta upp det i demon.",
+    },
+  ];
 
   const seoFaq = [
     {
+      q: `Vad ingår i SEO för ${nameLower} hos Local Rocket?`,
+      a: `Du listas som rekommenderad partner på vår sökoptimerade nischsajt för ${niche.service}. Vi sköter innehåll, lokala landningssidor, teknisk SEO och löpande optimering. Dessutom driver vi trafik med Google Ads och Meta Ads så att du får förfrågningar redan innan de organiska positionerna byggts upp.`,
+    },
+    {
       q: `Gör ni SEO på min egen webbplats?`,
-      a: `Nej. Vi driver synlighet via våra egna nischade directory-sajter som är byggda och optimerade för sökningar efter ${niche.service}. Ditt företag listas som rekommenderad partner och tar emot förfrågningarna, helt utan att du behöver röra din egen webbplats.`,
+      a: `Grundupplägget är att du syns via vår färdigbyggda nischsajt, så att du får effekten av SEO utan eget arbete. Vill du även stärka din egen webbplats erbjuder vi SEO där som tilläggstjänst för partners. Ta upp det i demon så tittar vi på vad som ger mest effekt i din stad.`,
     },
     {
       q: `Hur lång tid tar det innan jag syns?`,
@@ -41,17 +79,13 @@ const SeoNiche = () => {
       q: `Kan jag kombinera det här med egen SEO eller en byrå?`,
       a: `Ja. Vår kanal är helt fristående från din egen webbplats. Många partners ser oss som ett komplement: din egen SEO bygger ditt varumärke långsiktigt, medan vi levererar förfrågningar här och nu.`,
     },
-    {
-      q: `Syns jag även i AI-tjänster som ChatGPT?`,
-      a: `När ditt företag lyfts fram som rekommenderad partner på en trovärdig nischsajt ökar chansen att AI-tjänster som ChatGPT och Gemini nämner just dig när någon ber om rekommendationer i din stad.`,
-    },
   ];
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: `SEO för ${niche.audienceTitle}`,
-    serviceType: `Sökmotorsynlighet för ${niche.audienceTitle}`,
+    name: `SEO för ${nameLower}`,
+    serviceType: `Sökmotoroptimering för ${nameLower}`,
     provider: { "@type": "Organization", name: "Local Rocket", url: BASE_URL },
     areaServed: { "@type": "Country", name: "Sverige" },
     description,
@@ -80,15 +114,16 @@ const SeoNiche = () => {
           <div className="container mx-auto px-4 max-w-container">
             <div className="max-w-3xl">
               <div className="eyebrow mb-5 inline-flex items-center gap-2">
-                <Search className="w-3.5 h-3.5" /> SEO för {niche.audienceTitle}
+                <Search className="w-3.5 h-3.5" /> Undertjänst till leadsgenerering
               </div>
               <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl tracking-tightest leading-[1.02] mb-6">
-                Syns i Google, <span className="italic-accent">utan att göra jobbet själv</span>.
+                SEO för {nameLower} som ger <span className="italic-accent">kunder</span>, inte bara klick.
               </h1>
               <p className="text-ink-soft text-lg md:text-xl max-w-2xl mb-8">
-                Egen SEO tar månader av innehåll, länkar och teknik. Vi har redan byggt en
-                sökoptimerad sajt i din nisch. Du listas som rekommenderad partner i din stad
-                och tar emot förfrågningarna för {niche.service}.
+                Att lyckas med SEO för {nameLower} kräver månader av innehåll,
+                länkar och teknik. Vi har redan gjort jobbet: en sökoptimerad nischsajt
+                som fångar sökningarna efter {niche.service}. Du listas som rekommenderad
+                partner i din stad och tar emot förfrågningarna.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg" className="rounded-full">
@@ -120,9 +155,9 @@ const SeoNiche = () => {
                   Det här googlar dina <span className="italic-accent">nästa kunder</span>.
                 </h2>
                 <p className="text-ink-soft text-lg">
-                  Vår nischsajt är byggd sida för sida runt de sökningar som leder till
-                  riktiga förfrågningar. När kunderna hittar sajten är det ditt företag
-                  som lyfts fram.
+                  Lokal SEO för {nameLower} handlar om att äga sökningarna med
+                  köpintention. Vår nischsajt är byggd sida för sida runt exakt de
+                  sökningarna, och när kunderna hittar dit är det ditt företag som lyfts fram.
                 </p>
               </div>
               <div className="space-y-3">
@@ -137,33 +172,17 @@ const SeoNiche = () => {
           </div>
         </section>
 
-        {/* WHY THIS INSTEAD OF DIY */}
+        {/* WHAT'S INCLUDED */}
         <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 max-w-container">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <div className="eyebrow mb-5">Varför {niche.audienceTitle} väljer oss</div>
+              <div className="eyebrow mb-5">Vad som ingår</div>
               <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05]">
-                SEO-resultaten, utan <span className="italic-accent">SEO-projektet</span>.
+                Det här ingår i SEO för <span className="italic-accent">{nameLower}</span>.
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  icon: Clock,
-                  title: "Hoppa över uppbyggnadsfasen",
-                  body: "Att ranka en egen webbplats tar ofta månader av innehåll, teknik och länkarbete. Vår nischsajt är redan byggd och optimerad. Du kliver in som partner och drar nytta av den direkt.",
-                },
-                {
-                  icon: TrendingUp,
-                  title: "SEO och annonser tillsammans",
-                  body: "Medan den organiska synligheten arbetar långsiktigt driver vi trafik med Google Ads och Meta Ads. Du får förfrågningar från start, inte om ett halvår.",
-                },
-                {
-                  icon: Sparkles,
-                  title: "Synlighet även i AI-svar",
-                  body: "När en trovärdig nischsajt lyfter fram ditt företag som rekommenderad partner ökar chansen att AI-tjänster som ChatGPT nämner dig när någon söker hjälp i din stad.",
-                },
-              ].map((c) => (
+              {included.map((c) => (
                 <div key={c.title} className="bg-background-elevated rounded-[20px] p-7 border border-border/60" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
                   <div className="w-11 h-11 rounded-xl bg-primary-soft flex items-center justify-center mb-5">
                     <c.icon className="w-5 h-5 text-primary" />
@@ -176,27 +195,49 @@ const SeoNiche = () => {
           </div>
         </section>
 
-        {/* HOW IT WORKS */}
+        {/* WHY IT WORKS */}
         <section className="py-20 md:py-28 bg-warm">
           <div className="container mx-auto px-4 max-w-container">
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <div className="eyebrow mb-5">Så fungerar det</div>
-              <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05]">
-                Tre steg till <span className="italic-accent">synlighet</span>.
-              </h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { n: "01", t: "Du säkrar din stad", d: `Bara en ${niche.nameSingular} per stad blir partner. När platsen är din är den låst.` },
-                { n: "02", t: "Vi sköter synligheten", d: "Nischsajten optimeras löpande för sökningar i din bransch. Annonser driver trafik parallellt." },
-                { n: "03", t: "Du tar emot förfrågningarna", d: "Varje lead skickas direkt till din mejl eller telefon, exklusivt för dig." },
-              ].map((s) => (
-                <div key={s.n} className="bg-background-elevated rounded-[20px] p-7 border border-border/60" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
-                  <div className="text-ink-mute font-mono text-sm mb-4">{s.n}</div>
-                  <h3 className="font-serif text-xl mb-2 leading-tight">{s.t}</h3>
-                  <p className="text-ink-soft text-sm">{s.d}</p>
-                </div>
-              ))}
+            <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div>
+                <div className="eyebrow mb-4">Därför fungerar det</div>
+                <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05] mb-6">
+                  SEO-resultaten, utan <span className="italic-accent">SEO-projektet</span>.
+                </h2>
+                <p className="text-ink-soft text-lg mb-4">
+                  En egen webbplats som ska ranka på "{niche.searchPhrases[0]}" konkurrerar
+                  med etablerade sajter som byggt innehåll och länkar i åratal. Det går,
+                  men det tar ofta sex till tolv månader innan det ger affärer.
+                </p>
+                <p className="text-ink-soft text-lg mb-4">
+                  Vi vänder på upplägget. Nischsajten är redan byggd, optimerad och
+                  fokuserad på en enda sak: sökningar efter {niche.service}. Som
+                  rekommenderad partner kliver du in i en position i stället för att
+                  bygga en från noll.
+                </p>
+                <p className="text-ink-soft text-lg">
+                  Och medan den organiska synligheten arbetar långsiktigt driver vi
+                  trafik med Google Ads och Meta Ads, så att förfrågningarna börjar
+                  komma från start.
+                </p>
+              </div>
+              <div className="space-y-4 md:pt-10">
+                {[
+                  { icon: Clock, t: "Hoppa över uppbyggnadsfasen", d: "Du drar nytta av en färdig, optimerad sajt från dag ett." },
+                  { icon: TrendingUp, t: "SEO och annonser tillsammans", d: "Organisk synlighet på sikt, annonstrafik direkt. Båda ingår." },
+                  { icon: Check, t: "Exklusivt i din stad", d: `Bara en ${niche.nameSingular} per stad blir partner. Din plats är låst för konkurrenter.` },
+                ].map((c) => (
+                  <div key={c.t} className="bg-background-elevated rounded-[20px] p-6 border border-border/60 flex gap-4" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
+                    <div className="w-11 h-11 rounded-xl bg-primary-soft flex items-center justify-center shrink-0">
+                      <c.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-serif text-xl mb-1 leading-tight">{c.t}</h3>
+                      <p className="text-ink-soft text-sm">{c.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -227,7 +268,7 @@ const SeoNiche = () => {
             <div className="text-center mb-12">
               <div className="eyebrow mb-5">Vanliga frågor</div>
               <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05]">
-                Det du <span className="italic-accent">undrar över</span>.
+                Frågor om SEO för <span className="italic-accent">{nameLower}</span>.
               </h2>
             </div>
             <Accordion type="single" collapsible className="bg-background-elevated rounded-[20px] border border-border/60 px-6" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
@@ -242,9 +283,9 @@ const SeoNiche = () => {
             <p className="text-center text-ink-soft mt-10 inline-flex items-center gap-2 w-full justify-center">
               <Globe className="w-4 h-4 text-primary shrink-0" />
               <span>
-                Vill du veta mer om själva leadsen?{" "}
+                SEO är en del av vårt leadspaket. Läs mer om{" "}
                 <Link to={`/leadsgenerering/${niche.slug}`} className="text-primary underline underline-offset-4 hover:no-underline">
-                  Leadsgenerering för {niche.audienceTitle}
+                  leadsgenerering för {nameLower}
                 </Link>
               </span>
             </p>

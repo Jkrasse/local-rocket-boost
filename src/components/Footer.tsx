@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { niches } from "@/data/niches";
 
 const nicheList = Object.values(niches);
+const lowerName = (name: string) => (name === "VVS" ? "VVS" : name.toLowerCase());
 
 const Footer = () => {
   const cols = [
@@ -19,14 +20,14 @@ const Footer = () => {
     {
       title: "Leadsgenerering",
       links: nicheList.map((n) => ({
-        label: `Leads för ${n.name.toLowerCase()}`,
+        label: `Leads för ${lowerName(n.name)}`,
         to: `/leadsgenerering/${n.slug}`,
       })),
     },
     {
       title: "SEO per bransch",
       links: nicheList.map((n) => ({
-        label: `SEO för ${n.name.toLowerCase()}`,
+        label: `SEO för ${lowerName(n.name)}`,
         to: `/seo/${n.slug}`,
       })),
     },

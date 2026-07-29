@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowRight, Check, MapPin, Search, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, Check, MapPin, Megaphone, Search, Share2, ShieldCheck, Zap } from "lucide-react";
 import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,7 +21,8 @@ const NicheLanding = () => {
   if (!niche) return <Navigate to="/" replace />;
 
   const url = `${BASE_URL}/leadsgenerering/${niche.slug}`;
-  const title = `Leadsgenerering för ${niche.name.toLowerCase()}: exklusiva förfrågningar | Local Rocket`;
+  const nameLower = niche.name === "VVS" ? "VVS" : niche.name.toLowerCase();
+  const title = `Leadsgenerering för ${nameLower}: exklusiva förfrågningar | Local Rocket`;
   const description = `Få kvalificerade kundförfrågningar varje vecka. Local Rocket levererar exklusiva leads till ${niche.audienceTitle} i Sverige. En kund per stad, fast pris, ingen bindningstid.`;
 
   const jsonLd = {
@@ -60,10 +61,13 @@ const NicheLanding = () => {
                 <MapPin className="w-3.5 h-3.5" /> Leadsgenerering för {niche.audienceTitle}
               </div>
               <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl tracking-tightest leading-[1.02] mb-6">
-                Bli den enda <span className="italic-accent">{niche.nameSingular}</span> i din stad som syns när kunderna söker.
+                Leadsgenerering för {nameLower}: <span className="italic-accent">exklusiva förfrågningar</span> i din stad.
               </h1>
               <p className="text-ink-soft text-lg md:text-xl max-w-2xl mb-8">
-                Local Rocket driver trafik från Google och Meta till en optimerad sajt i din nisch. Du får kvalificerade förfrågningar för {niche.service}, levererade direkt till mejl eller telefon.
+                Bli {niche.nameSingularDef} som syns när kunderna i din stad söker.
+                Local Rocket driver trafik via Google Ads, Meta Ads och SEO till en optimerad
+                sajt i din nisch, och du får kvalificerade förfrågningar för {niche.service} direkt
+                till mejl eller telefon.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg" className="rounded-full">
@@ -111,8 +115,59 @@ const NicheLanding = () => {
           </div>
         </section>
 
-        {/* BENEFITS */}
+        {/* KANALER / UNDERTJÄNSTER */}
         <section className="py-20 md:py-28">
+          <div className="container mx-auto px-4 max-w-container">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <div className="eyebrow mb-5">Det här ingår</div>
+              <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05]">
+                Tre kanaler, <span className="italic-accent">ett paket</span>.
+              </h2>
+              <p className="text-ink-soft text-lg mt-6">
+                Din leadsgenerering drivs av Google Ads, Meta Ads och SEO tillsammans.
+                Allt ingår i månadspriset och sköts av oss.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-background-elevated rounded-[20px] p-7 border border-border/60" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
+                <div className="w-11 h-11 rounded-xl bg-primary-soft flex items-center justify-center mb-5">
+                  <Megaphone className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-serif text-2xl mb-3 leading-tight">Google Ads</h3>
+                <p className="text-ink-soft">
+                  Annonser på sökningar som "{niche.searchPhrases[0]}" fångar kunder med
+                  köpintention samma dag som kampanjen lanseras. Annonsbudget ingår.
+                </p>
+              </div>
+              <div className="bg-background-elevated rounded-[20px] p-7 border border-border/60" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
+                <div className="w-11 h-11 rounded-xl bg-primary-soft flex items-center justify-center mb-5">
+                  <Share2 className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-serif text-2xl mb-3 leading-tight">Meta Ads</h3>
+                <p className="text-ink-soft">
+                  Riktade kampanjer på Facebook och Instagram når kunder i ditt område
+                  innan de ens börjat googla. Även här ingår budgeten.
+                </p>
+              </div>
+              <div className="bg-background-elevated rounded-[20px] p-7 border border-border/60" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
+                <div className="w-11 h-11 rounded-xl bg-primary-soft flex items-center justify-center mb-5">
+                  <Search className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-serif text-2xl mb-3 leading-tight">SEO</h3>
+                <p className="text-ink-soft mb-3">
+                  Nischsajten är sökoptimerad och byggs ut löpande, så att den organiska
+                  synligheten växer månad för månad.
+                </p>
+                <Link to={`/seo/${niche.slug}`} className="text-primary underline underline-offset-4 hover:no-underline text-sm">
+                  Läs mer om SEO för {nameLower}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* BENEFITS */}
+        <section className="py-20 md:py-28 bg-warm">
           <div className="container mx-auto px-4 max-w-container">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <div className="eyebrow mb-5">Varför {niche.audienceTitle} väljer oss</div>
@@ -138,7 +193,7 @@ const NicheLanding = () => {
         </section>
 
         {/* HOW IT WORKS */}
-        <section className="py-20 md:py-28 bg-warm">
+        <section className="py-20 md:py-28">
           <div className="container mx-auto px-4 max-w-container">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <div className="eyebrow mb-5">Så fungerar det</div>
@@ -203,7 +258,7 @@ const NicheLanding = () => {
             <p className="text-center text-ink-soft mt-10">
               Vill du hellre läsa om hur vi jobbar med synlighet i Google?{" "}
               <Link to={`/seo/${niche.slug}`} className="text-primary underline underline-offset-4 hover:no-underline">
-                SEO för {niche.audienceTitle}
+                SEO för {nameLower}
               </Link>
             </p>
           </div>
