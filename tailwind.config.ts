@@ -27,9 +27,6 @@ export default {
         eyebrow: "0.14em",
         tightest: "-0.035em",
       },
-      borderRadius: {
-        pill: "9999px",
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -76,6 +73,7 @@ export default {
         },
       },
       borderRadius: {
+        pill: "9999px",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",

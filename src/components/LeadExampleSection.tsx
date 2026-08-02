@@ -30,7 +30,7 @@ const LeadExampleSection = () => {
               och bara din.
             </p>
             <Button variant="hero" size="lg" asChild>
-              <a href="/#pricing">
+              <a href="/priser">
                 Se priser <ArrowRight className="h-4 w-4" />
               </a>
             </Button>

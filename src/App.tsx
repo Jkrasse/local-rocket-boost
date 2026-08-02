@@ -8,6 +8,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index.tsx";
 import HowItWorksPage from "./pages/HowItWorksPage.tsx";
 import SeoNiche from "./pages/SeoNiche.tsx";
+import PricingPage from "./pages/PricingPage.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import TermsOfService from "./pages/TermsOfService.tsx";
 import CookiePolicy from "./pages/CookiePolicy.tsx";
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/leadsgenerering/:slug" element={<NicheLanding />} />
             <Route path="/seo/:slug" element={<SeoNiche />} />
             <Route path="/sa-fungerar-det" element={<HowItWorksPage />} />
+            <Route path="/priser" element={<PricingPage />} />
             <Route path="/integritetspolicy" element={<PrivacyPolicy />} />
             <Route path="/villkor" element={<TermsOfService />} />
             <Route path="/cookies" element={<CookiePolicy />} />

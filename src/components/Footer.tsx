@@ -10,9 +10,9 @@ const Footer = () => {
     {
       title: "Produkt",
       links: [
-        { label: "Så funkar det", to: "/sa-fungerar-det" },
+        { label: "Så fungerar det", to: "/sa-fungerar-det" },
         { label: "Branscher", to: "/#industries" },
-        { label: "Priser", to: "/#pricing" },
+        { label: "Priser", to: "/priser" },
         { label: "FAQ", to: "/#faq" },
         { label: "Kontakt", to: "/#contact" },
       ],

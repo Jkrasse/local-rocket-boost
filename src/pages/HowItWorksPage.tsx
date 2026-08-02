@@ -88,8 +88,8 @@ const HowItWorksPage = () => {
                     {step.description}
                   </p>
                   {step.note && (
-                    <div className="bg-warm border border-border/60 rounded-[16px] p-5 text-sm text-ink-soft">
-                      💡 {step.note}
+                    <div className="bg-warm border-l-2 border-primary rounded-r-[12px] p-5 text-sm text-ink-soft">
+                      {step.note}
                     </div>
                   )}
                 </div>
@@ -112,7 +112,7 @@ const HowItWorksPage = () => {
         <div className="container mx-auto px-4 max-w-container">
           <div className="max-w-4xl mx-auto bg-dark-section rounded-[28px] p-10 md:p-16">
             <div className="font-mono text-xs tracking-eyebrow text-background/60 uppercase mb-5">
-              🎁 Bonus
+              Bonus
             </div>
             <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05] mb-6">
               Syns mer, även i <span className="italic-accent">AI och sökmotorer</span>
@@ -136,7 +136,7 @@ const HowItWorksPage = () => {
           <p className="text-ink-soft text-lg mb-10 max-w-xl mx-auto">
             Bli rekommenderad partner i din stad och börja ta emot leads redan idag.
           </p>
-          <Link to="/#pricing">
+          <Link to="/priser">
             <Button variant="hero" size="lg">
               Se priser & kom igång <ArrowRight className="h-4 w-4" />
             </Button>

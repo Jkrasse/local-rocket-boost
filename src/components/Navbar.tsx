@@ -9,10 +9,9 @@ const APP_URL = "https://app.localrocket.se";
 const nicheList = Object.values(niches);
 
 const navLinks = [
-  { label: "Så funkar det", href: "/sa-fungerar-det", internal: true },
-  { label: "Priser", href: "/#pricing" },
+  { label: "Så fungerar det", href: "/sa-fungerar-det", internal: true },
+  { label: "Priser", href: "/priser", internal: true },
   { label: "Om oss", href: "/#about" },
-  { label: "FAQ", href: "/#faq" },
 ];
 
 const linkStyle =
@@ -81,7 +80,7 @@ const Navbar = () => {
         {/* Desktop-länkar */}
         <div className="hidden lg:flex items-center gap-8">
           <Link to="/sa-fungerar-det" className={linkStyle}>
-            Så funkar det
+            Så fungerar det
           </Link>
 
           {/* Branscher-dropdown */}
@@ -130,11 +129,17 @@ const Navbar = () => {
             )}
           </div>
 
-          {navLinks.slice(1).map((link) => (
-            <a key={link.href} href={link.href} className={linkStyle}>
-              {link.label}
-            </a>
-          ))}
+          {navLinks.slice(1).map((link) =>
+            link.internal ? (
+              <Link key={link.href} to={link.href} className={linkStyle}>
+                {link.label}
+              </Link>
+            ) : (
+              <a key={link.href} href={link.href} className={linkStyle}>
+                {link.label}
+              </a>
+            ),
+          )}
         </div>
 
         {/* Desktop-knappar */}
@@ -180,51 +185,37 @@ const Navbar = () => {
       {/* Mobilmeny */}
       {mobileOpen && (
         <div className="lg:hidden absolute top-full inset-x-0 h-[calc(100dvh-4rem)] bg-background overflow-y-auto">
-          <div className="container mx-auto px-4 py-8 flex flex-col min-h-full">
-            <div className="eyebrow mb-4 animate-fade-in-up">Meny</div>
-            <div className="flex flex-col gap-1 mb-8">
-              {[{ label: "Så funkar det", href: "/sa-fungerar-det", internal: true }, ...navLinks.slice(1)].map(
-                (link, i) => (
-                  <div key={link.href} className="animate-fade-in-up" style={{ animationDelay: `${0.05 * (i + 1)}s` }}>
-                    {link.internal ? (
-                      <Link
-                        to={link.href}
-                        onClick={() => setMobileOpen(false)}
-                        className="block font-serif text-3xl py-2.5 border-b border-border/40"
-                      >
-                        {link.label}
-                      </Link>
-                    ) : (
-                      <a
-                        href={link.href}
-                        onClick={() => setMobileOpen(false)}
-                        className="block font-serif text-3xl py-2.5 border-b border-border/40"
-                      >
-                        {link.label}
-                      </a>
-                    )}
-                  </div>
-                ),
-              )}
-            </div>
-
-            <div className="eyebrow mb-3 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-              Branscher
-            </div>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1 mb-10 animate-fade-in-up" style={{ animationDelay: "0.35s" }}>
-              {nicheList.map((n) => (
-                <Link
-                  key={n.slug}
-                  to={`/leadsgenerering/${n.slug}`}
-                  onClick={() => setMobileOpen(false)}
-                  className="py-2 text-ink-soft hover:text-foreground transition-colors"
-                >
-                  {n.name}
-                </Link>
+          <div className="container mx-auto px-4 py-10 flex flex-col min-h-full">
+            <nav className="flex flex-col" aria-label="Mobilmeny">
+              {[
+                { label: "Så fungerar det", href: "/sa-fungerar-det", internal: true },
+                { label: "Branscher", href: "/#industries", internal: false },
+                { label: "Priser", href: "/priser", internal: true },
+                { label: "Om oss", href: "/#about", internal: false },
+              ].map((link, i) => (
+                <div key={link.href} className="animate-fade-in-up" style={{ animationDelay: `${0.05 * i}s` }}>
+                  {link.internal ? (
+                    <Link
+                      to={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block font-serif text-[32px] leading-none py-5 border-b border-border/40"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block font-serif text-[32px] leading-none py-5 border-b border-border/40"
+                    >
+                      {link.label}
+                    </a>
+                  )}
+                </div>
               ))}
-            </div>
+            </nav>
 
-            <div className="mt-auto flex flex-col gap-3 pb-8 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+            <div className="mt-auto flex flex-col gap-3 pb-10 pt-12 animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
               {user ? (
                 <>
                   <Button variant="hero" size="lg" asChild className="w-full">
