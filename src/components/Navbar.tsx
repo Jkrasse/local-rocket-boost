@@ -158,7 +158,7 @@ const Navbar = () => {
                 <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <Button variant="hero" asChild>
-                <a href={APP_URL}>
+                <a href={`${APP_URL}/registrera`}>
                   Registrera <ArrowRight className="h-4 w-4" />
                 </a>
               </Button>
@@ -239,7 +239,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <Button variant="hero" size="lg" asChild className="w-full">
-                    <a href={APP_URL}>
+                    <a href={`${APP_URL}/registrera`}>
                       Registrera <ArrowRight className="h-4 w-4" />
                     </a>
                   </Button>
