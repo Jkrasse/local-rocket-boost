@@ -1,382 +1,316 @@
-import { useEffect, useMemo, useState } from "react";
-import { Crown, Check, Award, Quote, ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Phone, Mail, Globe, MapPin, ShieldCheck, BadgeCheck, Star, ChevronDown } from "lucide-react";
 
-type Niche = {
+/* Mockup av en Local Rocket-nischsajt (samma stil som tandläkarkollen.nu m.fl.) */
+
+type Review = { name: string; initial: string; color: string; date: string; text: string };
+
+type Site = {
+  key: string;
   domain: string;
-  domainShort: string;
   brand: string;
-  initial: string;
-  category: string;
+  category: string; // "städfirman"
+  categoryPlural: string; // "Städfirmor" (nav)
   city: string;
+  cta: string; // "Boka tid" / "Få gratis offert"
   intro: string;
-  introShort: string;
+  rating: string;
+  ratingCount: string;
+  totalReviews: string;
   description: string;
-  address: string;
-  reviews: string;
+  reviews: Review[];
 };
 
-const PARTNER_NAME = "Ditt Företag AB";
-const PARTNER_PHONE = "070-123 45 67";
+const PARTNER = "Ditt Företag AB";
 
-const NICHES: Niche[] = [
+const SITES: Site[] = [
   {
+    key: "Städfirmor",
     domain: "städfirmor.nu",
-    domainShort: "Städfirmor.nu",
-    brand: "Städfirmor",
-    initial: "S",
+    brand: "Städfirmor.nu",
     category: "städfirman",
+    categoryPlural: "Städfirmor",
     city: "Stockholm",
-    intro:
-      "Letar du efter en pålitlig städfirma? Vi hjälper dig hitta kvalitetsgranskade städföretag, från hemstäd till kontorsstäd.",
-    introShort:
-      "Pålitliga, kvalitetsgranskade städföretag. Hem, flytt och kontor.",
-    description:
-      "Här visas din beskrivning: vad ni gör, vad ni är bäst på och varför kunderna i Stockholm ska välja er.",
-    address: "Din adress, Stockholm",
-    reviews: "3 564",
+    cta: "Få gratis offert",
+    intro: "Letar du efter den bästa städfirman i Stockholm? Vi har granskat 20 städfirmor i Stockholm och rekommenderar Ditt Företag AB, med betyget 4,8 av 5 från 190 kunder.",
+    rating: "4,8",
+    ratingCount: "190",
+    totalReviews: "3 564",
+    description: "Här visas din beskrivning: vad ni gör, vad ni är bäst på och varför kunderna i Stockholm ska välja er.",
+    reviews: [
+      { name: "Anna E.", initial: "A", color: "#4C8BD9", date: "juni 2026", text: "Supersnabb service och trevlig personal. Lägenheten var skinande ren efter flyttstädningen." },
+      { name: "Johan S.", initial: "J", color: "#2E9E6B", date: "maj 2026", text: "Punktliga, noggranna och rimligt pris. Vi använder dem varannan vecka nu." },
+    ],
   },
   {
-    domain: "bästatandläkaren.se",
-    domainShort: "Bästatandläkaren.se",
-    brand: "Tandläkare",
-    initial: "T",
-    category: "tandläkaren",
+    key: "Tandläkare",
+    domain: "tandläkarkollen.nu",
+    brand: "Tandläkarkollen.nu",
+    category: "tandläkarkliniken",
+    categoryPlural: "Tandläkarkliniker",
     city: "Göteborg",
-    intro:
-      "Söker du en tandläkare i Göteborg? Vi listar de mest betrodda klinikerna med modern utrustning och hög patientnöjdhet.",
-    introShort:
-      "Trygga tandläkare i Göteborg. Moderna kliniker, goda omdömen.",
-    description:
-      "Här visas din beskrivning: er klinik, era behandlingar och varför patienterna i Göteborg ska boka hos er.",
-    address: "Din adress, Göteborg",
-    reviews: "2 187",
+    cta: "Boka tid",
+    intro: "Letar du efter den bästa tandläkarkliniken i Göteborg? Vi har granskat 20 tandläkarkliniker i Göteborg och rekommenderar Ditt Företag AB, med betyget 4,8 av 5 från 190 kunder.",
+    rating: "4,8",
+    ratingCount: "190",
+    totalReviews: "3 602",
+    description: "Här visas din beskrivning: er klinik, era behandlingar och varför patienterna i Göteborg ska boka hos er.",
+    reviews: [
+      { name: "Nina H.", initial: "N", color: "#4C8BD9", date: "juni 2026", text: "Supersnabb service och trevlig tandläkare. Kände mig trygg genom hela besöket." },
+      { name: "Maria L.", initial: "M", color: "#C24B7A", date: "juni 2026", text: "Vänligt bemötande och snabb hjälp trots semestertider. Rekommenderas varmt." },
+    ],
   },
   {
+    key: "Bilhandlare",
     domain: "bilhandlare.nu",
-    domainShort: "Bilhandlare.nu",
-    brand: "Bilhandlare",
-    initial: "B",
+    brand: "Bilhandlare.nu",
     category: "bilhandlaren",
-    city: "Umeå",
-    intro:
-      "Letar du efter en pålitlig bilhandlare i Umeå? Vi listar auktoriserade aktörer med transparenta priser och garanti.",
-    introShort:
-      "Auktoriserade bilhandlare i Umeå. Transparenta priser, garanti.",
-    description:
-      "Här visas din beskrivning: ert utbud, era garantier och varför bilköparna i Umeå ska välja er.",
-    address: "Din adress, Umeå",
-    reviews: "942",
+    categoryPlural: "Bilhandlare",
+    city: "Uppsala",
+    cta: "Få gratis offert",
+    intro: "Letar du efter den bästa bilhandlaren i Uppsala? Vi har granskat 20 bilhandlare i Uppsala och rekommenderar Ditt Företag AB, med betyget 4,8 av 5 från 190 kunder.",
+    rating: "4,8",
+    ratingCount: "190",
+    totalReviews: "1 402",
+    description: "Här visas din beskrivning: ert utbud, era garantier och varför bilköparna i Uppsala ska välja er.",
+    reviews: [
+      { name: "Erik P.", initial: "E", color: "#2E9E6B", date: "maj 2026", text: "Ärlig affär utan påtryckningar. Bilen var precis som beskriven och garantin gav trygghet." },
+      { name: "Sara K.", initial: "S", color: "#D9822B", date: "april 2026", text: "Fick bra betalt för inbytet och hela processen tog under en timme." },
+    ],
   },
   {
+    key: "Takläggare",
     domain: "bästatakläggaren.se",
-    domainShort: "Bästatakläggaren.se",
-    brand: "Takläggare",
-    initial: "T",
+    brand: "Bästatakläggaren.se",
     category: "takläggaren",
+    categoryPlural: "Takläggare",
     city: "Malmö",
-    intro:
-      "Behöver du lägga om taket? Vi hjälper dig hitta certifierade takläggare i Malmö med försäkring och dokumenterad erfarenhet.",
-    introShort:
-      "Certifierade takläggare i Malmö. Försäkrade och erfarna.",
-    description:
-      "Här visas din beskrivning: era takarbeten, era certifikat och varför husägarna i Malmö ska anlita er.",
-    address: "Din adress, Malmö",
-    reviews: "1 421",
+    cta: "Få gratis offert",
+    intro: "Letar du efter den bästa takläggaren i Malmö? Vi har granskat 20 takläggare i Malmö och rekommenderar Ditt Företag AB, med betyget 4,8 av 5 från 190 kunder.",
+    rating: "4,8",
+    ratingCount: "190",
+    totalReviews: "987",
+    description: "Här visas din beskrivning: era takarbeten, era certifikat och varför husägarna i Malmö ska anlita er.",
+    reviews: [
+      { name: "Lars B.", initial: "L", color: "#4C8BD9", date: "juni 2026", text: "Takbytet gick snabbare än planerat och de städade efter sig varje dag. Mycket nöjd." },
+      { name: "Karin O.", initial: "K", color: "#C24B7A", date: "maj 2026", text: "Tydlig offert, inga överraskningar och ett riktigt fint resultat." },
+    ],
   },
 ];
 
-/* ---------- Typewriter ---------- */
-const useTypewriter = (text: string, speed = 35) => {
-  const [out, setOut] = useState("");
-  useEffect(() => {
-    setOut("");
-    let i = 0;
-    const id = setInterval(() => {
-      i++;
-      setOut(text.slice(0, i));
-      if (i >= text.length) clearInterval(id);
-    }, speed);
-    return () => clearInterval(id);
-  }, [text, speed]);
-  return out;
-};
+/* Nischsajternas palett (ljus, teal + blå) */
+const T = "#3E9B7A"; // teal CTA
+const BL = "#2E5FB0"; // blå sekundär
+const ST = "#F28C28"; // stjärnor
+const INK = "#111827";
+const MUTE = "#6B7280";
+const GRAY = "#F2F4F5";
+const LINE = "#E5E7EB";
 
-const useNicheRotation = (intervalMs = 6000) => {
+const Stars = ({ size = 9 }: { size?: number }) => (
+  <span className="inline-flex gap-[1px]" style={{ color: ST }}>
+    {[0, 1, 2, 3, 4].map((i) => (
+      <Star key={i} style={{ width: size, height: size }} fill="currentColor" strokeWidth={0} />
+    ))}
+  </span>
+);
+
+const Pill = ({ bg, color, border, children, size }: { bg: string; color: string; border?: string; children: React.ReactNode; size: number }) => (
+  <span
+    className="inline-flex items-center justify-center gap-1 rounded-pill font-semibold whitespace-nowrap"
+    style={{ background: bg, color, border: border ? `1px solid ${border}` : "none", fontSize: size, padding: `${size * 0.55}px ${size * 1.2}px` }}
+  >
+    {children}
+  </span>
+);
+
+const useNicheRotation = (intervalMs = 7000) => {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
-
   useEffect(() => {
     if (paused) return;
-    const id = setInterval(() => setIdx((p) => (p + 1) % NICHES.length), intervalMs);
+    const id = setInterval(() => setIdx((p) => (p + 1) % SITES.length), intervalMs);
     return () => clearInterval(id);
   }, [intervalMs, paused]);
-
-  const select = (i: number) => {
-    setIdx(i);
-    setPaused(true);
-  };
-
-  return { niche: NICHES[idx], idx, select };
+  return { site: SITES[idx], idx, select: (i: number) => { setIdx(i); setPaused(true); } };
 };
 
-/* ---------- Site content ---------- */
-const SiteContent = ({ compact = false, niche }: { compact?: boolean; niche: Niche }) => {
-  const headline = `Bästa ${niche.category} i ${niche.city} 2026`;
-  const typed = useTypewriter(headline, compact ? 28 : 22);
-  const intro = compact ? niche.introShort : niche.intro;
+/* ---------- Sajtinnehåll ---------- */
+const SiteContent = ({ site, compact = false }: { site: Site; compact?: boolean }) => {
+  const fs = compact ? 9 : 10.5;
+  const pad = compact ? "10px 12px" : "14px 24px";
+  const heading = `Bästa ${site.category} i ${site.city} 2026`;
 
   return (
-    <>
-      {/* Site header */}
-      <div className={`flex items-center justify-between border-b border-border ${compact ? "px-3 py-2.5" : "px-6 py-4"}`}>
-        <div className="flex items-center gap-2 min-w-0">
-          <div className={`rounded-md bg-primary flex items-center justify-center text-primary-foreground font-bold shrink-0 ${compact ? "h-5 w-5 text-[10px]" : "h-7 w-7 text-xs"}`}>
-            {niche.initial}
+    <div className="w-full h-full flex flex-col overflow-hidden" style={{ background: "#fff", color: INK, fontFamily: "var(--font-body)", fontSize: fs }}>
+      {/* Sajtens meny */}
+      <div className="flex items-center justify-between border-b" style={{ padding: compact ? "8px 12px" : "10px 24px", borderColor: LINE }}>
+        <div className="flex items-center gap-1.5">
+          <div className="rounded-full grid place-items-center text-white font-bold" style={{ width: compact ? 16 : 20, height: compact ? 16 : 20, background: T, fontSize: fs - 1 }}>
+            {site.brand[0]}
           </div>
-          <span className={`font-semibold truncate ${compact ? "text-xs" : "text-sm"}`}>{niche.domainShort}</span>
+          <b style={{ fontSize: fs + 1.5, letterSpacing: "-.02em" }}>{site.brand}</b>
         </div>
-        {!compact ? (
-          <div className="hidden md:flex items-center gap-5 text-xs text-ink-soft">
-            <span>{niche.brand}</span>
+        {!compact && (
+          <div className="flex items-center gap-3 font-medium" style={{ fontSize: fs - 0.5, color: "#374151" }}>
+            <span>{site.categoryPlural}</span>
             <span>Tjänster</span>
+            <span>Guider</span>
             <span>Om oss</span>
-            <span>FAQ</span>
-            <span className="bg-[#FF5A1F] text-white px-3 py-1.5 rounded-pill text-xs">Få gratis offert →</span>
+            <Pill bg={T} color="#fff" size={fs - 1.5}>{site.cta} →</Pill>
           </div>
-        ) : (
-          <span className="bg-[#FF5A1F] text-white px-2.5 py-1 rounded-pill text-[9px] shrink-0">Offert →</span>
+        )}
+        {compact && <Pill bg={T} color="#fff" size={fs - 1.5}>{site.cta} →</Pill>}
+      </div>
+
+      {/* Hero */}
+      <div style={{ background: GRAY, padding: pad }}>
+        <div style={{ fontSize: fs - 2.5, color: MUTE, marginBottom: 4 }}>Hem › {site.categoryPlural} › {site.city}</div>
+        <div className="font-bold" style={{ fontSize: compact ? 15 : 22, letterSpacing: "-.03em", lineHeight: 1.1, marginBottom: 5 }}>{heading}</div>
+        <p style={{ margin: "0 0 8px", color: "#374151", lineHeight: 1.45, maxWidth: compact ? "100%" : "72%", fontSize: fs - 0.5 }}>{site.intro}</p>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <Pill bg={T} color="#fff" size={fs - 1}>{site.cta} →</Pill>
+          <Pill bg="#fff" color={BL} border={BL} size={fs - 1}><ChevronDown style={{ width: fs - 1, height: fs - 1 }} /> Se vår rekommendation</Pill>
+        </div>
+        {!compact && (
+          <div className="flex gap-4 mt-2.5" style={{ fontSize: fs - 2.5, color: "#4B5563" }}>
+            <span className="inline-flex items-center gap-1"><ShieldCheck style={{ width: 9, height: 9, color: BL }} /> Kostnadsfritt & obindande</span>
+            <span className="inline-flex items-center gap-1"><BadgeCheck style={{ width: 9, height: 9, color: BL }} /> Kvalitetsgranskad partner</span>
+            <span className="inline-flex items-center gap-1"><Star style={{ width: 9, height: 9, color: BL }} /> {site.totalReviews} verifierade omdömen</span>
+          </div>
         )}
       </div>
 
-      {/* Hero band */}
-      <div className={`bg-warm ${compact ? "px-3.5 py-3.5" : "px-6 py-7"}`}>
-        <div className={`font-mono text-ink-mute mb-2 ${compact ? "text-[8px]" : "text-[10px]"}`}>
-          Hem › {niche.brand} › {niche.city}
-        </div>
-        <h3 className={`font-sans font-bold text-foreground leading-[1.15] ${compact ? "text-[15px] mb-1.5" : "text-2xl md:text-3xl mb-2"}`}>
-          {typed}
-          <span className="inline-block w-[2px] h-[0.9em] bg-foreground align-middle ml-0.5 animate-pulse" />
-        </h3>
-        <p className={`text-ink-soft ${compact ? "text-[10px] leading-snug mb-2.5" : "text-sm leading-snug mb-3"}`}>
-          {intro}
-        </p>
-        <div className="flex flex-wrap gap-1.5">
-          <span className={`bg-[#FF5A1F] text-white rounded-pill ${compact ? "text-[9px] px-2.5 py-1" : "text-xs px-4 py-2"}`}>Få gratis offert →</span>
-          <span className={`bg-background border border-border rounded-pill text-ink-soft ${compact ? "text-[9px] px-2.5 py-1" : "text-xs px-4 py-2"}`}>
-            ★ {niche.reviews} omdömen
+      {/* Rekommenderad partner */}
+      <div style={{ padding: compact ? "10px 12px 0" : "12px 24px 0" }}>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="inline-flex items-center gap-1 font-bold uppercase" style={{ fontSize: fs - 2.5, letterSpacing: ".1em", color: T }}>
+            <BadgeCheck style={{ width: 9, height: 9 }} /> Vår rekommenderade partner
           </span>
+          {!compact && <span style={{ fontSize: fs - 3, color: MUTE }}>Senast granskad 24 juli 2026</span>}
+        </div>
+        <div className="rounded-[8px] bg-white" style={{ border: `1px solid ${LINE}`, borderTop: `3px solid ${T}`, padding: compact ? 10 : 12, boxShadow: "0 1px 3px rgba(0,0,0,.05)" }}>
+          <div className={compact ? "" : "flex gap-4 items-start"}>
+            <div className="flex-1 min-w-0">
+              <Pill bg={T} color="#fff" size={fs - 2.5}><BadgeCheck style={{ width: 8, height: 8 }} /> Rekommenderad partner</Pill>
+              <div className="font-bold" style={{ fontSize: compact ? 13 : 15, letterSpacing: "-.02em", marginTop: 5 }}>{PARTNER}</div>
+              <div className="flex items-center gap-1.5" style={{ marginTop: 2 }}>
+                <Stars size={compact ? 8 : 10} />
+                <b style={{ fontSize: fs - 0.5 }}>{site.rating}</b>
+                <span style={{ color: MUTE, fontSize: fs - 2 }}>({site.ratingCount} omdömen)</span>
+              </div>
+              <p style={{ margin: "5px 0 0", color: "#374151", lineHeight: 1.45, fontSize: fs - 1 }}>{site.description}</p>
+              <div className="flex flex-wrap gap-3" style={{ marginTop: 6, fontSize: fs - 2.5, color: MUTE }}>
+                <span className="inline-flex items-center gap-1"><MapPin style={{ width: 8, height: 8 }} /> Din adress, {site.city}</span>
+                <span className="inline-flex items-center gap-1"><Phone style={{ width: 8, height: 8 }} /> 070-123 45 67</span>
+              </div>
+            </div>
+            <div className={compact ? "grid grid-cols-3 gap-1.5 mt-2.5" : "flex flex-col gap-1.5 shrink-0"} style={{ minWidth: compact ? 0 : 118 }}>
+              <Pill bg={T} color="#fff" size={fs - 1.5}><Phone style={{ width: 8, height: 8 }} /> Ring nu</Pill>
+              <Pill bg={BL} color="#fff" size={fs - 1.5}><Mail style={{ width: 8, height: 8 }} /> Mejla</Pill>
+              <Pill bg={GRAY} color={INK} size={fs - 1.5}><Globe style={{ width: 8, height: 8 }} /> {compact ? "Webb" : "Besök webbplats"}</Pill>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Recommended partner */}
-      <div className={compact ? "px-3.5 pt-3 pb-3" : "px-6 py-6"}>
-        <div className={`flex items-center gap-1.5 mb-2 text-[#FF5A1F] font-mono tracking-eyebrow uppercase ${compact ? "text-[8px]" : "text-[10px] mb-3"}`}>
-          <Crown className={compact ? "h-2.5 w-2.5" : "h-3 w-3"} /> Vår rekommenderade partner
-        </div>
-        <div className={`border-2 border-[#FF5A1F]/60 rounded-[12px] ${compact ? "p-2.5" : "p-4 flex flex-col md:flex-row gap-4 items-start"}`}>
-          {compact ? (
-            <>
-              <div className="flex gap-2.5">
-                <div className="rounded-md border-2 border-dashed border-border flex items-center justify-center font-mono text-[8px] text-ink-mute shrink-0 h-14 w-14 text-center leading-tight">
-                  DIN<br />LOGO
+      {/* Omdömen */}
+      <div className="flex-1 min-h-0" style={{ padding: compact ? "8px 12px 10px" : "10px 24px 14px" }}>
+        <div className="rounded-[8px] bg-white h-full overflow-hidden" style={{ border: `1px solid ${LINE}`, padding: compact ? "8px 10px" : "10px 14px" }}>
+          <div className="font-semibold" style={{ fontSize: fs, marginBottom: 6 }}>Vad säger användare om {PARTNER}?</div>
+          <div className="flex flex-col" style={{ gap: compact ? 6 : 8 }}>
+            {site.reviews.map((r) => (
+              <div key={r.name} className="flex gap-2">
+                <div className="rounded-full grid place-items-center text-white font-semibold shrink-0" style={{ width: compact ? 16 : 20, height: compact ? 16 : 20, background: r.color, fontSize: fs - 2 }}>
+                  {r.initial}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap gap-1 mb-1">
-                    <span className="bg-[#FF5A1F]/10 text-[#FF5A1F] rounded text-[8px] px-1.5 py-0.5 font-medium">♦ Rekommenderad</span>
-                    <span className="bg-primary-soft text-primary rounded text-[8px] px-1.5 py-0.5 font-medium flex items-center gap-0.5">
-                      <Check className="h-2 w-2" /> Verifierad
-                    </span>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <b style={{ fontSize: fs - 1 }}>{r.name}</b>
+                    <span style={{ fontSize: fs - 3, color: MUTE }}>· {r.date}</span>
                   </div>
-                  <h4 className="font-sans font-bold text-[13px] leading-tight truncate">{PARTNER_NAME}</h4>
-                  <div className="text-ink-soft text-[9px]">
-                    ★★★★☆ <span className="font-semibold text-foreground">4.3</span> (611)
-                  </div>
+                  <Stars size={compact ? 7 : 8} />
+                  <p style={{ margin: "2px 0 0", color: "#374151", lineHeight: 1.4, fontSize: fs - 1.5 }}>"{r.text}"</p>
                 </div>
               </div>
-              <div className="mt-2.5 pt-2.5 border-t border-border/60 flex flex-wrap gap-x-3 gap-y-1 text-[9px] text-ink-soft">
-                <span>📞 {PARTNER_PHONE}</span>
-                <span>📍 {niche.address}</span>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="rounded-md border-2 border-dashed border-border flex items-center justify-center font-mono text-[10px] text-ink-mute shrink-0 h-20 w-24 text-center leading-tight">
-                DIN<br />LOGO
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap gap-1 mb-1.5">
-                  <span className="bg-[#FF5A1F]/10 text-[#FF5A1F] rounded-md text-[10px] px-2 py-1 font-medium">♦ Rekommenderad</span>
-                  <span className="bg-primary-soft text-primary rounded-md text-[10px] px-2 py-1 font-medium flex items-center gap-1">
-                    <Check className="h-2.5 w-2.5" /> Verifierad
-                  </span>
-                </div>
-                <h4 className="font-sans font-bold text-lg mb-1">{PARTNER_NAME}</h4>
-                <div className="text-ink-soft text-xs mb-2">
-                  ★★★★☆ <span className="font-semibold text-foreground">4.3</span> (611)
-                </div>
-                <p className="text-xs text-ink-soft mb-2">{niche.description}</p>
-                <div className="flex flex-wrap gap-4 text-[11px] text-ink-soft">
-                  <span>📞 {PARTNER_PHONE}</span>
-                  <span>📍 {niche.address}</span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 w-full md:w-auto shrink-0">
-                <span className="bg-[#FF5A1F] text-white text-xs px-4 py-2 rounded-pill text-center">→ Få offert</span>
-                <span className="bg-primary text-primary-foreground text-xs px-4 py-2 rounded-pill text-center">📞 Ring nu</span>
-                <span className="bg-background border border-border text-xs px-4 py-2 rounded-pill text-center text-ink-soft">🌐 Webbplats</span>
-              </div>
-            </>
-          )}
+            ))}
+          </div>
         </div>
-
-        {compact && (
-          <div className="grid grid-cols-3 gap-1.5 mt-2">
-            <span className="bg-[#FF5A1F] text-white text-[9px] px-1 py-1.5 rounded-pill text-center">Få offert</span>
-            <span className="bg-primary text-primary-foreground text-[9px] px-1 py-1.5 rounded-pill text-center">📞 Ring</span>
-            <span className="bg-background border border-border text-[9px] px-1 py-1.5 rounded-pill text-center text-ink-soft">🌐 Webb</span>
-          </div>
-        )}
-      </div>
-
-      {/* Compact-only: FAQ-stil + footer */}
-      {compact && (
-        <>
-          <div className="px-3.5 pb-3 space-y-1.5">
-            <div className="flex items-center justify-between gap-2 p-2 rounded-md border border-border/60 bg-background-elevated" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
-              <div className="flex items-center gap-1.5 min-w-0">
-                <Award className="h-3 w-3 text-[#FF5A1F] shrink-0" />
-                <span className="text-[9px] font-medium truncate">
-                  Varför är {PARTNER_NAME} bäst i {niche.city}?
-                </span>
-              </div>
-              <ChevronDown className="h-3 w-3 text-ink-mute shrink-0" />
-            </div>
-            <div className="flex items-center justify-between gap-2 p-2 rounded-md border border-border/60 bg-background-elevated" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
-              <div className="flex items-center gap-1.5 min-w-0">
-                <Quote className="h-3 w-3 text-ink-mute shrink-0" />
-                <span className="text-[9px] font-medium truncate">
-                  Vad säger användare om {PARTNER_NAME}?
-                </span>
-              </div>
-              <ChevronDown className="h-3 w-3 text-ink-mute shrink-0" />
-            </div>
-            <div className="flex items-center justify-between gap-2 p-2 rounded-md border border-border/60 bg-background-elevated" style={{ backgroundColor: "hsl(var(--background-elevated))" }}>
-              <div className="flex items-center gap-1.5 min-w-0">
-                <Check className="h-3 w-3 text-primary shrink-0" />
-                <span className="text-[9px] font-medium truncate">Hur väljer ni rekommenderad partner?</span>
-              </div>
-              <ChevronDown className="h-3 w-3 text-ink-mute shrink-0" />
-            </div>
-          </div>
-
-          <div className="px-3.5 py-2 bg-warm border-t border-border/60 flex items-center justify-around text-[8px] text-ink-soft">
-            <span>✓ Gratis offert</span>
-            <span>✓ Snabb match</span>
-            <span>✓ Trygg partner</span>
-          </div>
-
-          <div className="px-3.5 py-2.5 bg-foreground text-background flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <div className="h-3.5 w-3.5 rounded bg-primary flex items-center justify-center text-primary-foreground text-[7px] font-bold">
-                {niche.initial}
-              </div>
-              <span className="text-[9px] font-semibold">{niche.domainShort}</span>
-            </div>
-            <span className="font-mono text-[7px] text-background/50">© 2026</span>
-          </div>
-        </>
-      )}
-    </>
-  );
-};
-
-const BrowserBar = ({ niche }: { niche: Niche }) => {
-  const url = useMemo(() => `${niche.domain} / ${niche.city.toLowerCase()}`, [niche]);
-  return (
-    <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-warm">
-      <div className="flex gap-1.5">
-        <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
-        <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
-        <span className="h-3 w-3 rounded-full bg-[#28C840]" />
-      </div>
-      <div className="flex-1 ml-4 font-mono text-xs text-ink-soft truncate">{url}</div>
-      <div className="hidden sm:flex items-center gap-1.5 font-mono text-[10px] text-primary">
-        <span className="relative flex h-1.5 w-1.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
-          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-        </span>
-        LIVE
       </div>
     </div>
   );
 };
 
-const NicheTabs = ({ idx, onSelect }: { idx: number; onSelect: (i: number) => void }) => (
-  <div className="flex flex-wrap justify-center gap-2 mb-8 md:mb-10">
-    {NICHES.map((n, i) => (
-      <button
-        key={n.domain}
-        onClick={() => onSelect(i)}
-        className={`px-4 py-2 rounded-pill text-xs md:text-sm transition-all border ${
-          i === idx
-            ? "bg-foreground text-background border-foreground shadow-sm"
-            : "bg-background-elevated text-ink-soft border-border/60 hover:border-foreground/30"
-        }`}
-        style={i !== idx ? { backgroundColor: "hsl(var(--background-elevated))" } : undefined}
-        aria-pressed={i === idx}
-      >
-        {n.brand}
-      </button>
-    ))}
+const BrowserBar = ({ site }: { site: Site }) => (
+  <div className="flex items-center gap-1.5 px-3.5 py-2 border-b" style={{ background: "#EFECE5", borderColor: "#E6E3DC" }}>
+    <div className="flex gap-1">
+      {["#FF5F57", "#FEBC2E", "#28C841"].map((c) => (
+        <span key={c} className="h-2 w-2 rounded-full" style={{ background: c }} />
+      ))}
+    </div>
+    <span className="ml-2.5 text-[9.5px] tracking-[.02em]" style={{ color: "#6B7069" }}>
+      {site.domain} / {site.city.toLowerCase()}
+    </span>
+    <span className="ml-auto text-[8.5px] font-semibold tracking-[.1em] text-primary">● LIVE</span>
   </div>
 );
 
 const DirectoryPreview = () => {
-  const { niche, idx, select } = useNicheRotation(6000);
+  const { site, idx, select } = useNicheRotation(7000);
 
   return (
-    <section className="pb-16 md:pb-28 overflow-hidden">
-      <div className="container mx-auto px-4 max-w-container">
-        <NicheTabs idx={idx} onSelect={select} />
-
-        {/* Mobile: phone frame */}
-        <div className="md:hidden max-w-[300px] mx-auto relative">
-          <div className="absolute inset-x-[-40px] top-10 bottom-10 rounded-full bg-primary-soft/50 blur-3xl pointer-events-none" />
-          <div className="relative bg-foreground rounded-[44px] p-[10px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)] ring-1 ring-foreground/40">
-            <span className="absolute left-[-2px] top-[110px] h-8 w-[3px] rounded-l-sm bg-foreground/80" />
-            <span className="absolute left-[-2px] top-[160px] h-12 w-[3px] rounded-l-sm bg-foreground/80" />
-            <span className="absolute left-[-2px] top-[220px] h-12 w-[3px] rounded-l-sm bg-foreground/80" />
-            <span className="absolute right-[-2px] top-[140px] h-16 w-[3px] rounded-r-sm bg-foreground/80" />
-
-            <div className="relative bg-background rounded-[36px] overflow-hidden">
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 h-[26px] w-[90px] bg-foreground rounded-full z-20" />
-              <div className="h-9" />
-              <div key={niche.domain} className="overflow-hidden pb-4 animate-fade-in">
-                <SiteContent compact niche={niche} />
-              </div>
-              <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 h-1 w-24 bg-foreground/30 rounded-full z-20" />
-            </div>
-          </div>
+    <section className="pb-16 md:pb-24 overflow-hidden">
+      <div className="container mx-auto px-5 md:px-8 max-w-container">
+        <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-2 mb-9">
+          {SITES.map((s, i) => (
+            <button
+              key={s.key}
+              onClick={() => select(i)}
+              aria-pressed={i === idx}
+              className={`px-[18px] py-2.5 rounded-pill border text-sm font-medium transition-all duration-150 ${
+                i === idx
+                  ? "bg-foreground text-white border-foreground"
+                  : "bg-background-elevated text-ink-soft border-line hover:border-ink-soft hover:text-foreground"
+              }`}
+            >
+              {s.key}
+            </button>
+          ))}
         </div>
 
-        {/* Desktop: laptop frame */}
-        <div className="hidden md:block max-w-5xl mx-auto">
-          <div className="relative">
-            <div className="absolute inset-x-8 top-16 bottom-0 rounded-full bg-primary-soft/60 blur-3xl pointer-events-none" />
-            <div className="relative bg-foreground rounded-t-[20px] p-3 shadow-2xl">
-              <div className="bg-background rounded-[12px] overflow-hidden">
-                <BrowserBar niche={niche} />
-                <div key={niche.domain} className="animate-fade-in">
-                  <SiteContent niche={niche} />
+        {/* Mobil: telefonram */}
+        <div className="md:hidden max-w-[320px] mx-auto">
+          <div className="relative rounded-[44px] p-[10px] shadow-float" style={{ background: "#151D17" }}>
+            <div className="relative bg-white rounded-[36px] overflow-hidden" style={{ aspectRatio: "9 / 18" }}>
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 h-[24px] w-[88px] rounded-full z-20" style={{ background: "#151D17" }} />
+              <div className="absolute inset-0 pt-9">
+                <div key={site.key} className="h-full animate-fade-in">
+                  <SiteContent site={site} compact />
                 </div>
               </div>
             </div>
-            <div className="relative h-3 bg-foreground/90 rounded-b-[6px] mx-[-12px]" />
-            <div className="relative h-1.5 bg-foreground/60 rounded-b-[20px] mx-[-24px]" />
           </div>
         </div>
 
-        <p className="text-center font-mono text-[11px] md:text-xs tracking-eyebrow text-ink-mute uppercase mt-8 md:mt-10 px-4">
+        {/* Desktop: laptopram */}
+        <div className="hidden md:block relative max-w-[1000px] mx-auto w-full">
+          <div className="rounded-[18px_18px_6px_6px] p-[14px_14px_18px] shadow-float" style={{ background: "#151D17" }}>
+            <div className="bg-white rounded-lg overflow-hidden flex flex-col" style={{ aspectRatio: "16 / 9.6" }}>
+              <BrowserBar site={site} />
+              <div key={site.key} className="flex-1 min-h-0 animate-fade-in">
+                <SiteContent site={site} />
+              </div>
+            </div>
+          </div>
+          <div
+            className="relative h-3.5 rounded-b-2xl mx-[-28px]"
+            style={{ background: "linear-gradient(180deg,#2a3129,#151D17 70%,#0b0f0c)" }}
+          >
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[100px] h-[5px] rounded-b-lg" style={{ background: "#0b0f0c" }} />
+          </div>
+        </div>
+
+        <p className="eyebrow text-center mt-10">
           Så ser det ut när ditt företag listas som rekommenderad partner
         </p>
       </div>

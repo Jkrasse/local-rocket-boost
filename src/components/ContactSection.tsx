@@ -1,85 +1,132 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
+import { niches } from "@/data/niches";
 
 const CONTACT_EMAIL = "kontakt@localrocket.agency";
+const branscher = [...Object.values(niches).map((n) => n.name), "Annat"];
+const stader = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Västerås", "Annan"];
+
+const fieldClass =
+  "w-full bg-background border border-line rounded-[10px] px-3.5 py-[13px] text-[15px] text-foreground placeholder:text-ink-mute outline-none transition-colors focus:border-primary focus:bg-white";
+
+const Field = ({
+  id,
+  label,
+  type = "text",
+  placeholder,
+  options,
+  required,
+  value,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  type?: string;
+  placeholder?: string;
+  options?: string[];
+  required?: boolean;
+  value: string;
+  onChange: (v: string) => void;
+}) => (
+  <label htmlFor={id} className="flex flex-col gap-2">
+    <span className="eyebrow text-[10px]">{label}</span>
+    {options ? (
+      <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className={fieldClass} required={required}>
+        <option value="" disabled>
+          Välj…
+        </option>
+        {options.map((o) => (
+          <option key={o}>{o}</option>
+        ))}
+      </select>
+    ) : (
+      <input
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        required={required}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={fieldClass}
+      />
+    )}
+  </label>
+);
 
 const ContactSection = () => {
   const [sent, setSent] = useState(false);
-  const [values, setValues] = useState({ name: "", company: "", email: "", phone: "" });
-
-  const handleChange = (id: string, value: string) =>
-    setValues((v) => ({ ...v, [id]: value }));
+  const [v, setV] = useState({ name: "", company: "", email: "", phone: "", bransch: "", stad: "" });
+  const set = (k: keyof typeof v) => (val: string) => setV((s) => ({ ...s, [k]: val }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Demoförfrågan: ${values.company || values.name}`);
+    const subject = encodeURIComponent(`Demoförfrågan: ${v.company || v.name}`);
     const body = encodeURIComponent(
-      `Namn: ${values.name}\nFöretag: ${values.company}\nE-post: ${values.email}\nTelefon: ${values.phone}\n\nJag vill boka en demo av Local Rocket.`,
+      `Namn: ${v.name}\nFöretag: ${v.company}\nE-post: ${v.email}\nTelefon: ${v.phone}\nBransch: ${v.bransch}\nStad: ${v.stad}\n\nJag vill boka en demo av Local Rocket.`,
     );
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setSent(true);
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-dark-section">
-      <div className="container mx-auto px-4 max-w-container">
-        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+    <section id="contact" className="section">
+      <div className="container mx-auto px-5 md:px-8 max-w-container">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-20 items-start">
           <div>
-            <div className="font-mono text-xs tracking-eyebrow text-background/60 uppercase mb-5">Kom igång</div>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
-              Boka en <span className="italic-accent">30-min demo</span>
+            <div className="eyebrow mb-5">Kom igång</div>
+            <h2 className="font-serif text-[clamp(40px,5vw,68px)] tracking-[-0.03em] leading-[1.02] mb-6">
+              Boka en <span className="italic-accent">30-minuters demo</span>
             </h2>
-            <p className="text-lg text-background/80 leading-relaxed mb-10">
-              Vi visar sajten i din bransch, hur annonserna ser ut och om din stad
-              fortfarande är ledig. Inga säljmanus och inget krav på avtal.
+            <p className="text-lg text-ink-soft leading-[1.6] mb-10 max-w-[480px]">
+              Vi visar sajten i din bransch, hur annonserna ser ut och om platsen
+              som rekommenderad partner i din stad fortfarande är ledig. Inga
+              säljmanus och inget krav på avtal.
             </p>
-
-            <div className="space-y-5 font-mono text-sm">
+            <div className="flex flex-col">
               {[
-                ["Digital demo", "Cirka 30 minuter"],
+                ["E-post", CONTACT_EMAIL],
+                ["Demo", "Cirka 30 minuter, digitalt"],
                 ["Du får se", "Sajt, annonser och ledig plats i din stad"],
-                ["Kontakta oss direkt", CONTACT_EMAIL],
-              ].map(([k, v]) => (
-                <div key={k} className="flex justify-between gap-6 pb-4 border-b border-background/10">
-                  <span className="uppercase tracking-eyebrow text-background/60 text-xs">{k}</span>
-                  <span className="text-background text-right">{v}</span>
+              ].map(([k, val]) => (
+                <div key={k} className="flex justify-between gap-6 py-4 border-t border-line">
+                  <span className="eyebrow shrink-0">{k}</span>
+                  <span className="text-[15px] font-medium text-right">{val}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-background/5 border border-background/10 rounded-[24px] p-8 space-y-5">
-            {[
-              { id: "name", label: "Namn", type: "text", required: true },
-              { id: "company", label: "Företag", type: "text", required: true },
-              { id: "email", label: "E-post", type: "email", required: true },
-              { id: "phone", label: "Telefon", type: "tel", required: false },
-            ].map((f) => (
-              <div key={f.id}>
-                <label htmlFor={f.id} className="block font-mono text-[11px] tracking-eyebrow uppercase text-background/60 mb-2">
-                  {f.label}
-                </label>
-                <input
-                  id={f.id}
-                  type={f.type}
-                  required={f.required}
-                  value={values[f.id as keyof typeof values]}
-                  onChange={(e) => handleChange(f.id, e.target.value)}
-                  className="w-full bg-background/5 border border-background/15 rounded-md px-4 py-3 text-background placeholder:text-background/40 focus:outline-none focus:border-primary transition-colors"
-                />
+          <div className="bg-background-elevated border border-line rounded-xl p-6 md:p-10">
+            {sent ? (
+              <div className="text-center py-10">
+                <div className="w-14 h-14 rounded-full bg-primary text-white grid place-items-center mx-auto mb-5">
+                  <Check className="w-6 h-6" strokeWidth={2} />
+                </div>
+                <h3 className="font-serif text-[30px] mb-2.5">Tack!</h3>
+                <p className="text-ink-soft">
+                  Ditt mejlprogram öppnas med förfrågan ifylld. Går det inte, mejla oss
+                  direkt på {CONTACT_EMAIL}. Vi hör av oss inom kort.
+                </p>
               </div>
-            ))}
-            <Button type="submit" variant="hero" size="lg" className="w-full">
-              Boka demo <ArrowRight className="h-4 w-4" />
-            </Button>
-            {sent && (
-              <p className="flex items-center gap-2 text-sm text-background/80">
-                <Check className="h-4 w-4 text-primary" />
-                Ditt mejlprogram öppnas med förfrågan. Går det inte, mejla oss direkt på {CONTACT_EMAIL}.
-              </p>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-[18px]">
+                <Field id="name" label="Namn" placeholder="Anna Andersson" required value={v.name} onChange={set("name")} />
+                <Field id="company" label="Företag" placeholder="Ditt Företag AB" required value={v.company} onChange={set("company")} />
+                <div className="grid sm:grid-cols-2 gap-3.5">
+                  <Field id="email" label="E-post" type="email" placeholder="anna@foretag.se" required value={v.email} onChange={set("email")} />
+                  <Field id="phone" label="Telefon" type="tel" placeholder="070-123 45 67" value={v.phone} onChange={set("phone")} />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-3.5">
+                  <Field id="bransch" label="Bransch" options={branscher} value={v.bransch} onChange={set("bransch")} />
+                  <Field id="stad" label="Stad" options={stader} value={v.stad} onChange={set("stad")} />
+                </div>
+                <Button type="submit" variant="hero" size="lg" className="w-full mt-2">
+                  Boka demo <ArrowRight />
+                </Button>
+              </form>
             )}
-          </form>
+          </div>
         </div>
       </div>
     </section>

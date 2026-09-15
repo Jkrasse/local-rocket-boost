@@ -4,22 +4,18 @@ import { ArrowRight } from "lucide-react";
 
 const steps = [
   {
-    n: "01",
     title: "Du blir rekommenderad partner",
     desc: "Ditt företag listas som rekommenderad partner i din stad på vår etablerade directory-sajt, med logotyp, beskrivning och kontaktvägar. Vi har bara en partner per bransch och stad.",
   },
   {
-    n: "02",
     title: "Vi driver trafiken",
     desc: "Vi kör Google Ads, Meta Ads och SEO mot directory-sajten. All trafik som söker efter din tjänst i ditt område hittar dig först.",
   },
   {
-    n: "03",
     title: "Leads landar hos dig",
     desc: "Varje lead, oavsett om den kommer via formulär, samtal eller e-post, skickas direkt till ditt företag. Du missar aldrig en potentiell kund.",
   },
   {
-    n: "04",
     title: "Rapportering via dashboard",
     desc: "Du får full insyn i din egen dashboard med leads, klick, konverteringar och kostnad per lead. Vi optimerar löpande månad för månad.",
   },
@@ -27,42 +23,39 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section id="how-it-works" className="py-24 md:py-32">
-      <div className="container mx-auto px-4 max-w-container">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="eyebrow mb-5">Så fungerar det</div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-6">
+    <section id="how-it-works" className="section">
+      <div className="container mx-auto px-5 md:px-8 max-w-container">
+        <div className="text-center max-w-[720px] mx-auto mb-16">
+          <div className="eyebrow">Så fungerar det</div>
+          <h2 className="section-h2 mt-[18px] mb-[18px]">
             Fyra steg från <span className="italic-accent">noll</span> till stadigt leadflöde
           </h2>
-          <p className="text-ink-soft text-lg">
+          <p className="text-ink-soft text-lg leading-[1.55]">
             Vi bygger systemet, sköter trafiken och levererar leads direkt till dig. Du fokuserar på att stänga affärer.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5 max-w-5xl mx-auto">
-          {steps.map((step) => (
+        <div className="grid md:grid-cols-2 gap-4">
+          {steps.map((step, i) => (
             <div
-              key={step.n}
-              className="group relative overflow-hidden bg-background-elevated border border-border/70 rounded-[24px] p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-              style={{ backgroundColor: "hsl(var(--background-elevated))" }}
+              key={step.title}
+              className="bg-background-elevated border border-line rounded-lg px-7 py-8 md:px-9 md:pt-9 md:pb-10 grid grid-cols-[1fr_auto] gap-x-6 gap-y-3 hover:shadow-card transition-shadow"
             >
-              <div className="absolute -top-4 right-4 font-serif text-[96px] leading-none text-primary-soft/70 select-none pointer-events-none group-hover:text-primary-soft transition-colors">
-                {step.n}
+              <h3 className="font-serif text-[24px] md:text-[26px] self-end leading-[1.1]">{step.title}</h3>
+              <div className="font-serif text-[64px] md:text-[84px] leading-[0.8] tracking-[-0.05em] text-primary row-span-2 self-start opacity-90">
+                0{i + 1}
               </div>
-              <div className="relative">
-                <h3 className="font-serif text-2xl mb-3 max-w-[80%]">{step.title}</h3>
-                <p className="text-ink-soft leading-relaxed">{step.desc}</p>
-              </div>
+              <p className="text-ink-soft text-base leading-[1.6] max-w-[480px]">{step.desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <Link to="/sa-fungerar-det">
-            <Button variant="outline" size="lg">
-              Läs hela processen <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
+        <div className="text-center mt-11">
+          <Button variant="outline" asChild>
+            <Link to="/sa-fungerar-det">
+              Läs hela processen <ArrowRight />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

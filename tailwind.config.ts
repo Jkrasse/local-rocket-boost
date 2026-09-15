@@ -31,11 +31,27 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          elevated: "hsl(var(--background-elevated))",
+          warm: "hsl(var(--background-warm))",
+        },
         foreground: "hsl(var(--foreground))",
+        ink: {
+          DEFAULT: "hsl(var(--foreground))",
+          soft: "hsl(var(--ink-soft))",
+          mute: "hsl(var(--ink-mute))",
+        },
+        line: {
+          DEFAULT: "hsl(var(--border))",
+          soft: "hsl(var(--line-soft))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
+          soft: "hsl(var(--primary-soft))",
+          mist: "hsl(var(--primary-mist))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -74,9 +90,15 @@ export default {
       },
       borderRadius: {
         pill: "9999px",
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        xl: "28px",
+        lg: "20px",
+        md: "var(--radius)",
+        sm: "8px",
+      },
+      boxShadow: {
+        soft: "0 1px 2px rgba(21,29,23,.04), 0 2px 6px rgba(21,29,23,.04)",
+        card: "0 6px 16px rgba(21,29,23,.06), 0 12px 32px rgba(21,29,23,.05)",
+        float: "0 16px 40px rgba(21,29,23,.10), 0 32px 80px rgba(21,29,23,.08)",
       },
       keyframes: {
         "accordion-down": {

@@ -7,13 +7,15 @@ const stats = [
 
 const StatsStrip = () => {
   return (
-    <section className="py-16 md:py-20 border-y border-border/60">
-      <div className="container mx-auto px-4 max-w-container">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6">
+    <section className="py-[56px] md:py-[72px] border-y border-line">
+      <div className="container mx-auto px-5 md:px-8 max-w-container">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((s) => (
             <div key={s.label}>
-              <div className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-tightest mb-2">{s.value}</div>
-              <div className="eyebrow">{s.label}</div>
+              <div className="stat-num">{s.value}</div>
+              <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-mute">
+                {s.label}
+              </div>
             </div>
           ))}
         </div>

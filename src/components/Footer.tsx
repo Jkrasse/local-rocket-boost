@@ -1,6 +1,6 @@
-import { Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
 import { niches } from "@/data/niches";
+import Logo from "@/components/Logo";
 
 const nicheList = Object.values(niches);
 const lowerName = (name: string) => (name === "VVS" ? "VVS" : name.toLowerCase());
@@ -34,28 +34,23 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-background border-t border-border">
-      <div className="container mx-auto px-4 py-20 max-w-container">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
+    <footer className="border-t border-line pt-[56px] md:pt-[72px] pb-8">
+      <div className="container mx-auto px-5 md:px-8 max-w-container">
+        <div className="grid grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-8 md:gap-12 mb-14">
           <div className="col-span-2 md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 font-serif text-xl mb-4">
-              <Rocket className="h-5 w-5 text-primary" />
-              <span>Local<span className="font-semibold">Rocket</span></span>
-            </Link>
-            <p className="text-sm text-ink-soft leading-relaxed max-w-xs">
-              Leadsgenerering för lokala företag. Nischade directory-sajter över hela Sverige.
+            <Logo />
+            <p className="text-sm text-ink-soft max-w-[280px] mt-[18px] leading-[1.6]">
+              Exklusiva leads för lokala företag. En rekommenderad partner per bransch och stad.
             </p>
           </div>
 
           {cols.map((col) => (
             <div key={col.title}>
-              <h4 className="font-mono text-[11px] tracking-eyebrow uppercase text-ink-mute mb-5">
-                {col.title}
-              </h4>
-              <ul className="space-y-3 text-sm">
+              <div className="eyebrow mb-[18px]">{col.title}</div>
+              <ul className="flex flex-col gap-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link to={l.to} className="text-foreground hover:text-primary transition-colors">
+                    <Link to={l.to} className="text-sm text-ink-soft hover:text-primary transition-colors">
                       {l.label}
                     </Link>
                   </li>
@@ -65,14 +60,16 @@ const Footer = () => {
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t border-border font-mono text-xs text-ink-mute">
-          <p>
+        <hr className="border-0 h-px bg-line" />
+
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-6 text-[13px] text-ink-mute">
+          <span>
             © {new Date().getFullYear()} J.Krasse Marketing AB · Ätrastigen 5, 311 38 Falkenberg · kontakt@localrocket.agency
-          </p>
+          </span>
           <div className="flex gap-6">
-            <Link to="/integritetspolicy" className="hover:text-foreground transition-colors">Integritet</Link>
-            <Link to="/villkor" className="hover:text-foreground transition-colors">Villkor</Link>
-            <Link to="/cookies" className="hover:text-foreground transition-colors">Cookies</Link>
+            <Link to="/integritetspolicy" className="hover:text-primary transition-colors">Integritet</Link>
+            <Link to="/villkor" className="hover:text-primary transition-colors">Villkor</Link>
+            <Link to="/cookies" className="hover:text-primary transition-colors">Cookies</Link>
           </div>
         </div>
       </div>
