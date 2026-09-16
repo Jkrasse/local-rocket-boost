@@ -9,6 +9,7 @@ type Site = {
   key: string;
   domain: string;
   brand: string;
+  theme: { primary: string; accent: string }; // HSL-tokens från nischsajtens site_settings
   category: string; // "städfirman"
   categoryPlural: string; // "Städfirmor" (nav)
   city: string;
@@ -26,8 +27,9 @@ const PARTNER = "Ditt Företag AB";
 const SITES: Site[] = [
   {
     key: "Städfirmor",
-    domain: "städfirmor.nu",
-    brand: "Städfirmor.nu",
+    domain: "stadfirmor.nu",
+    brand: "Stadfirmor.nu",
+    theme: { primary: "160 79% 27%", accent: "25 95% 53%" },
     category: "städfirman",
     categoryPlural: "Städfirmor",
     city: "Stockholm",
@@ -44,8 +46,9 @@ const SITES: Site[] = [
   },
   {
     key: "Tandläkare",
-    domain: "tandläkarkollen.nu",
+    domain: "tandlakarkollen.nu",
     brand: "Tandläkarkollen.nu",
+    theme: { primary: "205 75% 38%", accent: "168 55% 42%" },
     category: "tandläkarkliniken",
     categoryPlural: "Tandläkarkliniker",
     city: "Göteborg",
@@ -62,8 +65,9 @@ const SITES: Site[] = [
   },
   {
     key: "Bilhandlare",
-    domain: "bilhandlare.nu",
-    brand: "Bilhandlare.nu",
+    domain: "bilhandlarkollen.se",
+    brand: "Bilhandlarkollen.se",
+    theme: { primary: "215 70% 30%", accent: "25 95% 53%" },
     category: "bilhandlaren",
     categoryPlural: "Bilhandlare",
     city: "Uppsala",
@@ -80,8 +84,9 @@ const SITES: Site[] = [
   },
   {
     key: "Takläggare",
-    domain: "bästatakläggaren.se",
-    brand: "Bästatakläggaren.se",
+    domain: "takläggarkollen.se",
+    brand: "Takläggarkollen.se",
+    theme: { primary: "20 55% 30%", accent: "38 92% 50%" },
     category: "takläggaren",
     categoryPlural: "Takläggare",
     city: "Malmö",
@@ -98,9 +103,7 @@ const SITES: Site[] = [
   },
 ];
 
-/* Nischsajternas palett (ljus, teal + blå) */
-const T = "#3E9B7A"; // teal CTA
-const BL = "#2E5FB0"; // blå sekundär
+/* Nischsajternas gemensamma palett; primär/accent kommer per sajt */
 const ST = "#F28C28"; // stjärnor
 const INK = "#111827";
 const MUTE = "#6B7280";
@@ -138,6 +141,8 @@ const useNicheRotation = (intervalMs = 7000) => {
 /* ---------- Sajtinnehåll ---------- */
 const SiteContent = ({ site, compact = false }: { site: Site; compact?: boolean }) => {
   const fs = compact ? 9 : 10.5;
+  const T = `hsl(${site.theme.accent})`;
+  const BL = `hsl(${site.theme.primary})`;
   const pad = compact ? "10px 12px" : "14px 24px";
   const heading = `Bästa ${site.category} i ${site.city} 2026`;
 
@@ -146,7 +151,7 @@ const SiteContent = ({ site, compact = false }: { site: Site; compact?: boolean 
       {/* Sajtens meny */}
       <div className="flex items-center justify-between border-b" style={{ padding: compact ? "8px 12px" : "10px 24px", borderColor: LINE }}>
         <div className="flex items-center gap-1.5">
-          <div className="rounded-full grid place-items-center text-white font-bold" style={{ width: compact ? 16 : 20, height: compact ? 16 : 20, background: T, fontSize: fs - 1 }}>
+          <div className="rounded-full grid place-items-center text-white font-bold" style={{ width: compact ? 16 : 20, height: compact ? 16 : 20, background: BL, fontSize: fs - 1 }}>
             {site.brand[0]}
           </div>
           <b style={{ fontSize: fs + 1.5, letterSpacing: "-.02em" }}>{site.brand}</b>
