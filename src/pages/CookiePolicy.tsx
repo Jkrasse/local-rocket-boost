@@ -7,7 +7,7 @@ const CookiePolicy = () => {
     <div className="min-h-screen bg-background">
       <Seo title="Cookiepolicy | Local Rocket" canonical="https://localrocket.se/cookies" />
       <Navbar />
-      <main className="pt-28 pb-20">
+      <main className="pt-10 pb-20 md:pt-16">
         <div className="container mx-auto px-4 max-w-3xl">
           <h1 className="font-heading text-4xl font-bold mb-8">Cookiepolicy</h1>
           <p className="text-muted-foreground mb-6">Senast uppdaterad: 2026-07-29</p>

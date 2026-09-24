@@ -260,67 +260,52 @@ const BrowserBar = ({ site }: { site: Site }) => (
   </div>
 );
 
-const DirectoryPreview = () => {
+/* Showcase enligt v3: text vänster, branschflikar höger, mörk ram */
+const Showcase = () => {
   const { site, idx, select } = useNicheRotation(7000);
 
   return (
-    <section className="pb-16 md:pb-24 overflow-hidden">
-      <div className="container mx-auto px-5 md:px-8 max-w-container">
-        <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-2 mb-9">
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-5 mb-6">
+        <p className="text-[15px] text-ink-soft max-w-[380px]">
+          Så ser det ut när ditt företag är rekommenderad partner på en av våra sajter.
+        </p>
+        <div className="flex flex-wrap gap-2">
           {SITES.map((s, i) => (
             <button
               key={s.key}
               onClick={() => select(i)}
               aria-pressed={i === idx}
-              className={`px-[18px] py-2.5 rounded-pill border text-sm font-medium transition-all duration-150 ${
+              className={`h-10 px-[18px] rounded-pill border text-[15px] font-medium transition-all duration-150 ${
                 i === idx
-                  ? "bg-foreground text-white border-foreground"
-                  : "bg-background-elevated text-ink-soft border-line hover:border-ink-soft hover:text-foreground"
+                  ? "bg-foreground text-background border-foreground"
+                  : "bg-transparent text-ink-soft border-line hover:border-foreground hover:text-foreground"
               }`}
             >
               {s.key}
             </button>
           ))}
         </div>
-
-        {/* Mobil: telefonram */}
-        <div className="md:hidden max-w-[320px] mx-auto">
-          <div className="relative rounded-[44px] p-[10px] shadow-float" style={{ background: "#151D17" }}>
-            <div className="relative bg-white rounded-[36px] overflow-hidden" style={{ aspectRatio: "9 / 18" }}>
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 h-[24px] w-[88px] rounded-full z-20" style={{ background: "#151D17" }} />
-              <div className="absolute inset-0 pt-9">
-                <div key={site.key} className="h-full animate-fade-in">
-                  <SiteContent site={site} compact />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Desktop: laptopram */}
-        <div className="hidden md:block relative max-w-[1000px] mx-auto w-full">
-          <div className="rounded-[18px_18px_6px_6px] p-[14px_14px_18px] shadow-float" style={{ background: "#151D17" }}>
-            <div className="bg-white rounded-lg overflow-hidden flex flex-col" style={{ aspectRatio: "16 / 9.6" }}>
-              <BrowserBar site={site} />
-              <div key={site.key} className="flex-1 min-h-0 animate-fade-in">
-                <SiteContent site={site} />
-              </div>
-            </div>
-          </div>
-          <div
-            className="relative h-3.5 rounded-b-2xl mx-[-28px]"
-            style={{ background: "linear-gradient(180deg,#2a3129,#151D17 70%,#0b0f0c)" }}
-          >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[100px] h-[5px] rounded-b-lg" style={{ background: "#0b0f0c" }} />
-          </div>
-        </div>
-
-        <p className="eyebrow text-center mt-10">
-          Så ser det ut när ditt företag listas som rekommenderad partner
-        </p>
       </div>
-    </section>
+
+      <div className="bg-foreground rounded-[24px] p-2 md:p-3 shadow-float">
+        {/* Desktop */}
+        <div className="hidden md:flex flex-col bg-white rounded-[14px] overflow-hidden" style={{ aspectRatio: "16 / 8.6" }}>
+          <BrowserBar site={site} />
+          <div key={site.key} className="flex-1 min-h-0 animate-fade-in">
+            <SiteContent site={site} />
+          </div>
+        </div>
+        {/* Mobil */}
+        <div className="md:hidden flex flex-col bg-white rounded-[14px] overflow-hidden" style={{ aspectRatio: "9 / 14" }}>
+          <BrowserBar site={site} />
+          <div key={site.key} className="flex-1 min-h-0 animate-fade-in">
+            <SiteContent site={site} compact />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default DirectoryPreview;
+export default Showcase;

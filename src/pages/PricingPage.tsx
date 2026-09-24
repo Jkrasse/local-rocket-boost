@@ -90,7 +90,7 @@ const PricingPage = () => {
 
       <main>
         {/* HERO */}
-        <section className="pt-32 pb-12 md:pt-40 md:pb-16">
+        <section className="pt-10 pb-12 md:pt-16 md:pb-16">
           <div className="container mx-auto px-4 max-w-container text-center">
             <div className="eyebrow mb-5">Priser</div>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl tracking-tightest leading-[1.05] mb-6 max-w-3xl mx-auto">
@@ -170,12 +170,12 @@ const PricingPage = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button asChild size="lg" className="bg-background text-foreground hover:bg-background/90">
-                  <a href="/#contact">
+                  <a href="/#kontakt">
                     Boka demo <ArrowRight className="h-4 w-4" />
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="border-background/30 bg-transparent text-background hover:bg-background/10">
-                  <Link to="/sa-fungerar-det">Så fungerar det</Link>
+                  <Link to="/leadsgenerering">Så fungerar det</Link>
                 </Button>
               </div>
             </div>

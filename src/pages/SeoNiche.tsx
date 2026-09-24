@@ -110,7 +110,7 @@ const SeoNiche = () => {
 
       <main>
         {/* HERO */}
-        <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-background">
+        <section className="pt-10 pb-16 md:pt-16 md:pb-24 bg-background">
           <div className="container mx-auto px-4 max-w-container">
             <div className="max-w-3xl">
               <div className="eyebrow mb-5 inline-flex items-center gap-2">
@@ -132,7 +132,7 @@ const SeoNiche = () => {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="rounded-full">
-                  <Link to="/sa-fungerar-det">Så fungerar det</Link>
+                  <Link to="/leadsgenerering">Så fungerar det</Link>
                 </Button>
               </div>
 

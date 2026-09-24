@@ -2,49 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Sora:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    /* Local Rocket design tokens v2 (brand book 2026-09) */
-    --background: 43 30% 95%;          /* cream #F7F5F0 */
-    --background-warm: 43 29% 91%;     /* sand #EEEAE0 */
-    --background-elevated: 0 0% 100%;  /* paper */
+    /* Local Rocket design tokens v3 (handoff 2026-09-24) */
+    --background: 42 31% 94%;          /* paper #F4F1EA */
+    --background-warm: 42 29% 88%;     /* paper-2 #EAE5D9 */
+    --background-elevated: 43 100% 99%; /* white #FFFDF8 */
 
-    --foreground: 135 16% 10%;         /* ink #151D17 */
-    --ink-soft: 133 6% 30%;            /* #49524B */
-    --ink-mute: 120 3% 51%;            /* #7F877F */
+    --foreground: 120 12% 8%;          /* ink #121712 */
+    --ink-soft: 129 5% 26%;            /* ink-2 #3F4640 */
+    --ink-mute: 112 4% 44%;            /* ink-3 #6E756D */
 
-    --card: 0 0% 100%;
-    --card-foreground: 135 16% 10%;
+    --card: 43 100% 99%;
+    --card-foreground: 120 12% 8%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 135 16% 10%;
+    --popover: 43 100% 99%;
+    --popover-foreground: 120 12% 8%;
 
     --primary: 142 41% 25%;            /* green #265A39 */
-    --primary-foreground: 43 30% 95%;
-    --primary-hover: 140 42% 19%;      /* green deep #1C4429 */
-    --primary-soft: 120 19% 89%;       /* #DFE9DF */
-    --primary-mist: 110 20% 94%;       /* #EEF3ED */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 142 43% 16%;      /* green-900 #173A24 */
+    --primary-700: 143 42% 21%;        /* #1F4C30 */
+    --primary-soft: 114 19% 90%;       /* green-100 #E1EAE0 */
+    --primary-mist: 110 19% 94%;       /* green-50 #EDF2EC */
 
-    --secondary: 43 29% 91%;
-    --secondary-foreground: 135 16% 10%;
+    --secondary: 42 29% 88%;
+    --secondary-foreground: 120 12% 8%;
 
-    --muted: 43 29% 91%;
-    --muted-foreground: 120 3% 51%;
+    --muted: 42 29% 88%;
+    --muted-foreground: 112 4% 44%;
 
-    --accent: 135 16% 10%;
-    --accent-foreground: 43 30% 95%;
+    --accent: 120 12% 8%;
+    --accent-foreground: 42 31% 94%;
 
-    --dark-section: 135 16% 10%;
-    --dark-section-foreground: 43 30% 95%;
+    --dark-section: 142 43% 16%;       /* green-900 */
+    --dark-section-foreground: 42 31% 94%;
 
     --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 44 20% 85%;              /* line #E1DDD2 */
-    --line-soft: 43 25% 90%;           /* #ECE8DE */
-    --input: 44 20% 85%;
+    --border: 42 21% 81%;              /* line #D9D3C5 */
+    --line-soft: 42 25% 87%;           /* line-2 #E6E1D5 */
+    --input: 42 21% 81%;
     --ring: 142 41% 25%;
 
     --radius: 14px;
@@ -58,28 +59,30 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --font-heading: 'Newsreader', Georgia, serif;
-    --font-body: 'Sora', system-ui, -apple-system, sans-serif;
-    --font-mono: 'Sora', system-ui, sans-serif;
+    --font-heading: 'Familjen Grotesk', system-ui, sans-serif;
+    --font-body: 'Familjen Grotesk', system-ui, sans-serif;
+    --font-mono: 'Familjen Grotesk', system-ui, sans-serif;
+
+    --shadow-float: 0 1px 2px rgba(18,23,18,.05), 0 14px 40px -12px rgba(18,23,18,.14);
   }
 
   .dark {
-    --background: 135 16% 10%;
-    --foreground: 43 30% 95%;
-    --card: 135 12% 13%;
-    --card-foreground: 43 30% 95%;
-    --popover: 135 12% 13%;
-    --popover-foreground: 43 30% 95%;
+    --background: 142 43% 16%;
+    --foreground: 42 31% 94%;
+    --card: 142 40% 20%;
+    --card-foreground: 42 31% 94%;
+    --popover: 142 40% 20%;
+    --popover-foreground: 42 31% 94%;
     --primary: 142 38% 55%;
-    --primary-foreground: 135 16% 10%;
-    --secondary: 135 8% 18%;
-    --secondary-foreground: 43 30% 95%;
-    --muted: 135 8% 18%;
-    --muted-foreground: 120 6% 65%;
-    --accent: 43 30% 95%;
-    --accent-foreground: 135 16% 10%;
-    --border: 135 8% 22%;
-    --input: 135 8% 22%;
+    --primary-foreground: 120 12% 8%;
+    --secondary: 142 30% 22%;
+    --secondary-foreground: 42 31% 94%;
+    --muted: 142 30% 22%;
+    --muted-foreground: 42 20% 70%;
+    --accent: 42 31% 94%;
+    --accent-foreground: 120 12% 8%;
+    --border: 142 25% 26%;
+    --input: 142 25% 26%;
     --ring: 142 38% 55%;
   }
 }
@@ -92,66 +95,104 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 17px;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01", "tnum" 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    font-optical-sizing: auto;
-    letter-spacing: -0.02em;
-    font-weight: 500;
-    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1;
   }
 }
 
 @layer utilities {
-  .font-serif { font-family: var(--font-heading); font-optical-sizing: auto; font-weight: 500; letter-spacing: -0.02em; }
+  .font-serif { font-family: var(--font-heading); font-weight: 600; letter-spacing: -0.035em; }
   .font-mono  { font-family: var(--font-mono); }
   .font-sans  { font-family: var(--font-body); }
 
-  .eyebrow {
+  /* Sektionsetikett: 13px/600 ink-3 med 18×1.5px streck före */
+  .eyebrow, .label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-body);
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: hsl(var(--ink-mute));
+    font-size: 13px;
     font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    color: hsl(var(--ink-mute));
   }
-  .eyebrow-green { color: hsl(var(--primary)); }
+  .eyebrow::before, .label::before {
+    content: "";
+    width: 18px;
+    height: 1.5px;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .label-green { color: hsl(var(--primary)); }
 
+  /* Betoning i rubriker: grön, inte kursiv (v3) */
   .italic-accent {
-    font-style: italic;
+    font-style: normal;
     color: hsl(var(--primary));
-    font-weight: 400;
+    font-weight: inherit;
   }
 
   .text-ink-soft { color: hsl(var(--ink-soft)); }
   .text-ink-mute { color: hsl(var(--ink-mute)); }
   .bg-warm { background-color: hsl(var(--background-warm)); }
   .bg-dark-section { background-color: hsl(var(--dark-section)); color: hsl(var(--dark-section-foreground)); }
+  .bg-dark-section .eyebrow, .bg-dark-section .label { color: rgba(244,241,234,.6); }
+  .bg-dark-section .lede, .bg-dark-section .muted { color: rgba(244,241,234,.78); }
 
-  /* Sektionsrytm enligt v2: 120px desktop, 80px mobil */
-  .section { padding: 80px 0; position: relative; }
-  @media (min-width: 768px) { .section { padding: 120px 0; } }
+  /* Sektionsrytm v3: 128px desktop, 84px mobil */
+  .section { padding: 84px 0; position: relative; }
+  @media (min-width: 768px) { .section { padding: 128px 0; } }
 
-  .section-h2 {
-    font-family: var(--font-heading);
-    font-weight: 500;
-    font-size: clamp(36px, 4.6vw, 60px);
-    letter-spacing: -0.025em;
-    line-height: 1.02;
+  /* Typografiskala v3 */
+  .h-xl { font-size: clamp(52px, 8.4vw, 128px); letter-spacing: -0.055em; line-height: 0.9; font-weight: 600; }
+  .h-l  { font-size: clamp(40px, 5.6vw, 80px); letter-spacing: -0.045em; line-height: 0.95; font-weight: 600; }
+  .h-m  { font-size: clamp(30px, 3.4vw, 46px); letter-spacing: -0.035em; line-height: 1.02; font-weight: 600; }
+  .h-s  { font-size: 24px; letter-spacing: -0.025em; line-height: 1.15; font-weight: 600; }
+  .lede { font-size: clamp(18px, 1.5vw, 21px); line-height: 1.5; color: hsl(var(--ink-soft)); text-wrap: pretty; max-width: 560px; }
+  .muted { color: hsl(var(--ink-soft)); }
+  .section-h2 { font-size: clamp(40px, 5.6vw, 80px); letter-spacing: -0.045em; line-height: 0.95; font-weight: 600; }
+  .stat-num { font-size: clamp(44px, 5vw, 72px); letter-spacing: -0.05em; line-height: 1; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+  /* Sektionshuvud: etikett + rubrik vänster, ingress höger i underkant */
+  .head { display: grid; grid-template-columns: 1fr; gap: 40px 64px; align-items: end; margin-bottom: 48px; }
+  @media (min-width: 900px) {
+    .head { grid-template-columns: minmax(0,1fr) minmax(0,1fr); margin-bottom: 72px; }
+    .head .lede { justify-self: end; }
   }
 
-  .stat-num {
-    font-family: var(--font-heading);
-    font-weight: 500;
-    font-size: clamp(44px, 5vw, 72px);
-    letter-spacing: -0.04em;
-    line-height: 1;
-  }
+  .split { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
+  @media (min-width: 900px) { .split { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 64px; } }
 
+  .shadow-float { box-shadow: var(--shadow-float); }
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
+
+  /* Branschlista med hover-indrag */
+  .ind { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 26px 0; border-top: 1px solid hsl(var(--border)); font-size: clamp(26px, 2.6vw, 36px); font-weight: 600; letter-spacing: -0.035em; color: hsl(var(--foreground)); transition: color .15s, padding .2s; }
+  .ind small { font-size: 14px; font-weight: 500; color: hsl(var(--ink-mute)); letter-spacing: 0; }
+  .ind:hover { color: hsl(var(--primary)); padding-left: 12px; }
+  .ind svg { width: 22px; height: 22px; transition: transform .2s; flex-shrink: 0; }
+  .ind:hover svg { transform: translate(3px, -3px); }
+
+  /* Formulärfält */
+  .field { height: 52px; background: hsl(var(--background)); border: 1px solid hsl(var(--border)); border-radius: 12px; padding: 0 16px; font: 16px var(--font-body); color: hsl(var(--foreground)); outline: none; width: 100%; transition: border-color .15s, background .15s; }
+  .field:focus { border-color: hsl(var(--primary)); background: #fff; }
+  .field::placeholder { color: hsl(var(--ink-mute)); }
+  .flabel { display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 600; color: hsl(var(--ink-soft)); }
+
+  /* FAQ */
+  .faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .25s; }
+  .faq-a.on { grid-template-rows: 1fr; }
+  .faq-a > div { overflow: hidden; }
 }

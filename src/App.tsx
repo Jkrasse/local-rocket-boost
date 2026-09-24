@@ -1,12 +1,13 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index.tsx";
-import HowItWorksPage from "./pages/HowItWorksPage.tsx";
+import LeadsPage from "./pages/LeadsPage.tsx";
+import ServicePage from "./pages/ServicePage.tsx";
 import SeoNiche from "./pages/SeoNiche.tsx";
 import PricingPage from "./pages/PricingPage.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
@@ -33,9 +34,11 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/leadsgenerering" element={<LeadsPage />} />
             <Route path="/leadsgenerering/:slug" element={<NicheLanding />} />
+            <Route path="/byratjanster/:slug" element={<ServicePage />} />
             <Route path="/seo/:slug" element={<SeoNiche />} />
-            <Route path="/sa-fungerar-det" element={<HowItWorksPage />} />
+            <Route path="/sa-fungerar-det" element={<Navigate to="/leadsgenerering" replace />} />
             <Route path="/priser" element={<PricingPage />} />
             <Route path="/integritetspolicy" element={<PrivacyPolicy />} />
             <Route path="/villkor" element={<TermsOfService />} />
