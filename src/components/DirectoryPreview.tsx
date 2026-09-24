@@ -42,6 +42,7 @@ const SITES: Site[] = [
     reviews: [
       { name: "Anna E.", initial: "A", color: "#4C8BD9", date: "juni 2026", text: "Supersnabb service och trevlig personal. Lägenheten var skinande ren efter flyttstädningen." },
       { name: "Johan S.", initial: "J", color: "#2E9E6B", date: "maj 2026", text: "Punktliga, noggranna och rimligt pris. Vi använder dem varannan vecka nu." },
+      { name: "Peter L.", initial: "P", color: "#D9822B", date: "april 2026", text: "Bokade kontorsstäd för hela våningen. Tydlig offert och samma team varje gång." },
     ],
   },
   {
@@ -61,6 +62,7 @@ const SITES: Site[] = [
     reviews: [
       { name: "Nina H.", initial: "N", color: "#4C8BD9", date: "juni 2026", text: "Supersnabb service och trevlig tandläkare. Kände mig trygg genom hela besöket." },
       { name: "Maria L.", initial: "M", color: "#C24B7A", date: "juni 2026", text: "Vänligt bemötande och snabb hjälp trots semestertider. Rekommenderas varmt." },
+      { name: "Cia K.", initial: "C", color: "#2E9E6B", date: "maj 2026", text: "Lagade två hål helt utan obehag. Lugn och noggrann tandläkare, rekommenderas." },
     ],
   },
   {
@@ -80,6 +82,7 @@ const SITES: Site[] = [
     reviews: [
       { name: "Erik P.", initial: "E", color: "#2E9E6B", date: "maj 2026", text: "Ärlig affär utan påtryckningar. Bilen var precis som beskriven och garantin gav trygghet." },
       { name: "Sara K.", initial: "S", color: "#D9822B", date: "april 2026", text: "Fick bra betalt för inbytet och hela processen tog under en timme." },
+      { name: "Anna R.", initial: "A", color: "#4C8BD9", date: "mars 2026", text: "Hjälpsam personal och bra finansieringsupplägg. Vi kommer tillbaka nästa gång." },
     ],
   },
   {
@@ -99,6 +102,7 @@ const SITES: Site[] = [
     reviews: [
       { name: "Lars B.", initial: "L", color: "#4C8BD9", date: "juni 2026", text: "Takbytet gick snabbare än planerat och de städade efter sig varje dag. Mycket nöjd." },
       { name: "Karin O.", initial: "K", color: "#C24B7A", date: "maj 2026", text: "Tydlig offert, inga överraskningar och ett riktigt fint resultat." },
+      { name: "Mats E.", initial: "M", color: "#D9822B", date: "april 2026", text: "Ny plåt på hela garaget på två dagar. Proffsigt och prisvärt." },
     ],
   },
 ];
@@ -127,24 +131,39 @@ const Pill = ({ bg, color, border, children, size }: { bg: string; color: string
   </span>
 );
 
-const useNicheRotation = (intervalMs = 7000) => {
+/* Skrivmaskinseffekt: skriver rubriken, pausar, suddar och byter sajt */
+const useTypewriter = () => {
   const [idx, setIdx] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [text, setText] = useState("");
+  const [phase, setPhase] = useState<"typing" | "hold" | "deleting">("typing");
+  const full = `Bästa ${SITES[idx].category} i ${SITES[idx].city} 2026`;
+
   useEffect(() => {
-    if (paused) return;
-    const id = setInterval(() => setIdx((p) => (p + 1) % SITES.length), intervalMs);
-    return () => clearInterval(id);
-  }, [intervalMs, paused]);
-  return { site: SITES[idx], idx, select: (i: number) => { setIdx(i); setPaused(true); } };
+    let t: number;
+    if (phase === "typing") {
+      if (text.length < full.length) t = window.setTimeout(() => setText(full.slice(0, text.length + 1)), 42);
+      else t = window.setTimeout(() => setPhase("hold"), 3200);
+    } else if (phase === "hold") {
+      t = window.setTimeout(() => setPhase("deleting"), 10);
+    } else {
+      if (text.length > 0) t = window.setTimeout(() => setText(text.slice(0, -1)), 22);
+      else {
+        setIdx((i) => (i + 1) % SITES.length);
+        setPhase("typing");
+      }
+    }
+    return () => window.clearTimeout(t);
+  }, [phase, text, full]);
+
+  return { site: SITES[idx], heading: text };
 };
 
 /* ---------- Sajtinnehåll ---------- */
-const SiteContent = ({ site, compact = false }: { site: Site; compact?: boolean }) => {
+const SiteContent = ({ site, heading, compact = false }: { site: Site; heading: string; compact?: boolean }) => {
   const fs = compact ? 9 : 10.5;
   const T = `hsl(${site.theme.accent})`;
   const BL = `hsl(${site.theme.primary})`;
   const pad = compact ? "10px 12px" : "14px 24px";
-  const heading = `Bästa ${site.category} i ${site.city} 2026`;
 
   return (
     <div className="w-full h-full flex flex-col overflow-hidden" style={{ background: "#fff", color: INK, fontFamily: "var(--font-body)", fontSize: fs }}>
@@ -171,7 +190,7 @@ const SiteContent = ({ site, compact = false }: { site: Site; compact?: boolean 
       {/* Hero */}
       <div style={{ background: GRAY, padding: pad }}>
         <div style={{ fontSize: fs - 2.5, color: MUTE, marginBottom: 4 }}>Hem › {site.categoryPlural} › {site.city}</div>
-        <div className="font-bold" style={{ fontSize: compact ? 15 : 22, letterSpacing: "-.03em", lineHeight: 1.1, marginBottom: 5 }}>{heading}</div>
+        <div className="font-bold" style={{ fontSize: compact ? 15 : 22, letterSpacing: "-.03em", lineHeight: 1.1, marginBottom: 5, minHeight: compact ? 17 : 24 }}>{heading}<span className="inline-block align-middle ml-[2px] animate-pulse" style={{ width: 2, height: compact ? 13 : 19, background: INK }} /></div>
         <p style={{ margin: "0 0 8px", color: "#374151", lineHeight: 1.45, maxWidth: compact ? "100%" : "72%", fontSize: fs - 0.5 }}>{site.intro}</p>
         <div className="flex flex-wrap items-center gap-1.5">
           <Pill bg={T} color="#fff" size={fs - 1}>{site.cta} →</Pill>
@@ -219,6 +238,20 @@ const SiteContent = ({ site, compact = false }: { site: Site; compact?: boolean 
         </div>
       </div>
 
+      {/* Varför rekommenderar vi */}
+      {!compact && (
+        <div style={{ padding: "10px 24px 0" }}>
+          <div className="rounded-[8px] bg-white" style={{ border: `1px solid ${LINE}`, padding: "10px 14px" }}>
+            <div className="font-semibold" style={{ fontSize: fs, marginBottom: 5 }}>Varför rekommenderar vi {PARTNER} som {site.category} i {site.city}?</div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1" style={{ fontSize: fs - 1.5, color: "#374151" }}>
+              {[`Betyg ${site.rating} av 5 från ${site.ratingCount} kunder, bland de högst betygsatta i ${site.city}`, "F-skattsedel och ansvarsförsäkring, ett krav för alla våra partners", `Utvald efter granskning av betyg, omdömen och verksamhet`, "Du kontaktar företaget direkt: ring, mejla eller boka via webben"].map((t) => (
+                <span key={t} className="inline-flex items-start gap-1"><BadgeCheck style={{ width: 9, height: 9, marginTop: 2, color: BL, flexShrink: 0 }} /> {t}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Omdömen */}
       <div className="flex-1 min-h-0" style={{ padding: compact ? "8px 12px 10px" : "10px 24px 14px" }}>
         <div className="rounded-[8px] bg-white h-full overflow-hidden" style={{ border: `1px solid ${LINE}`, padding: compact ? "8px 10px" : "10px 14px" }}>
@@ -260,47 +293,29 @@ const BrowserBar = ({ site }: { site: Site }) => (
   </div>
 );
 
-/* Showcase enligt v3: text vänster, branschflikar höger, mörk ram */
+/* Showcase: en enda mockup där rubriken skrivs om automatiskt */
 const Showcase = () => {
-  const { site, idx, select } = useNicheRotation(7000);
+  const { site, heading } = useTypewriter();
 
   return (
     <div>
-      <div className="flex flex-wrap items-center justify-between gap-5 mb-6">
-        <p className="text-[15px] text-ink-soft max-w-[380px]">
-          Så ser det ut när ditt företag är rekommenderad partner på en av våra sajter.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {SITES.map((s, i) => (
-            <button
-              key={s.key}
-              onClick={() => select(i)}
-              aria-pressed={i === idx}
-              className={`h-10 px-[18px] rounded-pill border text-[15px] font-medium transition-all duration-150 ${
-                i === idx
-                  ? "bg-foreground text-background border-foreground"
-                  : "bg-transparent text-ink-soft border-line hover:border-foreground hover:text-foreground"
-              }`}
-            >
-              {s.key}
-            </button>
-          ))}
-        </div>
-      </div>
+      <p className="text-[15px] text-ink-soft max-w-[520px] mb-6">
+        Så ser det ut när ditt företag är rekommenderad partner på en av våra sajter.
+      </p>
 
       <div className="bg-foreground rounded-[24px] p-2 md:p-3 shadow-float">
         {/* Desktop */}
-        <div className="hidden md:flex flex-col bg-white rounded-[14px] overflow-hidden" style={{ aspectRatio: "16 / 8.6" }}>
+        <div className="hidden md:flex flex-col bg-white rounded-[14px] overflow-hidden" style={{ aspectRatio: "16 / 9.9" }}>
           <BrowserBar site={site} />
-          <div key={site.key} className="flex-1 min-h-0 animate-fade-in">
-            <SiteContent site={site} />
+          <div className="flex-1 min-h-0">
+            <SiteContent site={site} heading={heading} />
           </div>
         </div>
         {/* Mobil */}
-        <div className="md:hidden flex flex-col bg-white rounded-[14px] overflow-hidden" style={{ aspectRatio: "9 / 14" }}>
+        <div className="md:hidden flex flex-col bg-white rounded-[14px] overflow-hidden" style={{ aspectRatio: "9 / 13.3" }}>
           <BrowserBar site={site} />
-          <div key={site.key} className="flex-1 min-h-0 animate-fade-in">
-            <SiteContent site={site} compact />
+          <div className="flex-1 min-h-0">
+            <SiteContent site={site} heading={heading} compact />
           </div>
         </div>
       </div>
