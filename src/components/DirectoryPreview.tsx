@@ -312,7 +312,7 @@ const Showcase = () => {
           </div>
         </div>
         {/* Mobil */}
-        <div className="md:hidden flex flex-col bg-white rounded-[14px] overflow-hidden" style={{ aspectRatio: "9 / 13.3" }}>
+        <div className="md:hidden flex flex-col bg-white rounded-[14px] overflow-hidden">
           <BrowserBar site={site} />
           <div className="flex-1 min-h-0">
             <SiteContent site={site} heading={heading} compact />
