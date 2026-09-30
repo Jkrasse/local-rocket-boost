@@ -50,3 +50,30 @@ export const ServiceIcon = ({ k, size = 20 }: { k: ServiceKey; size?: number }) 
     </svg>
   );
 };
+
+export type LeadsIconKey = "how" | "industries" | "price";
+
+export const LeadsIcon = ({ k, size = 20 }: { k: LeadsIconKey; size?: number }) => {
+  const p = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (k === "how")
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+        <path {...p} d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    );
+  if (k === "industries")
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+        <rect {...p} x="4" y="4" width="6.5" height="6.5" rx="1.5" />
+        <rect {...p} x="13.5" y="4" width="6.5" height="6.5" rx="1.5" />
+        <rect {...p} x="4" y="13.5" width="6.5" height="6.5" rx="1.5" />
+        <rect {...p} x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" />
+      </svg>
+    );
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+      <path {...p} d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3-8.7 8.7z" />
+      <circle cx="8" cy="8" r="1.4" fill="currentColor" />
+    </svg>
+  );
+};

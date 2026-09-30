@@ -17,7 +17,7 @@ const PrivacyPolicy = () => {
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">1. Ansvarig för behandling av personuppgifter</h2>
               <p>J.Krasse Marketing AB ("Local Rocket", "vi", "oss") är personuppgiftsansvarig för behandlingen av dina personuppgifter. Du kan kontakta oss via:</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li>E-post: kontakt@localrocket.agency</li>
+                <li>E-post: kontakt@localrocket.se</li>
                 <li>Adress: Ätrastigen 5, 311 38 Falkenberg</li>
               </ul>
             </section>

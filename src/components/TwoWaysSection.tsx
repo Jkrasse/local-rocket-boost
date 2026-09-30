@@ -33,7 +33,7 @@ const TwoWaysSection = () => (
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            {["En partner per stad", "Från 3 850 kr/mån", "Ingen bindningstid"].map((t) => (
+            {["En partner per stad", "Från 4 500 kr/mån", "Ingen bindningstid"].map((t) => (
               <span key={t} className="text-sm font-medium px-3.5 py-2 rounded-pill border border-background/30">
                 {t}
               </span>

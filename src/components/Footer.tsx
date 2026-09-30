@@ -85,7 +85,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-6 text-sm text-ink-mute">
           <span>
-            © {new Date().getFullYear()} J.Krasse Marketing AB · Ätrastigen 5, 311 38 Falkenberg · kontakt@localrocket.agency
+            © {new Date().getFullYear()} J.Krasse Marketing AB · Ätrastigen 5, 311 38 Falkenberg · kontakt@localrocket.se
           </span>
           <div className="flex gap-6">
             <Link to="/integritetspolicy" className="hover:text-primary transition-colors">Integritet</Link>

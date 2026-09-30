@@ -2,33 +2,47 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Arrow, Check } from "@/components/icons";
+import { SERVICES } from "@/data/services";
 
 type Plan = {
   name: string;
   description: string;
-  annual?: number;
   monthly?: number;
   features: string[];
-  hot?: boolean;
   to: string;
 };
 
+export const ANNUAL_DISCOUNT = 0.1;
+const annualPrice = (monthly: number) => Math.round(monthly * (1 - ANNUAL_DISCOUNT));
+
 const plans: Plan[] = [
   {
-    name: "Premium",
-    description: "Allt du behöver för att börja generera leads i en stad.",
-    annual: 3850,
+    name: "Starter",
+    description: "Allt du behöver för att börja få leads i en stad.",
     monthly: 5000,
-    features: ["1 stad + alla undersidor", "Google Ads (inkl. 1 000 kr spend)", "Meta Ads (inkl. 1 000 kr spend)", "Månadsrapporter", "A/B-testning", "Löpande optimering"],
+    features: [
+      "1 stad + alla undersidor",
+      "Google Ads (inkl. 1 000 kr spend)",
+      "Meta Ads (inkl. 1 000 kr spend)",
+      "Månadsrapporter",
+      "A/B-testning",
+      "Löpande optimering",
+    ],
     to: "/onboarding",
   },
   {
-    name: "Growth",
-    description: "Dubbel annonsbudget för dig som vill växa snabbare.",
-    annual: 6160,
+    name: "Premium",
+    description: "Dubbel annonsbudget och en egen sökordsdomän för din tjänst i din stad.",
     monthly: 8000,
-    features: ["1 stad + alla undersidor", "Google Ads (inkl. 2 000 kr spend)", "Meta Ads (inkl. 2 000 kr spend)", "Månadsrapporter", "A/B-testning", "Löpande optimering"],
-    hot: true,
+    features: [
+      "1 stad + alla undersidor",
+      "Google Ads (inkl. 2 000 kr spend)",
+      "Meta Ads (inkl. 2 000 kr spend)",
+      "Sökordsdomän med innehåll, t.ex. elektrikermalmo.se",
+      "Månadsrapporter",
+      "A/B-testning",
+      "Löpande optimering",
+    ],
     to: "/onboarding",
   },
   {
@@ -40,17 +54,18 @@ const plans: Plan[] = [
 ];
 
 const PricingSection = ({ showHeader = true }: { showHeader?: boolean }) => {
-  const [annual, setAnnual] = useState(true);
+  const [annual, setAnnual] = useState(false);
 
   const toggle = (
-    <div className="inline-flex p-1 rounded-pill border border-line">
+    <div className="inline-flex w-fit p-1 rounded-pill border border-line">
       {([
-        [true, "Årsvis −23 %"],
         [false, "Månadsvis"],
+        [true, "Årsvis −10 %"],
       ] as [boolean, string][]).map(([v, l]) => (
         <button
           key={l}
           onClick={() => setAnnual(v)}
+          aria-pressed={annual === v}
           className={`h-10 px-[18px] rounded-pill text-[15px] font-medium transition-colors ${
             annual === v ? "bg-foreground text-background" : "text-ink-soft hover:text-foreground"
           }`}
@@ -67,11 +82,13 @@ const PricingSection = ({ showHeader = true }: { showHeader?: boolean }) => {
         {showHeader ? (
           <div className="head">
             <div>
-              <div className="label mb-6">Priser</div>
-              <h2 className="h-l">Ett fast pris. Allt ingår.</h2>
+              <div className="label mb-6">Priser för leads-generering</div>
+              <h2 className="h-l">Leads-generering till fast pris.</h2>
             </div>
             <div className="grid gap-5 md:justify-items-end md:justify-self-end">
-              <p className="lede md:text-right">Fast månadspris med annonsbudget inkluderad. Du betalar aldrig per lead.</p>
+              <p className="lede md:text-right">
+                Fast månadspris med annonsbudget inkluderad. Du betalar aldrig per lead.
+              </p>
               {toggle}
             </div>
           </div>
@@ -81,23 +98,13 @@ const PricingSection = ({ showHeader = true }: { showHeader?: boolean }) => {
 
         <div className="grid md:grid-cols-3 gap-4">
           {plans.map((t) => {
-            const h = !!t.hot;
-            const price = t.annual ? (annual ? t.annual : t.monthly) : null;
+            const price = t.monthly ? (annual ? annualPrice(t.monthly) : t.monthly) : null;
             return (
               <div
                 key={t.name}
-                className={`rounded-xl p-7 md:p-9 flex flex-col gap-8 border ${
-                  h ? "bg-primary text-background border-primary" : "bg-background-elevated text-foreground border-line-soft"
-                }`}
+                className="rounded-xl p-7 md:p-9 flex flex-col gap-8 border bg-background-elevated text-foreground border-line-soft"
               >
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="h-s">{t.name}</h3>
-                  {h && (
-                    <span className="text-[13px] font-semibold bg-background text-primary-hover px-[11px] py-[5px] rounded-pill">
-                      Populärast
-                    </span>
-                  )}
-                </div>
+                <h3 className="h-s">{t.name}</h3>
 
                 <div>
                   <div className="num text-[56px] md:text-[64px] font-semibold tracking-[-0.05em] leading-none">
@@ -113,14 +120,14 @@ const PricingSection = ({ showHeader = true }: { showHeader?: boolean }) => {
 
                 <div className="grid gap-3 flex-1 content-start">
                   {t.features.map((f) => (
-                    <div key={f} className="flex items-center gap-3 text-base">
-                      <Check className={`w-4 h-4 shrink-0 ${h ? "text-background" : "text-primary"}`} />
+                    <div key={f} className="flex items-start gap-3 text-base">
+                      <Check className="w-4 h-4 shrink-0 mt-[5px] text-primary" />
                       {f}
                     </div>
                   ))}
                 </div>
 
-                <Button asChild variant={h ? "light" : "outline"} className="w-full">
+                <Button asChild variant="outline" className="w-full">
                   {t.to.startsWith("/#") ? (
                     <a href={t.to}>
                       Kontakta oss <Arrow />
@@ -138,6 +145,18 @@ const PricingSection = ({ showHeader = true }: { showHeader?: boolean }) => {
 
         <p className="text-center text-sm text-ink-mute mt-10">
           Ingen startavgift. Ingen bindningstid utöver vald period. Säg upp inför nästa period.
+        </p>
+        <p className="text-center text-sm text-ink-mute mt-2">
+          Priserna gäller leads-generering. Byråtjänsterna{" "}
+          {SERVICES.map((s, i) => (
+            <span key={s.slug}>
+              <Link to={`/byratjanster/${s.slug}`} className="text-primary hover:text-primary-hover underline underline-offset-4">
+                {s.name}
+              </Link>
+              {i < SERVICES.length - 2 ? ", " : i === SERVICES.length - 2 ? " och " : ""}
+            </span>
+          ))}{" "}
+          prissätts efter en kostnadsfri genomgång.
         </p>
       </div>
     </section>

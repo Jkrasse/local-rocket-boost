@@ -51,7 +51,7 @@ const LeadsPage = () => (
     <PageHero
       crumbs={["Leads-generering"]}
       label="Leads-generering"
-      title="Bli den enda i din stad som får förfrågningarna."
+      title="Få kvalificerade leads direkt till dig."
       lede="Vi bygger nischade directory-sajter och driver kvalificerad trafik via Google Ads, Meta Ads och SEO. Ditt företag blir vår rekommenderade partner och tar emot alla förfrågningar i din stad."
     >
       <div className="flex flex-wrap gap-3">

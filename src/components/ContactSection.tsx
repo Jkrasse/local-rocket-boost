@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Arrow, Check } from "@/components/icons";
 
-const CONTACT_EMAIL = "kontakt@localrocket.agency";
+const CONTACT_EMAIL = "kontakt@localrocket.se";
 const INTERESTS = ["Leads-generering", "Lokal SEO", "Google Ads", "Meta Ads", "Vet inte än"];
 
 export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultInterest?: string }) => {

@@ -46,8 +46,8 @@ const FAQSection = ({ items = faqs, title = "Vanliga frågor", id = "faq" }: Pro
           <h2 className="h-l">{title}</h2>
           <p className="muted mt-6 max-w-[380px]">
             Hittar du inte svaret? Mejla oss på{" "}
-            <a href="mailto:kontakt@localrocket.agency" className="text-primary hover:text-primary-hover">
-              kontakt@localrocket.agency
+            <a href="mailto:kontakt@localrocket.se" className="text-primary hover:text-primary-hover">
+              kontakt@localrocket.se
             </a>
             .
           </p>

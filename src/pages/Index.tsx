@@ -23,7 +23,7 @@ const organizationLd = {
   legalName: "J.Krasse Marketing AB",
   url: BASE_URL,
   logo: `${BASE_URL}/favicon-app.svg`,
-  email: "kontakt@localrocket.agency",
+  email: "kontakt@localrocket.se",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Ätrastigen 5",

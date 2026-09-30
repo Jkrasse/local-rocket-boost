@@ -73,7 +73,7 @@ const SeoNiche = () => {
     },
     {
       q: `Vad kostar det jämfört med att anlita en SEO-byrå?`,
-      a: `Vi har två fasta paket: Premium från 3 850 kr/mån och Growth från 6 160 kr/mån vid årsbetalning, med annonsbudget inkluderad. Ingen startavgift och ingen bindningstid utöver perioden.`,
+      a: `Vi har två fasta paket för leads-generering: Starter för 5 000 kr/mån och Premium för 8 000 kr/mån, med annonsbudget inkluderad. Betalar du årsvis får du 10 % rabatt. Ingen startavgift och ingen bindningstid utöver perioden. Du betalar aldrig per lead.`,
     },
     {
       q: `Kan jag kombinera det här med egen SEO eller en byrå?`,

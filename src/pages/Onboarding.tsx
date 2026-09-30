@@ -23,26 +23,28 @@ const PLANS: {
   price: string;
   features: string[];
 }[] = [
+  // Id:n är Stripe-nycklar och sparas i subscriptions.plan: "premium" visas som Starter, "growth" som Premium.
   {
     id: "premium",
-    name: "Premium",
+    name: "Starter",
     price: "5 000 kr/mån",
     features: [
       "Exklusiv Rekommenderad partner-plats",
-      "2 000 kr/mån i Google Ads-spend",
-      "2 000 kr/mån i Meta Ads-spend",
+      "1 000 kr/mån i Google Ads-spend",
+      "1 000 kr/mån i Meta Ads-spend",
       "Månadsrapport i dashboard",
       "Leads direkt till dig",
     ],
   },
   {
     id: "growth",
-    name: "Growth",
+    name: "Premium",
     price: "8 000 kr/mån",
     features: [
       "Exklusiv Rekommenderad partner-plats",
-      "4 000 kr/mån i Google Ads-spend",
-      "4 000 kr/mån i Meta Ads-spend",
+      "2 000 kr/mån i Google Ads-spend",
+      "2 000 kr/mån i Meta Ads-spend",
+      "Sökordsdomän med innehåll för din tjänst och stad",
       "Månadsrapport i dashboard",
       "Leads direkt till dig",
     ],

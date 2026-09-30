@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const BASE_URL = "https://localrocket.se";
-const TITLE = "Priser: fast månadspris för leadsgenerering | Local Rocket";
+const TITLE = "Priser för leadsgenerering: fast månadspris | Local Rocket";
 const DESCRIPTION =
-  "Två fasta paket med annonsbudget inkluderad: Premium från 3 850 kr/mån och Growth från 6 160 kr/mån vid årsbetalning. Ingen startavgift, ingen bindningstid, aldrig betala per lead.";
+  "Två fasta paket för leadsgenerering med annonsbudget inkluderad: Starter 5 000 kr/mån och Premium 8 000 kr/mån. 10 % rabatt vid årsbetalning. Ingen startavgift, ingen bindningstid, aldrig betala per lead.";
 
 const inAllPlans = [
   { icon: Globe, label: "Plats som rekommenderad partner", detail: "på en etablerad nischsajt i din bransch och stad" },
@@ -25,16 +25,24 @@ const priceFaq = [
     a: "Nej, aldrig. Du betalar ett fast månadspris och alla leads som kommer in i din stad är dina, oavsett hur många de blir.",
   },
   {
-    q: "Vad är skillnaden mellan Premium och Growth?",
-    a: "Paketen har samma innehåll, men Growth har dubbel annonsbudget: 2 000 kr Google Ads och 2 000 kr Meta Ads per månad i stället för 1 000 kr vardera. Mer budget betyder mer trafik och fler förfrågningar.",
+    q: "Vad är skillnaden mellan Starter och Premium?",
+    a: "Premium har dubbel annonsbudget, 2 000 kr Google Ads och 2 000 kr Meta Ads per månad i stället för 1 000 kr vardera, och en egen sökordsdomän med innehåll för din tjänst i din stad. Mer budget och fler ingångar betyder mer trafik och fler förfrågningar.",
+  },
+  {
+    q: "Vad är en sökordsdomän?",
+    a: "En domän som exakt matchar det dina kunder söker på, till exempel elektrikermalmo.se. Vi sätter upp den med innehåll om din tjänst i din stad, och alla förfrågningar därifrån går direkt till dig. Den ingår i Premium.",
   },
   {
     q: "Finns det någon bindningstid eller startavgift?",
-    a: "Ingen startavgift. Vid månadsbetalning förnyas avtalet månad för månad, vid årsbetalning gäller det i tolv månader till ett lägre pris. Du kan alltid säga upp inför nästa period.",
+    a: "Ingen startavgift. Vid månadsbetalning förnyas avtalet månad för månad. Betalar du årsvis får du 10 % rabatt och avtalet gäller i tolv månader. Du kan alltid säga upp inför nästa period.",
   },
   {
     q: "Kan jag byta paket senare?",
-    a: "Ja. Du kan uppgradera från Premium till Growth när du vill. Vill du synas i flera städer eller sätta en egen annonsbudget tar vi fram ett skräddarsytt upplägg.",
+    a: "Ja. Du kan byta mellan Starter och Premium när du vill. Vill du synas i flera städer eller sätta en egen annonsbudget tar vi fram ett skräddarsytt upplägg.",
+  },
+  {
+    q: "Gäller priserna även byråtjänsterna?",
+    a: "Nej. Priserna på den här sidan gäller leadsgenerering via våra directory-sajter. Lokal SEO, Google Ads och Meta Ads för ditt eget företag prissätts efter en kostnadsfri genomgång.",
   },
   {
     q: "Tillkommer moms?",
@@ -51,17 +59,17 @@ const offerCatalogLd = {
   offers: [
     {
       "@type": "Offer",
-      name: "Premium",
-      price: "3850",
+      name: "Starter",
+      price: "5000",
       priceCurrency: "SEK",
-      description: "Fast månadspris vid årsbetalning, exkl. moms. 5 000 kr/mån vid månadsbetalning.",
+      description: "Fast månadspris exkl. moms. 4 500 kr/mån vid årsbetalning.",
     },
     {
       "@type": "Offer",
-      name: "Growth",
-      price: "6160",
+      name: "Premium",
+      price: "8000",
       priceCurrency: "SEK",
-      description: "Fast månadspris vid årsbetalning, exkl. moms. 8 000 kr/mån vid månadsbetalning.",
+      description: "Fast månadspris exkl. moms, inklusive sökordsdomän med innehåll. 7 200 kr/mån vid årsbetalning.",
     },
   ],
   url: `${BASE_URL}/priser`,
@@ -91,14 +99,14 @@ const PricingPage = () => {
       <main>
         {/* HERO */}
         <section className="pt-10 pb-12 md:pt-16 md:pb-16">
-          <div className="container mx-auto px-4 max-w-container text-center">
-            <div className="eyebrow mb-5">Priser</div>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl tracking-tightest leading-[1.05] mb-6 max-w-3xl mx-auto">
-              Ett fast pris, allt <span className="italic-accent">ingår</span>.
+          <div className="container mx-auto px-5 md:px-10 max-w-container text-center">
+            <div className="label mb-6 justify-center">Priser för leads-generering</div>
+            <h1 className="h-xl mb-6 max-w-[900px] mx-auto text-balance" style={{ fontSize: "clamp(44px, 6vw, 92px)" }}>
+              Leads-generering till <span className="text-primary">fast pris.</span>
             </h1>
-            <p className="text-lg md:text-xl text-ink-soft max-w-2xl mx-auto">
-              Sajt, annonser, SEO och rapportering i ett månadspris. Ingen startavgift
-              och du betalar aldrig per lead.
+            <p className="lede mx-auto text-center">
+              Plats som rekommenderad partner, annonser, SEO och rapportering i ett
+              månadspris. Ingen startavgift och du betalar aldrig per lead.
             </p>
           </div>
         </section>

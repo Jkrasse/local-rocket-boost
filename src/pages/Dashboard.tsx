@@ -43,8 +43,8 @@ const STATUS_LABEL: Record<string, { label: string; variant: "default" | "second
 };
 
 const PLAN_LABEL: Record<string, string> = {
-  growth: "Growth",
-  premium: "Premium",
+  growth: "Premium",
+  premium: "Starter",
 };
 
 function formatDate(iso: string | null) {

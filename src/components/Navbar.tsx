@@ -2,10 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
-import { Arrow, Caret, ServiceIcon } from "@/components/icons";
+import { Arrow, Caret, LeadsIcon, ServiceIcon, type LeadsIconKey } from "@/components/icons";
 import { SERVICES } from "@/data/services";
 
 const APP_URL = "https://app.localrocket.se";
+
+const LEADS_ITEMS: { to: string; k: LeadsIconKey; name: string; short: string; anchor?: boolean }[] = [
+  { to: "/leadsgenerering", k: "how", name: "Så fungerar det", short: "Bli rekommenderad partner och få förfrågningarna i din stad." },
+  { to: "/#branscher", k: "industries", name: "Branscher", short: "Våra directory-sajter, en per bransch.", anchor: true },
+  { to: "/priser", k: "price", name: "Priser", short: "Fast månadspris med annonsbudget inkluderad." },
+];
+
+type Menu = "leads" | "services" | null;
 
 const navLink =
   "inline-flex items-center gap-1.5 h-10 px-[15px] rounded-pill text-[15.5px] font-medium tracking-[-0.01em] text-foreground hover:bg-background-warm transition-colors";
@@ -13,7 +21,7 @@ const navLink =
 const Navbar = () => {
   const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<Menu>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<number | null>(null);
 
@@ -25,7 +33,7 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    setOpen(false);
+    setOpen(null);
     setMobileOpen(false);
   }, [pathname]);
 
@@ -36,15 +44,15 @@ const Navbar = () => {
     };
   }, [mobileOpen]);
 
-  const enter = () => {
+  const enter = (m: Exclude<Menu, null>) => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current);
-    setOpen(true);
+    setOpen(m);
   };
   const leave = () => {
-    closeTimer.current = window.setTimeout(() => setOpen(false), 140);
+    closeTimer.current = window.setTimeout(() => setOpen(null), 140);
   };
 
-  const isLeads = pathname === "/leadsgenerering";
+  const isLeads = pathname.startsWith("/leadsgenerering") || pathname === "/priser";
   const isService = pathname.startsWith("/byratjanster/");
   const solid = scrolled || mobileOpen;
 
@@ -62,32 +70,60 @@ const Navbar = () => {
 
         {/* Desktop-länkar */}
         <div className="hidden lg:flex gap-0.5 justify-self-center">
-          <Link to="/leadsgenerering" className={`${navLink} ${isLeads ? "bg-background-warm" : ""}`}>
-            Leads-generering
-          </Link>
-
-          <div className="relative" onMouseEnter={enter} onMouseLeave={leave}>
+          {/* Leads-generering */}
+          <div className="relative" onMouseEnter={() => enter("leads")} onMouseLeave={leave}>
             <button
-              className={`${navLink} ${isService || open ? "bg-background-warm" : ""}`}
-              onClick={() => setOpen((v) => !v)}
-              aria-expanded={open}
+              className={`${navLink} ${isLeads || open === "leads" ? "bg-background-warm" : ""}`}
+              onClick={() => setOpen((v) => (v === "leads" ? null : "leads"))}
+              aria-expanded={open === "leads"}
+              aria-haspopup="true"
+            >
+              Leads-generering
+              <Caret className={`transition-transform duration-200 ${open === "leads" ? "rotate-180" : ""}`} />
+            </button>
+            <div className={`absolute left-1/2 top-[calc(100%+10px)] w-[560px] -translate-x-1/2 bg-background-elevated border border-line-soft rounded-[20px] shadow-float p-2.5 grid grid-cols-2 gap-1 transition-[opacity,transform] duration-[180ms] before:content-[''] before:absolute before:inset-x-0 before:-top-3 before:h-3 ${open === "leads" ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-1.5 pointer-events-none"}`}>
+              {LEADS_ITEMS.map((x) => {
+                const inner = (
+                  <>
+                    <span className="row-span-2 w-10 h-10 rounded-[12px] bg-primary-mist text-primary grid place-items-center">
+                      <LeadsIcon k={x.k} />
+                    </span>
+                    <b className="font-semibold text-[15.5px] tracking-[-0.01em] leading-tight">{x.name}</b>
+                    <small className="text-[13.5px] text-ink-mute leading-[1.4]">{x.short}</small>
+                  </>
+                );
+                return x.anchor ? (
+                  <a key={x.to} href={x.to} onClick={() => setOpen(null)} className="grid grid-cols-[40px_1fr] gap-x-3.5 gap-y-1 p-3.5 rounded-md text-foreground hover:bg-background transition-colors">{inner}</a>
+                ) : (
+                  <Link key={x.to} to={x.to} className="grid grid-cols-[40px_1fr] gap-x-3.5 gap-y-1 p-3.5 rounded-md text-foreground hover:bg-background transition-colors">{inner}</Link>
+                );
+              })}
+              <a href="/#kontakt" onClick={() => setOpen(null)} className="col-start-2 row-start-1 row-span-3 bg-primary text-background rounded-md p-5 flex flex-col justify-between gap-6 hover:bg-primary-hover transition-colors">
+                <b className="text-[22px] tracking-[-0.03em] font-semibold leading-[1.1]">Är din stad ledig?</b>
+                <small className="text-sm opacity-80 leading-[1.45]">
+                  En partner per bransch och stad. Boka en demo så kollar vi om platsen är ledig.
+                </small>
+                <span className="inline-flex items-center gap-2 font-semibold text-[15px]">
+                  Boka demo <Arrow className="w-[15px] h-[15px]" />
+                </span>
+              </a>
+            </div>
+          </div>
+
+          {/* Byråtjänster */}
+          <div className="relative" onMouseEnter={() => enter("services")} onMouseLeave={leave}>
+            <button
+              className={`${navLink} ${isService || open === "services" ? "bg-background-warm" : ""}`}
+              onClick={() => setOpen((v) => (v === "services" ? null : "services"))}
+              aria-expanded={open === "services"}
               aria-haspopup="true"
             >
               Byråtjänster
-              <Caret className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+              <Caret className={`transition-transform duration-200 ${open === "services" ? "rotate-180" : ""}`} />
             </button>
-
-            <div
-              className={`absolute left-1/2 top-[calc(100%+10px)] w-[560px] -translate-x-1/2 bg-background-elevated border border-line-soft rounded-[20px] shadow-float p-2.5 grid grid-cols-2 gap-1 transition-[opacity,transform] duration-[180ms] before:content-[''] before:absolute before:inset-x-0 before:-top-3 before:h-3 ${
-                open ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-1.5 pointer-events-none"
-              }`}
-            >
+            <div className={`absolute left-1/2 top-[calc(100%+10px)] w-[560px] -translate-x-1/2 bg-background-elevated border border-line-soft rounded-[20px] shadow-float p-2.5 grid grid-cols-2 gap-1 transition-[opacity,transform] duration-[180ms] before:content-[''] before:absolute before:inset-x-0 before:-top-3 before:h-3 ${open === "services" ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-1.5 pointer-events-none"}`}>
               {SERVICES.map((s) => (
-                <Link
-                  key={s.slug}
-                  to={`/byratjanster/${s.slug}`}
-                  className="grid grid-cols-[40px_1fr] gap-x-3.5 gap-y-1 p-3.5 rounded-md text-foreground hover:bg-background transition-colors"
-                >
+                <Link key={s.slug} to={`/byratjanster/${s.slug}`} className="grid grid-cols-[40px_1fr] gap-x-3.5 gap-y-1 p-3.5 rounded-md text-foreground hover:bg-background transition-colors">
                   <span className="row-span-2 w-10 h-10 rounded-[12px] bg-primary-mist text-primary grid place-items-center">
                     <ServiceIcon k={s.k} />
                   </span>
@@ -95,10 +131,7 @@ const Navbar = () => {
                   <small className="text-[13.5px] text-ink-mute leading-[1.4]">{s.short}</small>
                 </Link>
               ))}
-              <a
-                href="/#kontakt"
-                className="col-start-2 row-start-1 row-span-3 bg-primary text-background rounded-md p-5 flex flex-col justify-between gap-6 hover:bg-primary-hover transition-colors"
-              >
+              <a href="/#kontakt" onClick={() => setOpen(null)} className="col-start-2 row-start-1 row-span-3 bg-primary text-background rounded-md p-5 flex flex-col justify-between gap-6 hover:bg-primary-hover transition-colors">
                 <b className="text-[22px] tracking-[-0.03em] font-semibold leading-[1.1]">Osäker på vad som passar?</b>
                 <small className="text-sm opacity-80 leading-[1.45]">
                   Vi går igenom din synlighet idag och föreslår en plan. 30 minuter, kostnadsfritt.
@@ -110,8 +143,6 @@ const Navbar = () => {
             </div>
           </div>
 
-          <a href="/#branscher" className={navLink}>Branscher</a>
-          <Link to="/priser" className={`${navLink} ${pathname === "/priser" ? "bg-background-warm" : ""}`}>Priser</Link>
           <a href="/#om-oss" className={navLink}>Om oss</a>
         </div>
 
@@ -141,22 +172,25 @@ const Navbar = () => {
       {/* Mobilmeny */}
       {mobileOpen && (
         <div className="lg:hidden absolute top-full inset-x-0 h-[calc(100dvh-76px)] bg-background z-30 px-5 py-6 flex flex-col gap-1 overflow-y-auto">
-          <Link to="/leadsgenerering" className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line">
-            Leads-generering
-          </Link>
-          <span className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5">Byråtjänster</span>
+          <span className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5">Leads-generering</span>
+          {LEADS_ITEMS.map((x) =>
+            x.anchor ? (
+              <a key={x.to} href={x.to} onClick={() => setMobileOpen(false)} className="text-lg font-medium text-ink-soft py-2.5 pl-[18px] border-b border-line">
+                {x.name}
+              </a>
+            ) : (
+              <Link key={x.to} to={x.to} className="text-lg font-medium text-ink-soft py-2.5 pl-[18px] border-b border-line">
+                {x.name}
+              </Link>
+            ),
+          )}
+          <span className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 mt-3">Byråtjänster</span>
           {SERVICES.map((s) => (
-            <Link
-              key={s.slug}
-              to={`/byratjanster/${s.slug}`}
-              className="text-lg font-medium text-ink-soft py-2.5 pl-[18px] border-b border-line"
-            >
+            <Link key={s.slug} to={`/byratjanster/${s.slug}`} className="text-lg font-medium text-ink-soft py-2.5 pl-[18px] border-b border-line">
               {s.name}
             </Link>
           ))}
-          <a href="/#branscher" onClick={() => setMobileOpen(false)} className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line">Branscher</a>
-          <Link to="/priser" className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line">Priser</Link>
-          <a href="/#om-oss" onClick={() => setMobileOpen(false)} className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line">Om oss</a>
+          <a href="/#om-oss" onClick={() => setMobileOpen(false)} className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line mt-3">Om oss</a>
           <a href={`${APP_URL}/login`} className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line">Logga in</a>
           <Button asChild className="mt-6 w-full sm:hidden">
             <a href="/#kontakt" onClick={() => setMobileOpen(false)}>
