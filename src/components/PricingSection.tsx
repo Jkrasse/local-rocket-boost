@@ -28,7 +28,7 @@ const plans: Plan[] = [
       "A/B-testning",
       "Löpande optimering",
     ],
-    to: "/onboarding",
+    to: "/#kontakt",
   },
   {
     name: "Premium",
@@ -43,7 +43,7 @@ const plans: Plan[] = [
       "A/B-testning",
       "Löpande optimering",
     ],
-    to: "/onboarding",
+    to: "/#kontakt",
   },
   {
     name: "Skräddarsydd",
@@ -128,15 +128,9 @@ const PricingSection = ({ showHeader = true }: { showHeader?: boolean }) => {
                 </div>
 
                 <Button asChild variant="outline" className="w-full">
-                  {t.to.startsWith("/#") ? (
-                    <a href={t.to}>
-                      Kontakta oss <Arrow />
-                    </a>
-                  ) : (
-                    <Link to={t.to}>
-                      Kom igång <Arrow />
-                    </Link>
-                  )}
+                  <a href={t.to}>
+                    {t.monthly ? "Boka demo" : "Kontakta oss"} <Arrow />
+                  </a>
                 </Button>
               </div>
             );
