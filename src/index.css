@@ -154,7 +154,7 @@
   @media (min-width: 768px) { .section { padding: 128px 0; } }
 
   /* Typografiskala v3 */
-  .h-xl { font-size: clamp(52px, 8.4vw, 128px); letter-spacing: -0.055em; line-height: 0.9; font-weight: 600; }
+  .h-xl { font-size: clamp(48px, 7.8vw, 120px); letter-spacing: -0.055em; line-height: 0.9; font-weight: 600; }
   .h-l  { font-size: clamp(40px, 5.6vw, 80px); letter-spacing: -0.045em; line-height: 0.95; font-weight: 600; }
   .h-m  { font-size: clamp(30px, 3.4vw, 46px); letter-spacing: -0.035em; line-height: 1.02; font-weight: 600; }
   .h-s  { font-size: 24px; letter-spacing: -0.025em; line-height: 1.15; font-weight: 600; }

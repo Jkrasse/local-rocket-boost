@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import Showcase from "@/components/DirectoryPreview";
 import StepsSection from "@/components/StepsSection";
+import AdMockupsSection from "@/components/AdMockupsSection";
 import IndustriesSection from "@/components/IndustriesSection";
 import LeadExampleSection from "@/components/LeadExampleSection";
 import PricingSection from "@/components/PricingSection";
@@ -73,6 +74,7 @@ const LeadsPage = () => (
     </section>
 
     <StepsSection title="Så fungerar leads-generering." />
+    <AdMockupsSection />
 
     <section className="section">
       <div className="container mx-auto px-5 md:px-10 max-w-container">

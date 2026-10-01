@@ -116,7 +116,7 @@ const SeoNiche = () => {
               <div className="eyebrow mb-5 inline-flex items-center gap-2">
                 <Search className="w-3.5 h-3.5" /> Undertjänst till leadsgenerering
               </div>
-              <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl tracking-tightest leading-[1.02] mb-6">
+              <h1 className="font-serif text-[34px] sm:text-[44px] md:text-[64px] tracking-tightest leading-[1.02] mb-6">
                 SEO för {nameLower} som ger <span className="italic-accent">kunder</span>, inte bara klick.
               </h1>
               <p className="text-ink-soft text-lg md:text-xl max-w-2xl mb-8">

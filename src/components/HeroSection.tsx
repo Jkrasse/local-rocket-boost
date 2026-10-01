@@ -8,7 +8,7 @@ const HeroSection = () => {
     <section className="pt-12 md:pt-[72px] pb-16 md:pb-24 overflow-hidden">
       <div className="container mx-auto px-5 md:px-10 max-w-container">
         <div className="max-w-[980px]">
-          <h1 className="h-xl" style={{ fontSize: "clamp(50px, 7.2vw, 112px)" }}>
+          <h1 className="h-xl" style={{ fontSize: "clamp(46px, 6.6vw, 104px)" }}>
             Kvalificerade leads, <span className="text-primary">på autopilot.</span>
           </h1>
           <p className="lede mt-7 md:mt-9 max-w-[620px]">
