@@ -23,7 +23,7 @@ const Footer = () => {
     [
       "Företaget",
       [
-        { label: "Om oss", to: "/#om-oss" },
+        { label: "Om oss", to: "/om-oss" },
         { label: "Kontakt", to: "/#kontakt" },
         { label: "Logga in", to: `${APP_URL}/login`, external: true },
       ],

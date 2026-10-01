@@ -150,6 +150,7 @@
   .bg-dark-section .lede, .bg-dark-section .muted { color: rgba(244,241,234,.78); }
 
   /* Sektionsrytm v3: 128px desktop, 84px mobil */
+  [id] { scroll-margin-top: 84px; }
   .section { padding: 84px 0; position: relative; }
   @media (min-width: 768px) { .section { padding: 128px 0; } }
 

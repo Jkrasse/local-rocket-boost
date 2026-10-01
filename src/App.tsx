@@ -14,6 +14,8 @@ import TermsOfService from "./pages/TermsOfService.tsx";
 import CookiePolicy from "./pages/CookiePolicy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import NicheLanding from "./pages/NicheLanding.tsx";
+import AboutPage from "./pages/AboutPage.tsx";
+import ScrollManager from "./components/ScrollManager.tsx";
 
 const PORTAL_LOGIN = "https://app.localrocket.se/login";
 const PortalRedirect = () => {
@@ -31,6 +33,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+          <ScrollManager />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/leadsgenerering" element={<LeadsPage />} />
@@ -39,6 +42,7 @@ const App = () => (
             <Route path="/seo/:slug" element={<SeoNiche />} />
             <Route path="/sa-fungerar-det" element={<Navigate to="/leadsgenerering" replace />} />
             <Route path="/priser" element={<PricingPage />} />
+            <Route path="/om-oss" element={<AboutPage />} />
             <Route path="/integritetspolicy" element={<PrivacyPolicy />} />
             <Route path="/villkor" element={<TermsOfService />} />
             <Route path="/cookies" element={<CookiePolicy />} />

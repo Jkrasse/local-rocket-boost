@@ -143,7 +143,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          <a href="/#om-oss" className={navLink}>Om oss</a>
+          <Link to="/om-oss" className={`${navLink} ${pathname === "/om-oss" ? "bg-background-warm" : ""}`}>Om oss</Link>
         </div>
 
         {/* Höger: Logga in + Boka demo + hamburgare */}
@@ -190,7 +190,7 @@ const Navbar = () => {
               {s.name}
             </Link>
           ))}
-          <a href="/#om-oss" onClick={() => setMobileOpen(false)} className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line mt-3">Om oss</a>
+          <Link to="/om-oss" onClick={() => setMobileOpen(false)} className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line mt-3">Om oss</Link>
           <a href={`${APP_URL}/login`} className="text-[26px] font-semibold tracking-[-0.03em] text-foreground py-2.5 border-b border-line">Logga in</a>
           <Button asChild className="mt-6 w-full sm:hidden">
             <a href="/#kontakt" onClick={() => setMobileOpen(false)}>

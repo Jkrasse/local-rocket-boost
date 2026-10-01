@@ -26,10 +26,10 @@ const priceFaq = [
   },
   {
     q: "Vad är skillnaden mellan Starter och Premium?",
-    a: "Premium har dubbel annonsbudget, 2 000 kr Google Ads och 2 000 kr Meta Ads per månad i stället för 1 000 kr vardera, och en egen sökordsdomän med innehåll för din tjänst i din stad. Mer budget och fler ingångar betyder mer trafik och fler förfrågningar.",
+    a: "Premium har dubbel annonsbudget, 2 000 kr Google Ads och 2 000 kr Meta Ads per månad i stället för 1 000 kr vardera, och en exakt matchad domän med innehåll för din tjänst i din stad. Mer budget och fler ingångar betyder mer trafik och fler förfrågningar.",
   },
   {
-    q: "Vad är en sökordsdomän?",
+    q: "Vad är en exakt matchad domän?",
     a: "En domän som exakt matchar det dina kunder söker på, till exempel elektrikermalmo.se. Vi sätter upp den med innehåll om din tjänst i din stad, och alla förfrågningar därifrån går direkt till dig. Den ingår i Premium.",
   },
   {
@@ -69,7 +69,7 @@ const offerCatalogLd = {
       name: "Premium",
       price: "8000",
       priceCurrency: "SEK",
-      description: "Fast månadspris exkl. moms, inklusive sökordsdomän med innehåll. 7 200 kr/mån vid årsbetalning.",
+      description: "Fast månadspris exkl. moms, inklusive exakt matchad domän med innehåll. 7 200 kr/mån vid årsbetalning.",
     },
   ],
   url: `${BASE_URL}/priser`,

@@ -7,7 +7,6 @@ import Showcase from "@/components/DirectoryPreview";
 import StepsSection from "@/components/StepsSection";
 import AdMockupsSection from "@/components/AdMockupsSection";
 import IndustriesSection from "@/components/IndustriesSection";
-import LeadExampleSection from "@/components/LeadExampleSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection, { faqs } from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
@@ -109,7 +108,6 @@ const LeadsPage = () => (
     </section>
 
     <IndustriesSection />
-    <LeadExampleSection />
     <PricingSection />
     <FAQSection />
     <ContactSection />

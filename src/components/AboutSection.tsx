@@ -1,3 +1,7 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Arrow } from "@/components/icons";
+
 const AboutSection = () => (
   <section id="om-oss" className="section bg-warm">
     <div className="container mx-auto px-5 md:px-10 max-w-container">
@@ -15,6 +19,11 @@ const AboutSection = () => (
           alla förfrågningar. Exklusivt, transparent och till fast pris.
         </p>
       </div>
+      <Button variant="outline" asChild className="mt-10 md:mt-12">
+        <Link to="/om-oss">
+          Mer om oss <Arrow />
+        </Link>
+      </Button>
     </div>
   </section>
 );

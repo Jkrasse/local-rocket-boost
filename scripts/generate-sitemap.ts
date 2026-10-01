@@ -12,7 +12,9 @@ interface Entry {
 
 const entries: Entry[] = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
-  { path: "/sa-fungerar-det", changefreq: "monthly", priority: "0.8" },
+  { path: "/leadsgenerering", changefreq: "monthly", priority: "0.9" },
+  { path: "/priser", changefreq: "monthly", priority: "0.8" },
+  { path: "/om-oss", changefreq: "monthly", priority: "0.6" },
   { path: "/integritetspolicy", changefreq: "yearly", priority: "0.3" },
   { path: "/villkor", changefreq: "yearly", priority: "0.3" },
   { path: "/cookies", changefreq: "yearly", priority: "0.3" },

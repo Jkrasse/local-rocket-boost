@@ -5,15 +5,11 @@ export type FaqItem = { q: string; a: string };
 export const faqs: FaqItem[] = [
   {
     q: "Hur snabbt får jag mina första leads?",
-    a: "Sajten och annonserna lanseras inom 14 dagar från avtal. Därefter brukar de första förfrågningarna komma inom de närmaste veckorna, beroende på bransch och stad.",
+    a: "Det kan vara från första dagen. Våra sajter är redan indexerade och får trafik, så förfrågningarna kan börja komma så snart ditt företag ligger uppe som rekommenderad partner.",
   },
   {
     q: "Vad är en \"kvalificerad lead\"?",
-    a: "En person som aktivt sökt efter din typ av tjänst, fyllt i kontaktformulär med beskrivning, lämnat telefonnummer eller e-post och matchar din geografiska region.",
-  },
-  {
-    q: "Måste jag ha ett befintligt varumärke eller hemsida?",
-    a: "Nej. Vi bygger din synlighet på våra directory-sajter, så även små lokala aktörer kan konkurrera med de stora. Din egen hemsida är en bonus, inte ett krav.",
+    a: "En besökare som har klickat på ring, mejla eller gå till webbplats hos ditt företag, eller som har fyllt i ett kontaktformulär.",
   },
   {
     q: "Hur skiljer ni er från offertplattformar?",

@@ -19,7 +19,7 @@ const baseFaq = (n: string, plural: string) => [
   },
   {
     q: `Hur snabbt börjar jag få leads?`,
-    a: `Sajten och annonserna lanseras inom 14 dagar från avtal. Därefter brukar de första förfrågningarna komma inom de närmaste veckorna, beroende på bransch och stad.`,
+    a: `Det kan vara från första dagen. Våra sajter är redan indexerade och får trafik, så förfrågningarna kan börja komma så snart ditt företag ligger uppe som rekommenderad partner.`,
   },
   {
     q: `Är leadsen exklusiva för mig?`,
