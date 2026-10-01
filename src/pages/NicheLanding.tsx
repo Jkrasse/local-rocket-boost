@@ -71,9 +71,9 @@ const NicheLanding = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg" className="rounded-full">
-                  <Link to="/signup">
+                  <a href="/#kontakt">
                     Säkra din stad <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
+                  </a>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="rounded-full">
                   <Link to="/leadsgenerering">Så fungerar det</Link>
@@ -229,9 +229,9 @@ const NicheLanding = () => {
                 Vi släpper bara in ett företag per ort. När platsen är tagen är konkurrenterna utestängda.
               </p>
               <Button asChild size="lg" className="rounded-full bg-background text-foreground hover:bg-background/90">
-                <Link to="/signup">
+                <a href="/#kontakt">
                   Kolla om din stad är ledig <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
+                </a>
               </Button>
             </div>
           </div>
