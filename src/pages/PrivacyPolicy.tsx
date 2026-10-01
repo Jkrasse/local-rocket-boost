@@ -29,7 +29,6 @@ const PrivacyPolicy = () => {
                 <li>Kontaktuppgifter (namn, e-post, telefonnummer) när du fyller i formulär</li>
                 <li>Företagsinformation som du lämnar i samband med beställning</li>
                 <li>Teknisk data som IP-adress, webbläsartyp och besöksbeteende via cookies</li>
-                <li>Betalningsinformation som hanteras av vår betalningsleverantör Stripe</li>
               </ul>
             </section>
 
