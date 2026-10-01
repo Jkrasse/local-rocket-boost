@@ -27,7 +27,7 @@ const TermsOfService = () => {
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">3. Priser och betalning</h2>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Alla priser anges exklusive moms om inget annat anges</li>
-                <li>Betalning sker månadsvis via Stripe</li>
+                <li>Betalning sker mot faktura</li>
                 <li>Annonsbudget som ingår i paketet specificeras i respektive paketbeskrivning</li>
               </ul>
             </section>

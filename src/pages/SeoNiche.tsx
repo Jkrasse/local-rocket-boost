@@ -116,7 +116,7 @@ const SeoNiche = () => {
               <div className="eyebrow mb-5 inline-flex items-center gap-2">
                 <Search className="w-3.5 h-3.5" /> Undertjänst till leadsgenerering
               </div>
-              <h1 className="font-serif text-[34px] sm:text-[44px] md:text-[64px] tracking-tightest leading-[1.02] mb-6">
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl tracking-tightest leading-[1.02] mb-6">
                 SEO för {nameLower} som ger <span className="italic-accent">kunder</span>, inte bara klick.
               </h1>
               <p className="text-ink-soft text-lg md:text-xl max-w-2xl mb-8">
@@ -127,9 +127,9 @@ const SeoNiche = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg" className="rounded-full">
-                  <Link to="/signup">
+                  <a href="/#kontakt">
                     Säkra din stad <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
+                  </a>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="rounded-full">
                   <Link to="/leadsgenerering">Så fungerar det</Link>
@@ -254,9 +254,9 @@ const SeoNiche = () => {
                 Kolla om din stad fortfarande är ledig.
               </p>
               <Button asChild size="lg" className="rounded-full bg-background text-foreground hover:bg-background/90">
-                <Link to="/signup">
+                <a href="/#kontakt">
                   Kolla om din stad är ledig <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
+                </a>
               </Button>
             </div>
           </div>

@@ -22,7 +22,7 @@ const PageHero = ({ crumbs, label, title, lede, children }: Props) => (
         ))}
       </nav>
       <div className="label label-green mb-7">{label}</div>
-      <h1 className="h-xl max-w-[1100px] text-balance" style={{ fontSize: "clamp(44px, 6.4vw, 100px)" }}>
+      <h1 className="h-xl max-w-[1100px] text-balance" style={{ fontSize: "clamp(48px, 7vw, 108px)" }}>
         {title}
       </h1>
       <div className="split mt-10 md:mt-12 md:items-end">
