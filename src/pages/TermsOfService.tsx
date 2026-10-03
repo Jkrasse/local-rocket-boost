@@ -10,31 +10,31 @@ const TermsOfService = () => {
       <main className="pt-10 pb-20 md:pt-16">
         <div className="container mx-auto px-4 max-w-3xl">
           <h1 className="font-heading text-4xl font-bold mb-8">Allmänna villkor</h1>
-          <p className="text-muted-foreground mb-6">Senast uppdaterad: 2026-07-29</p>
+          <p className="text-muted-foreground mb-6">Senast uppdaterad: 2026-10-03</p>
 
           <div className="prose prose-lg max-w-none space-y-6 text-foreground/85">
             <section>
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">1. Om tjänsten</h2>
-              <p>Local Rocket är en tjänst som drivs av J.Krasse Marketing AB (org.nr anges vid förfrågan). Vi hjälper lokala företag att generera leads genom att lista dem som rekommenderade partners på våra nischade directory-sidor samt genom annonsering via Google Ads och Meta Ads.</p>
+              <p>Local Rocket är en tjänst som drivs av J.Krasse Marketing AB (org.nr 559319-5554), Holgersgatan 10A, 311 30 Falkenberg. Vi hjälper lokala företag att generera leads genom att lista dem som rekommenderade partners på våra nischade directory-sidor samt genom annonsering via Google Ads och Meta Ads.</p>
             </section>
 
             <section>
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">2. Avtalets ingående</h2>
-              <p>Avtal ingås när du beställer en tjänst via vår webbplats och betalningen har genomförts. Du bekräftar att du har rätt att teckna avtal för det företag du representerar.</p>
+              <p>Avtal ingås när parterna skriftligen, till exempel via e-post, har kommit överens om paket, stad och startdatum. Du bekräftar att du har rätt att teckna avtal för det företag du representerar.</p>
             </section>
 
             <section>
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">3. Priser och betalning</h2>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Alla priser anges exklusive moms om inget annat anges</li>
-                <li>Betalning sker mot faktura</li>
+                <li>Betalning sker mot faktura i förskott per period</li>
                 <li>Annonsbudget som ingår i paketet specificeras i respektive paketbeskrivning</li>
               </ul>
             </section>
 
             <section>
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">4. Uppsägning</h2>
-              <p>Tjänsten löper tillsvidare med en månads uppsägningstid. Uppsägning sker skriftligen via e-post till kontakt@localrocket.se.</p>
+              <p>Vid månadsbetalning löper avtalet tillsvidare med en månads uppsägningstid. Vid årsbetalning gäller avtalet i tolv månader och löper därefter tillsvidare med en månads uppsägningstid. Uppsägning sker skriftligen via e-post till kontakt@localrocket.se.</p>
             </section>
 
             <section>

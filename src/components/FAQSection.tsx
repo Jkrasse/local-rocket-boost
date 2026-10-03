@@ -17,7 +17,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: "Är jag bunden till något avtal?",
-    a: "Nej, ingen bindningstid utöver vald period. Vid månadsbetalning förnyas avtalet månad för månad och du kan säga upp inför nästa period.",
+    a: "Nej, ingen bindningstid vid månadsbetalning. Avtalet löper tillsvidare med en månads uppsägningstid. Väljer du årsbetalning gäller avtalet i tolv månader.",
   },
   {
     q: "Vad händer om jag inte är nöjd med leadkvaliteten?",

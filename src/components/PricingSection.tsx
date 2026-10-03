@@ -138,7 +138,7 @@ const PricingSection = ({ showHeader = true }: { showHeader?: boolean }) => {
         </div>
 
         <p className="text-center text-sm text-ink-mute mt-10">
-          Ingen startavgift. Ingen bindningstid utöver vald period. Säg upp inför nästa period.
+          Ingen startavgift. Ingen bindningstid – en månads uppsägningstid.
         </p>
         <p className="text-center text-sm text-ink-mute mt-2">
           Priserna gäller leads-generering. Byråtjänsterna{" "}
