@@ -34,7 +34,7 @@ const priceFaq = [
   },
   {
     q: "Finns det någon bindningstid eller startavgift?",
-    a: "Ingen startavgift. Vid månadsbetalning förnyas avtalet månad för månad. Betalar du årsvis får du 10 % rabatt och avtalet gäller i tolv månader. Du kan alltid säga upp inför nästa period.",
+    a: "Ingen startavgift och ingen bindningstid vid månadsbetalning – avtalet löper tillsvidare med en månads uppsägningstid. Betalar du årsvis får du 10 % rabatt och avtalet gäller i tolv månader.",
   },
   {
     q: "Kan jag byta paket senare?",
