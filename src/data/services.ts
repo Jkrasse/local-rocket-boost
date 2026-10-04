@@ -8,7 +8,7 @@ export type Service = {
 };
 
 export const SERVICES: Service[] = [
-  { slug: "lokal-seo", k: "seo", name: "Lokal SEO", short: "Syns först på Google Maps och i lokala sökningar." },
+  { slug: "lokal-seo", k: "seo", name: "Lokal SEO", short: "Bättre synlighet på Google och i AI-sök." },
   { slug: "google-ads", k: "google", name: "Google Ads", short: "Sökannonser som når kunder när de letar." },
   { slug: "meta-ads", k: "meta", name: "Meta Ads", short: "Annonser på Facebook och Instagram i ditt område." },
 ];
@@ -21,15 +21,17 @@ export type ServiceContent = {
   incl: [string, string][];
   fit: string[];
   faq: [string, string][];
+  /** Lyft sektion med egen CTA, visas efter "Det här ingår" */
+  highlight?: { label: string; title: string; body: string; points: string[] };
 };
 
 // Tjänstesidornas copy är utkast enligt handoff v3 och ska granskas innan publicering.
 export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   "lokal-seo": {
-    title: "Syns först när någon söker i din stad.",
-    lede: "Vi optimerar din Google-företagsprofil, din hemsida och dina lokala omnämnanden så att du rankar i kartan och i de organiska resultaten där dina kunder bor.",
-    metaTitle: "Lokal SEO för lokala företag: syns i Google Maps och lokala sökningar | Local Rocket",
-    metaDescription: "Lokal SEO från Local Rocket: Google-företagsprofil, lokala landningssidor, teknisk SEO, omdömen och rankningsrapport. Fast månadspris, ingen bindningstid.",
+    title: "Lokal SEO: förbättra din synlighet på Google och i AI-sök.",
+    lede: "Vi optimerar din Google-företagsprofil, din hemsida och dina lokala omnämnanden så att du syns i kartan, i sökresultaten och i AI-svaren när någon letar efter din tjänst. Som kund får du också en plats som rekommenderad partner på vår directory-sajt.",
+    metaTitle: "Lokal SEO: förbättra din synlighet på Google och i AI-sök | Local Rocket",
+    metaDescription: "Lokal SEO från Local Rocket: Google-företagsprofil, lokala landningssidor, teknisk SEO, omdömen och en plats som rekommenderad partner på vår directory-sajt. Fast månadspris, ingen bindningstid.",
     incl: [
       ["Google-företagsprofil", "Komplett uppsättning, kategorier, tjänster, bilder och löpande inlägg."],
       ["Lokala landningssidor", "En sida per ort eller stadsdel du vill synas i, skriven för att ranka."],
@@ -38,6 +40,16 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
       ["Lokala länkar och kataloger", "Konsekventa uppgifter i de kataloger och sajter Google litar på."],
       ["Rankningsrapport", "Månadsvis uppföljning av positioner i kartan och i sökresultaten."],
     ],
+    highlight: {
+      label: "Ingår i lokal SEO",
+      title: "En plats som rekommenderad partner.",
+      body: "Vi använder våra egna directory-sajter i SEO-arbetet. Har vi en sajt i din bransch listas ditt företag där som rekommenderad partner i din stad, med omdömen, kontaktvägar och länk till din hemsida.",
+      points: [
+        "En relevant länk från en sajt i din egen bransch",
+        "Fler ställen där Google och AI-sök hittar ditt företag",
+        "Förfrågningar från sajtens besökare går direkt till dig",
+      ],
+    },
     fit: [
       "Du har en fysisk plats eller ett tydligt serviceområde",
       "Du vill ha trafik som inte försvinner när annonserna stängs av",
@@ -47,7 +59,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
       ["Hur lång tid tar lokal SEO?", "De första förbättringarna i kartan syns ofta inom några veckor. Stabila topplaceringar tar vanligtvis tre till sex månader beroende på konkurrens."],
       ["Behöver jag en ny hemsida?", "Oftast inte. Vi arbetar med din befintliga sajt och bygger till de sidor som saknas."],
       ["Vad skiljer lokal SEO från vanlig SEO?", "Lokal SEO fokuserar på sökningar med geografisk avsikt, som \"elektriker Uppsala\", och på Google Maps. Företagsprofilen och lokala signaler väger tungt."],
-      ["Kan jag kombinera med leads-generering?", "Ja. Många partners kör båda: leads via våra directory-sajter och lokal SEO för det egna varumärket."],
+      ["Hur hänger lokal SEO ihop med era directory-sajter?", "Har vi en directory-sajt i din bransch får du som SEO-kund en plats som rekommenderad partner i din stad. Det ger en relevant länk till din hemsida och ännu en plats där kunder hittar dig."],
     ],
   },
   "google-ads": {

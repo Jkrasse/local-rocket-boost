@@ -32,13 +32,13 @@ const plans: Plan[] = [
   },
   {
     name: "Premium",
-    description: "Dubbel annonsbudget och en exakt matchad domän för din tjänst i din stad.",
+    description: "Dubbel annonsbudget och en exaktmatchad domän för din tjänst i din stad.",
     monthly: 8000,
     features: [
       "1 stad + alla undersidor",
       "Google Ads (inkl. 2 000 kr spend)",
       "Meta Ads (inkl. 2 000 kr spend)",
-      "Exakt matchad domän med innehåll, t.ex. elektrikermalmo.se",
+      "Exaktmatchad domän med innehåll, t.ex. elektrikermalmo.se",
       "Månadsrapporter",
       "A/B-testning",
       "Löpande optimering",

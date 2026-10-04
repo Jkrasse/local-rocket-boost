@@ -3,19 +3,29 @@ import { Button } from "@/components/ui/button";
 import { Arrow, Check } from "@/components/icons";
 
 const CONTACT_EMAIL = "kontakt@localrocket.se";
-const INTERESTS = ["Leads-generering", "Lokal SEO", "Google Ads", "Meta Ads", "Vet inte än"];
+const UNSURE = "Vet inte än";
+const INTERESTS = ["Leads-generering", "Lokal SEO", "Google Ads", "Meta Ads", UNSURE];
 
 export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultInterest?: string }) => {
   const [sent, setSent] = useState(false);
-  const [v, setV] = useState({ name: "", company: "", email: "", phone: "", interest: defaultInterest });
-  const set = (k: keyof typeof v) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const [v, setV] = useState({ name: "", company: "", email: "", phone: "" });
+  const [interests, setInterests] = useState<string[]>([defaultInterest]);
+  const set = (k: keyof typeof v) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setV((s) => ({ ...s, [k]: e.target.value }));
+
+  // Flera tjänster kan väljas. "Vet inte än" står för sig själv.
+  const toggle = (i: string) =>
+    setInterests((cur) => {
+      if (i === UNSURE) return cur.includes(UNSURE) ? [] : [UNSURE];
+      const rest = cur.filter((x) => x !== UNSURE);
+      return rest.includes(i) ? rest.filter((x) => x !== i) : [...rest, i];
+    });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const subject = encodeURIComponent(`Demoförfrågan: ${v.company || v.name}`);
     const body = encodeURIComponent(
-      `Namn: ${v.name}\nFöretag: ${v.company}\nE-post: ${v.email}\nTelefon: ${v.phone}\nIntresserad av: ${v.interest}\n\nJag vill boka en demo av Local Rocket.`,
+      `Namn: ${v.name}\nFöretag: ${v.company}\nE-post: ${v.email}\nTelefon: ${v.phone}\nIntresserad av: ${interests.length ? interests.join(", ") : UNSURE}\n\nJag vill boka en demo av Local Rocket.`,
     );
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setSent(true);
@@ -30,8 +40,11 @@ export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultI
           </div>
           <h3 className="h-m">Tack!</h3>
           <p className="muted mt-2.5">
-            Ditt mejlprogram öppnas med förfrågan ifylld. Går det inte, mejla oss direkt på {CONTACT_EMAIL}.
-            Vi hör av oss inom kort.
+            Ditt mejlprogram öppnas med förfrågan ifylld. Går det inte, mejla oss direkt på{" "}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary hover:text-primary-hover">
+              {CONTACT_EMAIL}
+            </a>
+            . Vi hör av oss inom kort.
           </p>
         </div>
       ) : (
@@ -57,14 +70,33 @@ export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultI
               <input className="field" type="tel" placeholder="070-123 45 67" value={v.phone} onChange={set("phone")} autoComplete="tel" />
             </label>
           </div>
-          <label className="flabel">
-            Jag är intresserad av
-            <select className="field" value={v.interest} onChange={set("interest")}>
-              {INTERESTS.map((i) => (
-                <option key={i}>{i}</option>
-              ))}
-            </select>
-          </label>
+          <fieldset className="flabel">
+            <legend className="mb-2">
+              Jag är intresserad av <span className="font-normal text-ink-mute">(välj en eller flera)</span>
+            </legend>
+            <div className="flex flex-wrap gap-2">
+              {INTERESTS.map((i) => {
+                const on = interests.includes(i);
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    role="checkbox"
+                    aria-checked={on}
+                    onClick={() => toggle(i)}
+                    className={`inline-flex items-center gap-2 h-11 px-4 rounded-pill border text-[15px] font-medium transition-colors ${
+                      on
+                        ? "bg-primary border-primary text-white"
+                        : "bg-background border-line text-foreground hover:border-primary"
+                    }`}
+                  >
+                    {on && <Check className="w-3.5 h-3.5" />}
+                    {i}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
           <Button type="submit" size="lg" className="w-full mt-2">
             Boka demo <Arrow />
           </Button>
@@ -99,7 +131,15 @@ const ContactSection = ({
           ].map(([k, val]) => (
             <div key={k} className="flex justify-between gap-6 py-3.5 border-t border-background/20 text-[15px]">
               <span className="text-background/60 shrink-0">{k}</span>
-              <span className="font-semibold text-right">{val}</span>
+              <span className="font-semibold text-right">
+                {val === CONTACT_EMAIL ? (
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="underline underline-offset-4 decoration-background/40 hover:decoration-background">
+                    {val}
+                  </a>
+                ) : (
+                  val
+                )}
+              </span>
             </div>
           ))}
         </div>

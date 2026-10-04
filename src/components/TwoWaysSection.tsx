@@ -48,8 +48,8 @@ const TwoWaysSection = () => (
           <div>
             <h3 className="h-m mb-4">Byråtjänster</h3>
             <p className="muted max-w-[440px]">
-              Vi sköter marknadsföringen för ditt eget företag, med samma metoder som driver
-              våra directory-sajter.
+              Vi sköter SEO och annonsering för ditt eget företag. I SEO-arbetet använder vi
+              våra directory-sajter, så du får också en plats som rekommenderad partner.
             </p>
           </div>
           <div className="grid">

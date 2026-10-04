@@ -38,7 +38,7 @@ const CookiePolicy = () => {
 
             <section>
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">Kontakt</h2>
-              <p>Har du frågor om vår cookiepolicy? Kontakta oss på kontakt@localrocket.se.</p>
+              <p>Har du frågor om vår cookiepolicy? Kontakta oss på <a href="mailto:kontakt@localrocket.se" className="text-primary underline underline-offset-2 hover:text-primary-hover">kontakt@localrocket.se</a>.</p>
             </section>
           </div>
         </div>

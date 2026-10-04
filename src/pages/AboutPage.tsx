@@ -183,7 +183,15 @@ const AboutPage = () => (
               className={`flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-6 py-5 ${i ? "border-t border-line-soft" : ""}`}
             >
               <span className="text-ink-mute shrink-0">{k}</span>
-              <span className="font-semibold sm:text-right">{v}</span>
+              <span className="font-semibold sm:text-right">
+                {v.includes("@") ? (
+                  <a href={`mailto:${v}`} className="text-primary hover:text-primary-hover transition-colors">
+                    {v}
+                  </a>
+                ) : (
+                  v
+                )}
+              </span>
             </div>
           ))}
         </div>

@@ -34,7 +34,7 @@ const TermsOfService = () => {
 
             <section>
               <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">4. Uppsägning</h2>
-              <p>Vid månadsbetalning löper avtalet tillsvidare med en månads uppsägningstid. Vid årsbetalning gäller avtalet i tolv månader och löper därefter tillsvidare med en månads uppsägningstid. Uppsägning sker skriftligen via e-post till kontakt@localrocket.se.</p>
+              <p>Vid månadsbetalning löper avtalet tillsvidare med en månads uppsägningstid. Vid årsbetalning gäller avtalet i tolv månader och löper därefter tillsvidare med en månads uppsägningstid. Uppsägning sker skriftligen via e-post till <a href="mailto:kontakt@localrocket.se" className="text-primary underline underline-offset-2 hover:text-primary-hover">kontakt@localrocket.se</a>.</p>
             </section>
 
             <section>

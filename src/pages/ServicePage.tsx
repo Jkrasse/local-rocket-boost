@@ -19,6 +19,25 @@ const PROCESS: [string, string][] = [
   ["Löpande", "Optimering varje vecka, rapport varje månad."],
 ];
 
+const CONTACT_EMAIL = "kontakt@localrocket.se";
+
+/** Återkommande CTA-rad på tjänstesidorna */
+const CtaRow = ({ className = "" }: { className?: string }) => (
+  <div className={`flex flex-wrap items-center gap-x-6 gap-y-3 ${className}`}>
+    <Button asChild>
+      <a href="#kontakt">
+        Boka genomgång <Arrow />
+      </a>
+    </Button>
+    <span className="text-[15px] text-ink-soft">
+      eller mejla{" "}
+      <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-primary hover:text-primary-hover">
+        {CONTACT_EMAIL}
+      </a>
+    </span>
+  </div>
+);
+
 const ServicePage = () => {
   const { slug = "" } = useParams<{ slug: string }>();
   const meta = getService(slug);
@@ -59,7 +78,7 @@ const ServicePage = () => {
       <PageHero crumbs={["Byråtjänster", meta.name]} label={`Byråtjänster · ${meta.name}`} title={s.title} lede={s.lede}>
         <div className="flex flex-wrap gap-3">
           <Button asChild>
-            <a href="/#kontakt">
+            <a href="#kontakt">
               Boka genomgång <Arrow />
             </a>
           </Button>
@@ -88,8 +107,43 @@ const ServicePage = () => {
               </div>
             ))}
           </div>
+          <CtaRow className="mt-10 md:mt-12 pt-8 border-t border-line" />
         </div>
       </section>
+
+      {s.highlight && (
+        <section className="section !pb-0">
+          <div className="container mx-auto px-5 md:px-10 max-w-container">
+            <div className="rounded-2xl bg-primary text-background p-7 md:p-14 grid md:grid-cols-2 gap-10 md:gap-16 md:items-center">
+              <div>
+                <div className="label mb-6 !text-background/70">{s.highlight.label}</div>
+                <h2 className="h-l text-background text-balance">{s.highlight.title}</h2>
+                <p className="mt-6 text-[18px] leading-[1.5] text-background/85 max-w-[520px]">{s.highlight.body}</p>
+                <div className="flex flex-wrap gap-3 mt-9">
+                  <Button variant="light" asChild>
+                    <a href="#kontakt">
+                      Boka genomgång <Arrow />
+                    </a>
+                  </Button>
+                  <Button variant="outlineLight" asChild>
+                    <Link to="/leadsgenerering">Se våra directory-sajter</Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="grid">
+                {s.highlight.points.map((x) => (
+                  <div key={x} className="flex items-center gap-4 py-5 border-t border-background/25 text-lg md:text-xl font-semibold tracking-[-0.02em]">
+                    <span className="w-8 h-8 rounded-full bg-background text-primary grid place-items-center shrink-0">
+                      <Check className="w-3.5 h-3.5" />
+                    </span>
+                    {x}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Passar dig som */}
       <section className="section">
@@ -97,6 +151,12 @@ const ServicePage = () => {
           <div>
             <div className="label mb-6">Passar dig som</div>
             <h2 className="h-l">Är {meta.name} rätt för dig?</h2>
+            <p className="lede mt-7">Osäker? Vi går igenom ditt läge på 30 minuter och säger ärligt vad vi tror ger mest.</p>
+            <Button variant="outline" asChild className="mt-8">
+              <a href="#kontakt">
+                Boka genomgång <Arrow />
+              </a>
+            </Button>
           </div>
           <div className="grid">
             {s.fit.map((x) => (
@@ -133,6 +193,7 @@ const ServicePage = () => {
               </div>
             ))}
           </div>
+          <CtaRow className="mt-10 md:mt-12" />
         </div>
       </section>
 
