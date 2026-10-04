@@ -101,7 +101,7 @@ const PricingPage = () => {
         <section className="pt-10 pb-12 md:pt-16 md:pb-16">
           <div className="container mx-auto px-5 md:px-10 max-w-container text-center">
             <div className="label mb-6 justify-center">Priser för leads-generering</div>
-            <h1 className="h-xl mb-6 max-w-[900px] mx-auto text-balance" style={{ fontSize: "clamp(44px, 6vw, 92px)" }}>
+            <h1 className="h-xl mb-6 max-w-[900px] mx-auto text-balance" style={{ fontSize: "clamp(36px, 4.6vw, 72px)", lineHeight: 0.98, letterSpacing: "-0.045em" }}>
               Leads-generering till <span className="text-primary">fast pris.</span>
             </h1>
             <p className="lede mx-auto text-center">
