@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { SERVICES } from "@/data/services";
-import { niches } from "@/data/niches";
+import { SITES } from "@/data/sites";
 
 const APP_URL = "https://app.localrocket.se";
-const nicheList = Object.values(niches);
-const lowerName = (name: string) => (name === "VVS" ? "VVS" : name.toLowerCase());
+// Bara branscher där sajten är live
+const nicheList = SITES.map((s) => ({ slug: s.nicheSlug, name: s.label }));
 
 const flink = "text-[15px] text-ink-soft hover:text-primary transition-colors";
 
@@ -75,7 +75,7 @@ const Footer = () => {
             <span className="font-semibold text-ink-soft">SEO per bransch:</span>
             {nicheList.map((n) => (
               <Link key={n.slug} to={`/seo/${n.slug}`} className="hover:text-primary transition-colors">
-                SEO för {lowerName(n.name)}
+                SEO för {n.name.toLowerCase()}
               </Link>
             ))}
           </p>

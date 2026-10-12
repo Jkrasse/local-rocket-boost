@@ -160,6 +160,22 @@ export const niches: Record<string, NicheContent> = {
     ],
     faq: baseFaq("bilhandlare", "bilhandlare"),
   },
+  kiropraktor: {
+    slug: "kiropraktor",
+    name: "Kiropraktorer",
+    nameSingular: "kiropraktor",
+    nameSingularDef: "kiropraktorn",
+    audienceTitle: "kiropraktorer",
+    service: "kiropraktik vid rygg-, nack- och ledbesvär",
+    searchPhrases: ["kiropraktor stockholm", "akut kiropraktor", "kiropraktor nära mig"],
+    city: "Stockholm",
+    benefits: [
+      { title: "Patienter som redan söker", body: "Vi når människor som letar efter en kiropraktor i din stad, mitt i sökningen." },
+      { title: "Bokningar, inte bara klick", body: "Besökaren kan ringa, mejla eller boka tid direkt från din profil på sajten." },
+      { title: "En kiropraktor per stad", body: "Bara en klinik per stad är rekommenderad partner. Platsen är din så länge du är med." },
+    ],
+    faq: baseFaq("kiropraktor", "kiropraktorer"),
+  },
 };
 
 // Gamla slugs som ska skickas vidare till nya adresser (behåller ev. indexerade länkar)

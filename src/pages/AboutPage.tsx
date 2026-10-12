@@ -6,6 +6,7 @@ import PageHero from "@/components/PageHero";
 import ContactSection from "@/components/ContactSection";
 import { Button } from "@/components/ui/button";
 import { Arrow, Diag } from "@/components/icons";
+import { SITES } from "@/data/sites";
 
 const BASE_URL = "https://localrocket.se";
 const TITLE = "Om oss: marknadsförare som bygger leadflöden åt lokala företag | Local Rocket";
@@ -29,19 +30,6 @@ const PRINCIPLES: [string, string][] = [
     "Raka besked",
     "Du ser vilka leads som kommit in och vad vi gör med annonserna. Fungerar något inte säger vi det och justerar.",
   ],
-];
-
-const SITES: { name: string; url: string; text: string }[] = [
-  {
-    name: "Tandläkarkollen.nu",
-    url: "https://tandlakarkollen.nu",
-    text: "Hjälper patienter att hitta en tandläkare i sin stad.",
-  },
-  {
-    name: "Bilhandlarkollen.se",
-    url: "https://bilhandlarkollen.se",
-    text: "Hjälper bilköpare att hitta en bilhandlare i sin stad.",
-  },
 ];
 
 const FACTS: [string, string][] = [
@@ -98,20 +86,20 @@ const AboutPage = () => (
 
     <section className="section bg-warm">
       <div className="container mx-auto px-5 md:px-10 max-w-container">
-        <div className="label mb-7">Varför vi finns</div>
+        <div className="label mb-7">Det här gör vi</div>
         <h2 className="h-l max-w-[1100px] text-balance">
-          Bra hantverkare ska inte behöva vara bra på <span className="italic-accent">annonsering</span>.
+          Vi sköter marknadsföringen. <span className="italic-accent">Ni stänger affärerna.</span>
         </h2>
         <div className="split mt-10 md:mt-14">
           <p className="lede !max-w-none">
-            De flesta lokala företag är duktiga på sitt jobb men har varken tid eller lust att
-            lära sig Google Ads, Meta Ads och SEO. Samtidigt börjar nästan varje kund sin resa
-            med en sökning.
+            Local Rocket är en digital marknadsföringsbyrå för lokala företag. Vi bygger och
+            driver egna directory-sajter, en per bransch, och gör SEO, Google Ads och Meta Ads
+            åt företag som vill synas bättre under eget namn.
           </p>
           <p className="lede !max-w-none">
-            Därför bygger vi sajterna, sköter annonserna och tar hand om tekniken. Ditt företag
-            presenteras som rekommenderad partner i din stad, och när någon hör av sig landar
-            förfrågan direkt hos dig.
+            Vi tar hand om sajterna, annonserna och tekniken, och följer upp vad som ger
+            förfrågningar. Ni får samtalen och mejlen direkt och kan lägga tiden på kunderna
+            i stället för på annonskonton.
           </p>
         </div>
       </div>
@@ -153,7 +141,7 @@ const AboutPage = () => (
         </div>
         <div>
           {SITES.map((s) => (
-            <a key={s.url} href={s.url} target="_blank" rel="noopener" className="ind group">
+            <a key={s.domain} href={`https://${s.domain}`} target="_blank" rel="noopener" className="ind group">
               <span>
                 {s.name}
                 <small className="block mt-1.5">{s.text}</small>

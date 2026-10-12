@@ -1,16 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Diag } from "@/components/icons";
-import { niches } from "@/data/niches";
-
-const list = Object.values(niches);
-
-// Publika domäner för de nischsajter som är live. Övriga visar ingen domän ännu.
-const DOMAINS: Record<string, string> = {
-  stadfirmor: "stadfirmor.nu",
-  tandlakare: "tandlakarkollen.nu",
-  bilhandlare: "bilhandlarkollen.se",
-};
+import { SITES } from "@/data/sites";
 
 const IndustriesSection = () => (
   <section id="branscher" className="section">
@@ -25,11 +16,11 @@ const IndustriesSection = () => (
       </div>
 
       <div className="border-b border-line">
-        {list.map((n) => (
-          <Link key={n.slug} to={`/leadsgenerering/${n.slug}`} className="ind">
-            <span>{n.name}</span>
+        {SITES.map((s) => (
+          <Link key={s.nicheSlug} to={`/leadsgenerering/${s.nicheSlug}`} className="ind">
+            <span>{s.label}</span>
             <span className="flex items-center gap-5">
-              {DOMAINS[n.slug] && <small>{DOMAINS[n.slug]}</small>}
+              <small>{s.name}</small>
               <Diag />
             </span>
           </Link>
