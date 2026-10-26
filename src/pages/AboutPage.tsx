@@ -6,7 +6,7 @@ import PageHero from "@/components/PageHero";
 import ContactSection from "@/components/ContactSection";
 import { Button } from "@/components/ui/button";
 import { Arrow, Diag } from "@/components/icons";
-import { SITES } from "@/data/sites";
+import { INDUSTRIES } from "@/data/sites";
 
 const BASE_URL = "https://localrocket.se";
 const TITLE = "Om oss: marknadsförare som bygger leadflöden åt lokala företag | Local Rocket";
@@ -140,14 +140,14 @@ const AboutPage = () => (
           </p>
         </div>
         <div>
-          {SITES.map((s) => (
-            <a key={s.domain} href={`https://${s.domain}`} target="_blank" rel="noopener" className="ind group">
+          {INDUSTRIES.map((s) => (
+            <Link key={s.nicheSlug} to={`/leadsgenerering/${s.nicheSlug}`} className="ind group">
               <span>
-                {s.name}
+                {s.label}
                 <small className="block mt-1.5">{s.text}</small>
               </span>
               <Diag />
-            </a>
+            </Link>
           ))}
           <div className="border-t border-line" />
         </div>

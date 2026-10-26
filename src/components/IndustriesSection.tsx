@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Diag } from "@/components/icons";
-import { SITES } from "@/data/sites";
+import { INDUSTRIES } from "@/data/sites";
 
 const IndustriesSection = () => (
   <section id="branscher" className="section">
@@ -16,13 +16,10 @@ const IndustriesSection = () => (
       </div>
 
       <div className="border-b border-line">
-        {SITES.map((s) => (
+        {INDUSTRIES.map((s) => (
           <Link key={s.nicheSlug} to={`/leadsgenerering/${s.nicheSlug}`} className="ind">
             <span>{s.label}</span>
-            <span className="flex items-center gap-5">
-              <small>{s.name}</small>
-              <Diag />
-            </span>
+            <Diag />
           </Link>
         ))}
       </div>

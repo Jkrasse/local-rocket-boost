@@ -160,6 +160,22 @@ export const niches: Record<string, NicheContent> = {
     ],
     faq: baseFaq("bilhandlare", "bilhandlare"),
   },
+  byggfirmor: {
+    slug: "byggfirmor",
+    name: "Byggfirmor",
+    nameSingular: "byggfirma",
+    nameSingularDef: "byggfirman",
+    audienceTitle: "byggfirmor",
+    service: "renovering, tillbyggnad och nybyggnation",
+    searchPhrases: ["byggfirma stockholm", "renovera badrum", "bygga altan"],
+    city: "Stockholm",
+    benefits: [
+      { title: "Kunder som planerar ett projekt", body: "Vi når människor som söker efter en byggfirma i din stad, när de är redo att begära offert." },
+      { title: "Offertförfrågningar direkt till dig", body: "Besökaren kan ringa, mejla eller skicka en offertförfrågan direkt från din profil på sajten." },
+      { title: "En byggfirma per stad", body: "Bara en byggfirma per stad är rekommenderad partner. Platsen är din så länge du är med." },
+    ],
+    faq: baseFaq("byggfirma", "byggfirmor"),
+  },
   kiropraktor: {
     slug: "kiropraktor",
     name: "Kiropraktorer",

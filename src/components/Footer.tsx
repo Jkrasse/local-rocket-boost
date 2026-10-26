@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { SERVICES } from "@/data/services";
-import { SITES } from "@/data/sites";
+import { INDUSTRIES } from "@/data/sites";
 
 const APP_URL = "https://app.localrocket.se";
 // Bara branscher där sajten är live
-const nicheList = SITES.map((s) => ({ slug: s.nicheSlug, name: s.label }));
+const nicheList = INDUSTRIES.map((s) => ({ slug: s.nicheSlug, name: s.label }));
 
 const flink = "text-[15px] text-ink-soft hover:text-primary transition-colors";
 
