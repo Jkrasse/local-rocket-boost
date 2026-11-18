@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<title>Local Rocket – FB-annonsmallar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;color:#1B1A17;-webkit-font-smoothing:antialiased;background:#DcD7C9}
+  body.render{background:transparent}
+  .serif{font-family:'Newsreader',Georgia,serif;font-weight:400}
+  .eyb{text-transform:uppercase}
+  .ab{overflow:hidden;position:relative}
+  .theme{
+    --paper:#F4F2EC;--ink:#1B1A17;--ink2:#4A473F;--muted:#6E6B62;--rule:#CFC9BB;
+    --onDeepTitle:#F6F3EA;--lightBtn:#F4F1E7;--ruleOnDeep:rgba(244,241,231,.22);
+    --deep:oklch(from var(--brand) .32 .065 h);
+    --brandOnDeep:oklch(from var(--brand) .80 .08 h);
+    --textOnDeep:oklch(from var(--brand) .95 .02 h);
+    --mutedOnDeep:oklch(from var(--brand) .92 .03 h);
+    --hiOnDeep:#F2C27A;--starOnPaper:#B4491A;
+  }
+  .gallery{display:grid;grid-template-columns:repeat(2,max-content);gap:48px;padding:48px}
+  .gallery .cap{font-size:22px;color:#4A473F;margin-top:12px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const DEMO = {
+  sajt:'TandläkarGuiden.se', masthead:'Tandläkarguiden', plats:'Göteborg', ar:'2026',
+  fraga:'Söker du tandläkare i Göteborg?', partner:'Vasa Viktoria Tandvård',
+  betyg:'4,9', omdomen:'214', cta:'Se vår partner',
+  theme:{ brand:'#196DAA', deep:'#0F3553', brandOnDeep:'#8EC3EA', textOnDeep:'#E4EFF8', mutedOnDeep:'#DCEAF6' }
+};
+const SIZES = {A:[1080,1080],B:[1080,1080],C:[1080,1080],D:[1080,1350],E:[1080,1080],F:[1080,1080],G:[1080,1080],H:[1080,1350]};
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const seal = n => `<svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6l2.3 2.1 3.1-.4.9 3 3 .9-.4 3.1 2.1 2.3-2.1 2.3.4 3.1-3 .9-.9 3-3.1-.4L12 21.4l-2.3-2.1-3.1.4-.9-3-3-.9.4-3.1L1.4 12l2.1-2.3-.4-3.1 3-.9.9-3 3.1.4z"/><path d="M9 12l2 2 4-4"/></svg>`;
+// Partnerportalen: inga stjärnor om betyget är under 4,5 (mallen visar annars alltid fem)
+const stars = (size, color, ls) => (typeof data !== 'undefined' && data.dolStjarnor) ? '' : `<span style="font-size:${size}px;color:${color};letter-spacing:${ls}px">★★★★★</span>`;
+const btn = (d, light, fs, pad) => `<div style="display:inline-flex;align-self:flex-start;align-items:center;gap:16px;background:${light?'var(--lightBtn)':'var(--deep)'};color:${light?'var(--deep)':'var(--lightBtn)'};padding:${pad};border-radius:3px;font-size:${fs}px;font-weight:${light?700:600}">${esc(d.cta)}<span style="font-size:${fs+2}px">→</span></div>`;
+const hairDeep = w => `background-image:repeating-linear-gradient(90deg, rgba(244,241,231,.04) 0 1px, rgba(0,0,0,0) 1px ${w}px)`;
+const rating = (d, size, color, ls, tsize, tcolor, gap, suffix='omdömen', mid=' · ') =>
+  `<div style="display:flex;align-items:center;gap:${gap}px">${stars(size,color,ls)}<span style="font-size:${tsize}px;color:${tcolor};font-weight:500">${d.omdomen ? esc(d.betyg)+mid+esc(d.omdomen)+' '+suffix : esc(d.betyg)+' stjärnor'}</span></div>`;
+const masthead = (d, dark) => `<div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:4px solid ${dark?'var(--lightBtn)':'var(--ink)'};padding-bottom:24px">
+  <span class="serif" style="font-size:62px;letter-spacing:-.01em;color:${dark?'var(--onDeepTitle)':'var(--ink)'}">${esc(d.masthead)}</span>
+  <span class="eyb" style="font-size:25px;font-weight:600;letter-spacing:.14em;color:${dark?'var(--mutedOnDeep)':'var(--muted)'}">${esc(d.plats)} · ${esc(d.ar)}</span></div>`;
+const foot = (d, dark, border=true, fs=29, pad='22px 38px') => `<div style="display:flex;align-items:center;justify-content:space-between;${border?`border-top:1px solid ${dark?'var(--ruleOnDeep)':'var(--rule)'};padding-top:30px`:'padding-top:6px'}">
+  <span style="font-size:27px;color:${dark?'var(--mutedOnDeep)':'var(--muted)'}">${esc(d.sajt)}</span>${btn(d,dark,fs,pad).replace('align-self:flex-start;','')}</div>`;
+
+const T = {
+A: d => `<div class="ab" style="width:1080px;height:1080px;display:flex">
+  <div style="width:440px;background-color:var(--deep);${hairDeep(64)};padding:64px 48px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:30px">
+    <div style="color:var(--brandOnDeep)">${seal(112)}</div>
+    <div class="eyb" style="font-size:23px;font-weight:700;letter-spacing:.18em;color:var(--hiOnDeep);line-height:1.5">Rekommenderad<br>partner</div>
+    <div class="serif" style="font-size:54px;line-height:1.1;color:var(--onDeepTitle)">${esc(d.partner)}</div>
+    <div><div>${stars(32,'var(--hiOnDeep)',4)}</div><div style="font-size:25px;color:var(--textOnDeep);margin-top:10px">${d.omdomen ? esc(d.betyg)+' · '+esc(d.omdomen)+' omdömen' : esc(d.betyg)+' stjärnor'}</div></div>
+  </div>
+  <div style="flex:1;background:var(--paper);padding:80px 72px;display:flex;flex-direction:column;justify-content:center;gap:36px">
+    <div class="eyb" style="font-size:25px;font-weight:600;letter-spacing:.16em;color:var(--brand)">${esc(d.sajt)}</div>
+    <h2 class="serif" style="font-size:88px;line-height:1.05;letter-spacing:-.025em;text-wrap:pretty">${esc(d.fraga)}</h2>
+    <p style="font-size:34px;line-height:1.4;color:var(--ink2);text-wrap:pretty">Vi rekommenderar ${esc(d.partner)}.</p>
+    ${btn(d,false,31,'26px 42px')}
+  </div></div>`,
+
+B: d => `<div class="ab" style="width:1080px;height:1080px;display:flex">
+  <div style="flex:1;background-color:var(--deep);background-image:radial-gradient(90% 60% at 0% 0%, rgba(244,241,231,.10), rgba(244,241,231,0) 70%);padding:80px 72px;display:flex;flex-direction:column;justify-content:center;gap:36px">
+    <div class="eyb" style="font-size:25px;font-weight:600;letter-spacing:.16em;color:var(--brandOnDeep)">${esc(d.sajt)}</div>
+    <h2 class="serif" style="font-size:88px;line-height:1.05;letter-spacing:-.025em;color:var(--onDeepTitle);text-wrap:pretty">${esc(d.fraga)}</h2>
+    <p class="serif" style="font-size:40px;font-style:italic;line-height:1.3;color:var(--textOnDeep)">Det här är vår rekommenderade partner.</p>
+  </div>
+  <div style="width:440px;background:var(--paper);padding:64px 48px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:30px;border-left:1px solid var(--rule)">
+    <div style="color:var(--brand)">${seal(112)}</div>
+    <div class="serif" style="font-size:54px;line-height:1.1">${esc(d.partner)}</div>
+    <div><div>${stars(32,'var(--starOnPaper)',4)}</div><div style="font-size:25px;color:var(--ink2);margin-top:10px">${d.omdomen ? esc(d.betyg)+' · '+esc(d.omdomen)+' omdömen' : esc(d.betyg)+' stjärnor'}</div></div>
+    ${btn(d,false,28,'24px 34px').replace('align-self:flex-start;','')}
+  </div></div>`,
+
+C: d => `<div class="ab" style="width:1080px;height:1080px;display:flex;flex-direction:column">
+  <div style="height:540px;background-color:var(--deep);${hairDeep(76)};padding:0 88px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+    <div class="eyb" style="font-size:25px;font-weight:600;letter-spacing:.16em;color:var(--brandOnDeep)">${esc(d.sajt)}</div>
+    <h2 class="serif" style="font-size:96px;line-height:1.04;letter-spacing:-.025em;color:var(--onDeepTitle);text-wrap:pretty">${esc(d.fraga)}</h2>
+  </div>
+  <div style="flex:1;background:var(--paper);padding:0 88px;display:flex;align-items:center;justify-content:space-between;gap:40px">
+    <div>
+      <div class="eyb" style="font-size:24px;font-weight:700;letter-spacing:.18em;color:var(--starOnPaper)">Vi rekommenderar</div>
+      <div class="serif" style="font-size:64px;letter-spacing:-.01em;margin-top:14px">${esc(d.partner)}</div>
+      <div style="margin-top:14px">${rating(d,36,'var(--starOnPaper)',5,28,'var(--ink2)',18)}</div>
+      <div style="margin-top:30px">${btn(d,false,30,'24px 40px')}</div>
+    </div>
+    <div style="color:var(--brand);flex-shrink:0">${seal(112)}</div>
+  </div></div>`,
+
+D: d => `<div class="ab" style="width:1080px;height:1350px;display:flex;flex-direction:column">
+  <div style="height:640px;background-color:var(--deep);${hairDeep(76)};padding:0 88px;display:flex;flex-direction:column;justify-content:center;gap:30px">
+    <div class="eyb" style="font-size:26px;font-weight:600;letter-spacing:.16em;color:var(--brandOnDeep)">${esc(d.sajt)}</div>
+    <h2 class="serif" style="font-size:108px;line-height:1.03;letter-spacing:-.03em;color:var(--onDeepTitle);text-wrap:pretty">${esc(d.fraga)}</h2>
+  </div>
+  <div style="flex:1;background:var(--paper);padding:0 88px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:28px">
+    <div style="color:var(--brand)">${seal(112)}</div>
+    <div class="serif" style="font-size:40px;font-style:italic;color:var(--ink2)">Det här är vår rekommenderade partner</div>
+    <div class="serif" style="font-size:72px;letter-spacing:-.015em;line-height:1.05">${esc(d.partner)}</div>
+    ${rating(d,40,'var(--starOnPaper)',5,30,'var(--ink2)',20)}
+    ${btn(d,false,33,'28px 46px').replace('align-self:flex-start;','')}
+  </div></div>`,
+
+E: d => `<div class="ab" style="width:1080px;height:1080px;background:var(--paper);padding:72px 80px;display:flex;flex-direction:column">
+  ${masthead(d,false)}
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:30px">
+    <div class="eyb" style="font-size:26px;font-weight:700;letter-spacing:.14em;color:var(--starOnPaper)">${esc(d.fraga)}</div>
+    <div class="serif" style="font-size:48px;font-style:italic;color:var(--ink2);line-height:1">Vi rekommenderar</div>
+    <h2 class="serif" style="font-size:${d.partner.length>26?96:112}px;line-height:1.02;letter-spacing:-.03em;text-wrap:pretty">${esc(d.partner)}</h2>
+    ${rating(d,42,'var(--starOnPaper)',6,31,'var(--ink2)',22,'omdömen',' av 5 · ')}
+  </div>
+  ${foot(d,false)}</div>`,
+
+F: d => `<div class="ab" style="width:1080px;height:1080px;background:var(--paper);padding:72px 80px;display:flex;flex-direction:column">
+  ${masthead(d,false)}
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:40px">
+    <h2 class="serif" style="font-size:104px;line-height:1.03;letter-spacing:-.03em;text-wrap:pretty">${esc(d.fraga)}</h2>
+    <div style="display:flex;align-items:center;gap:36px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:34px 0">
+      <div style="color:var(--brand);flex-shrink:0">${seal(96)}</div>
+      <div>
+        <div class="eyb" style="font-size:23px;font-weight:700;letter-spacing:.16em;color:var(--starOnPaper)">Vår rekommenderade partner</div>
+        <div class="serif" style="font-size:56px;letter-spacing:-.01em;margin-top:10px">${esc(d.partner)}</div>
+        <div style="margin-top:10px">${rating(d,32,'var(--starOnPaper)',4,27,'var(--ink2)',16)}</div>
+      </div>
+    </div>
+  </div>
+  ${foot(d,false,false)}</div>`,
+
+G: d => `<div class="ab" style="width:1080px;height:1080px;background-color:var(--deep);background-image:radial-gradient(100% 70% at 100% 0%, rgba(244,241,231,.10), rgba(244,241,231,0) 65%);color:var(--lightBtn);padding:72px 80px;display:flex;flex-direction:column">
+  ${masthead(d,true)}
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:30px">
+    <div class="eyb" style="font-size:26px;font-weight:700;letter-spacing:.14em;color:var(--hiOnDeep)">${esc(d.fraga)}</div>
+    <div class="serif" style="font-size:48px;font-style:italic;color:var(--brandOnDeep);line-height:1">Vi rekommenderar</div>
+    <h2 class="serif" style="font-size:${d.partner.length>26?96:112}px;line-height:1.02;letter-spacing:-.03em;color:var(--onDeepTitle);text-wrap:pretty">${esc(d.partner)}</h2>
+    ${rating(d,42,'var(--hiOnDeep)',6,31,'var(--textOnDeep)',22,'omdömen',' av 5 · ')}
+  </div>
+  ${foot(d,true)}</div>`,
+
+H: d => `<div class="ab" style="width:1080px;height:1350px;background:var(--paper);padding:72px 80px;display:flex;flex-direction:column">
+  ${masthead(d,false)}
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:36px">
+    <h2 class="serif" style="font-size:112px;line-height:1.02;letter-spacing:-.03em;text-wrap:pretty">${esc(d.fraga)}</h2>
+    <div style="height:1px;background:var(--rule)"></div>
+    <div class="serif" style="font-size:46px;font-style:italic;color:var(--ink2)">Det här är vår rekommenderade partner.</div>
+    <div style="display:flex;align-items:center;gap:32px">
+      <div style="color:var(--brand);flex-shrink:0">${seal(96)}</div>
+      <div>
+        <div class="serif" style="font-size:66px;letter-spacing:-.015em">${esc(d.partner)}</div>
+        <div style="margin-top:12px">${rating(d,38,'var(--starOnPaper)',5,29,'var(--ink2)',18)}</div>
+      </div>
+    </div>
+  </div>
+  ${foot(d,false,true,31,'26px 44px')}</div>`
+};
+
+function themeStyle(t){
+  const map={brand:'--brand',deep:'--deep',brandOnDeep:'--brandOnDeep',textOnDeep:'--textOnDeep',mutedOnDeep:'--mutedOnDeep',highlightOnDeep:'--hiOnDeep',starOnPaper:'--starOnPaper'};
+  return Object.entries(t||{}).filter(([k,v])=>map[k]&&v).map(([k,v])=>`${map[k]}:${v}`).join(';');
+}
+
+const params = new URLSearchParams(location.search);
+// Partnerportalen skickar annonsdatan som JSON i ?d=… (render.mjs använder window.__AD__)
+let urlAd = null;
+try { urlAd = params.get('d') ? JSON.parse(params.get('d')) : null; } catch (e) { urlAd = null; }
+const ext = urlAd || window.__AD__ || null;
+const data = Object.assign({}, DEMO, ext || {});
+data.theme = Object.assign({}, (ext ? {} : DEMO.theme), (ext||{}).theme);
+const t = (params.get('mall') || 'all').toUpperCase();
+const root = document.getElementById('root');
+const wrap = html => `<div class="theme" style="${themeStyle(data.theme)}">${html}</div>`;
+
+if (!T[t]) {
+  root.className = 'gallery';
+  root.innerHTML = Object.keys(T).map(k => `<div>${wrap(T[k](data))}<div class="cap">${k} · ${SIZES[k].join('×')}</div></div>`).join('');
+} else {
+  document.body.classList.add('render');
+  root.innerHTML = `<div id="ad" style="width:${SIZES[t][0]}px;height:${SIZES[t][1]}px">${wrap(T[t](data))}</div>`;
+}
+window.__AD_SIZES__ = SIZES;
+</script>
+</body>
+</html>

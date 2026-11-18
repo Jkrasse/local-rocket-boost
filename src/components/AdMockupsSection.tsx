@@ -1,85 +1,251 @@
-import { BadgeCheck, Globe, MessageCircle, MoreHorizontal, Search, Share2, Star, ThumbsUp, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Globe, MessageCircle, MoreHorizontal, Search, Share2, ThumbsUp, X } from "lucide-react";
 
-const PARTNER = "Ditt Företag AB";
-const CITY = "Uppsala";
+const P = "Ditt Företag AB";
+const C = "Uppsala";
+const BETYG = "Betyg 4,8 av 5 från 190 omdömen.";
 const ASSETS = "https://lzefyygjrofswefrhbsd.supabase.co/storage/v1/object/public/site-assets";
 
-/** En kollen-sajts annonsprofil. Texterna skrivs per bransch så mockupen ser ut som riktiga annonser. */
-type AdProfile = {
-  brand: string; // "Bilhandlarkollen"
-  domain: string; // "bilhandlarkollen.se"
-  owner: string; // "Bilhandlarkollens", eller "vår" när genitiv blir konstig
-  icon?: string; // favicon, annars ritas bilhandlarmärket
-  color: string; // sajtens primärfärg
-  noun: string; // "bilhandlare"
-  path: string; // tjänstesegmentet i URL:en
-  query: string; // sökningen i Google-mockupen
-  headline: string; // annonsrubrikens första del, före " Uppsala | ..."
-  googleTail: string; // slutet av sökannonsens beskrivning
+/**
+ * En annonsvinkel. Google- och Meta-annonsen byter alltid tillsammans, så att
+ * besökaren ser samma budskap i båda kanalerna. Vinklarna motsvarar sajtens
+ * undertjänster och följer samma stil som annonsexemplen i partnerportalen.
+ */
+type Variant = {
+  label: string; // knappen, t.ex. "Akut tandvård"
+  path: string; // URL-segment i sökannonsen
+  query: string; // sökningen
+  headline: string; // annonsrubriken före " | Ditt Företag AB"
+  desc: string; // sökannonsens beskrivning
   chips: string[];
-  metaOpen: string; // inledning i Meta-inlägget
-  metaTail: string; // uppmaning sist i Meta-inlägget
-  example: string; // "en bilhandlare"
+  fraga: string; // rubriken i Meta-bilden
+  meta: string; // inläggstexten
 };
 
-const AD_PROFILES: Record<string, AdProfile> = {
-  bilhandlare: {
-    brand: "Bilhandlarkollen", domain: "bilhandlarkollen.se", owner: "Bilhandlarkollens", color: "#1E3354",
-    noun: "bilhandlare", path: "bilhandlare", query: "bilhandlare uppsala", headline: "Bilhandlare",
-    googleTail: "Se bilar i lager och boka provkörning.", chips: ["Bilar i lager", "Inbyte", "Boka provkörning"],
-    metaOpen: "Dags för ny bil i Uppsala? 🚗", metaTail: "Kika in och boka provkörning.", example: "en bilhandlare",
+type Profile = {
+  site: string; // "Tandläkarkollen.nu", visas som avsändare
+  domain: string;
+  icon?: string; // favicon, annars ritas bilhandlarmärket
+  color: string; // sajtens primärfärg, styr Meta-mallarna
+  noun: string; // "tandläkarklinik"
+  variants: Variant[];
+};
+
+const v = (
+  label: string,
+  path: string,
+  query: string,
+  headline: string,
+  desc: string,
+  chips: string[],
+  fraga: string,
+  meta: string,
+): Variant => ({ label, path, query, headline, desc, chips, fraga, meta });
+
+const PROFILES: Record<string, Profile> = {
+  tandlakare: {
+    site: "Tandläkarkollen.nu", domain: "tandlakarkollen.nu", icon: `${ASSETS}/tandlakare/favicon-192-v1.png`,
+    color: "hsl(205 75% 38%)", noun: "tandläkarklinik",
+    variants: [
+      v("Tandläkare", "tandlakare", "tandläkare uppsala", "Tandläkare Uppsala",
+        `${P} är vår rekommenderade tandläkarklinik i ${C}. ${BETYG} Boka tid enkelt.`,
+        ["Undersökning", "Tandhygienist", "Boka tid"], `Letar du efter tandläkare i ${C}?`,
+        `Letar du efter en ny tandläkare? 🦷 ${P} är Tandläkarkollens rekommenderade tandläkarklinik i ${C}, med betyget 4,8 från 190 omdömen.`),
+      v("Uppskjutet besök", "tandlakare", "boka tandläkare uppsala", `Boka Tandläkare i ${C}`,
+        `Dags för undersökning? Boka tid hos ${P}, vår rekommenderade klinik i ${C}. ${BETYG}`,
+        ["Undersökning", "Boka tid"], "Har du skjutit fram ditt tandläkarbesök?",
+        `Det är lätt att skjuta upp. Boka en undersökning hos ${P}, vår rekommenderade tandläkarklinik i ${C}.`),
+      v("Akut tandvård", "akut-tandvard", "akut tandläkare uppsala", `Akut Tandvård ${C}`,
+        `Ont i tanden? Kontakta ${P}, vår rekommenderade klinik i ${C}. ${BETYG}`,
+        ["Akut tandvård", "Ring direkt", "Boka tid"], `Behöver du akut tandvård i ${C}?`,
+        `Ont i tanden? Kontakta ${P}, Tandläkarkollens rekommenderade klinik för akut tandvård i ${C}.`),
+      v("Tandblekning", "tandblekning", "tandblekning uppsala", `Tandblekning i ${C}`,
+        `Vill du ha vitare tänder? ${P} är vår rekommenderade klinik i ${C}. Tandblekning, Invisalign och implantat.`,
+        ["Tandblekning", "Invisalign", "Tandimplantat"], "Drömmer du om ett vitare leende?",
+        `Tandblekning eller Invisalign? ✨ ${P} är vår rekommenderade klinik för estetisk tandvård i ${C}.`),
+    ],
   },
   elektriker: {
-    brand: "Elfirmakollen", domain: "elfirmakollen.se", owner: "Elfirmakollens", icon: `${ASSETS}/elektriker/favicon-192-v1.png`,
-    color: "hsl(220 60% 22%)", noun: "elektriker", path: "elektriker", query: "elektriker uppsala", headline: "Elektriker",
-    googleTail: "Begär offert på elinstallation, laddbox eller felsökning.", chips: ["Elinstallation", "Laddbox", "Begär offert"],
-    metaOpen: "Behöver du en elektriker i Uppsala? ⚡", metaTail: "Begär offert direkt.", example: "en elektriker",
+    site: "Elfirmakollen.se", domain: "elfirmakollen.se", icon: `${ASSETS}/elektriker/favicon-192-v1.png`,
+    color: "hsl(220 60% 30%)", noun: "elektriker",
+    variants: [
+      v("Elektriker", "elektriker", "elektriker uppsala", "Elektriker Uppsala",
+        `${P} är vår rekommenderade elektriker i ${C}. ${BETYG} Begär offert direkt.`,
+        ["Elinstallation", "Elbesiktning", "Begär offert"], `Behöver du en elektriker i ${C}?`,
+        `Behöver du hjälp med elen hemma? ⚡ ${P} är Elfirmakollens rekommenderade elektriker i ${C}, med betyget 4,8 från 190 omdömen.`),
+      v("Laddbox", "installera-laddbox", "installera laddbox uppsala", `Installera Laddbox i ${C}`,
+        `Ska du ladda elbilen hemma? Begär offert från ${P}, vår rekommenderade elektriker i ${C}. ${BETYG}`,
+        ["Installera laddbox", "Begär offert"], "Dags att installera laddbox hemma?",
+        `Ny elbil? 🔌 Begär offert på laddbox från ${P}, vår rekommenderade elektriker i ${C}.`),
+      v("Byta elcentral", "byta-elcentral", "byta elcentral uppsala", `Byta Elcentral i ${C}`,
+        `Säkringar som löser ut? Begär offert från ${P}, vår rekommenderade elektriker i ${C}. ${BETYG}`,
+        ["Byta elcentral", "Elbesiktning", "Begär offert"], "Är det dags att byta elcentral?",
+        `Proppar som går om och om igen? ${P} är Elfirmakollens rekommenderade elektriker i ${C}. Begär offert på ny elcentral.`),
+      v("Eljour", "eljour", "eljour uppsala", `Eljour i ${C}`,
+        `Elfel som inte kan vänta? Kontakta ${P}, Elfirmakollens rekommenderade elektriker i ${C}. ${BETYG}`,
+        ["Eljour", "Ring direkt"], `Strömavbrott eller elfel i ${C}?`,
+        `Elfel som inte kan vänta? Kontakta ${P}, vår rekommenderade elektriker för eljour i ${C}.`),
+    ],
   },
   stadfirmor: {
-    brand: "Stadfirmor.nu", domain: "stadfirmor.nu", owner: "vår", icon: "https://stadfirmor.nu/apple-touch-icon.png",
-    color: "hsl(160 79% 22%)", noun: "städfirma", path: "stadfirmor", query: "städfirma uppsala", headline: "Städfirma",
-    googleTail: "Begär offert på hemstädning eller flyttstädning med RUT.", chips: ["Hemstädning", "Flyttstädning", "Begär offert"],
-    metaOpen: "Slipp städningen i vardagen? ✨", metaTail: "Begär offert direkt.", example: "en städfirma",
+    site: "Stadfirmor.nu", domain: "stadfirmor.nu", icon: "https://stadfirmor.nu/apple-touch-icon.png",
+    color: "hsl(160 79% 27%)", noun: "städfirma",
+    variants: [
+      v("Hemstäd", "stadfirmor", "städfirma uppsala", "Städfirma Uppsala",
+        `${P} är vår rekommenderade städfirma i ${C}. ${BETYG} Hemstädning med RUT-avdrag.`,
+        ["Hemstäd", "Storstäd", "Begär offert"], `Söker du en städfirma i ${C}?`,
+        `Mer tid över i vardagen? ✨ ${P} är vår rekommenderade städfirma i ${C}, med betyget 4,8 från 190 omdömen.`),
+      v("Flyttstäd", "flyttstad", "flyttstädning uppsala", `Flyttstädning i ${C}`,
+        `Ska du flytta? Begär offert på flyttstäd från ${P}, vår rekommenderade städfirma i ${C}. ${BETYG}`,
+        ["Flyttstäd", "Fönsterputs", "Begär offert"], `Dags för flyttstädning i ${C}?`,
+        `Ska du flytta? 📦 Låt ${P} ta flyttstädningen. Vår rekommenderade städfirma i ${C}.`),
+      v("Fönsterputs", "fonsterputs", "fönsterputs uppsala", `Fönsterputs i ${C}`,
+        `Rena fönster utan besvär. Begär offert från ${P}, vår rekommenderade städfirma i ${C}. ${BETYG}`,
+        ["Fönsterputs", "Hemstäd", "Begär offert"], "Vill du ha skinande rena fönster?",
+        `Släpp in ljuset ☀️ Begär offert på fönsterputs från ${P}, vår rekommenderade städfirma i ${C}.`),
+      v("Kontorsstäd", "kontorsstad", "kontorsstädning uppsala", `Kontorsstäd i ${C}`,
+        `Behöver ni regelbunden kontorsstädning? Begär offert från ${P}, vår rekommenderade städfirma i ${C}.`,
+        ["Kontorsstäd", "Begär offert"], "Behöver kontoret en ny städfirma?",
+        `Ett rent kontor gör skillnad. ${P} är vår rekommenderade städfirma för kontorsstäd i ${C}.`),
+    ],
   },
   flyttfirmor: {
-    brand: "Flyttbolagskollen", domain: "flyttbolagskollen.se", owner: "Flyttbolagskollens", icon: `${ASSETS}/flyttfirma/favicon-192-v1.png`,
-    color: "hsl(200 55% 24%)", noun: "flyttfirma", path: "flyttfirma", query: "flyttfirma uppsala", headline: "Flyttfirma",
-    googleTail: "Begär offert på flytthjälp, packning och flyttstädning.", chips: ["Bohagsflytt", "Packhjälp", "Begär offert"],
-    metaOpen: "Ska du flytta i Uppsala? 📦", metaTail: "Begär offert direkt.", example: "en flyttfirma",
+    site: "Flyttbolagskollen.se", domain: "flyttbolagskollen.se", icon: `${ASSETS}/flyttfirma/favicon-192-v1.png`,
+    color: "hsl(200 55% 30%)", noun: "flyttfirma",
+    variants: [
+      v("Flyttfirma", "flyttfirma", "flyttfirma uppsala", "Flyttfirma Uppsala",
+        `${P} är vår rekommenderade flyttfirma i ${C}. ${BETYG} Begär offert direkt.`,
+        ["Bohagsflytt", "Flyttstädning", "Begär offert"], `Ska du flytta i ${C}?`,
+        `Ny adress på gång? 📦 ${P} är Flyttbolagskollens rekommenderade flyttfirma i ${C}, med betyget 4,8 från 190 omdömen.`),
+      v("Flytt och städ", "flyttstadning", "flytt och flyttstädning uppsala", `Flytt & Flyttstädning i ${C}`,
+        `Samla flytten och städningen hos en firma. Begär offert från ${P}, vår rekommenderade flyttfirma i ${C}.`,
+        ["Flyttstädning", "Magasinering", "Begär offert"], "Vill du slippa flyttstädningen?",
+        `Flytt och flyttstäd från samma firma? Begär offert från ${P}, vår rekommenderade flyttfirma i ${C}.`),
+      v("Kontorsflytt", "kontorsflytt", "kontorsflytt uppsala", `Kontorsflytt i ${C}`,
+        `Planerar ni en kontorsflytt? Begär offert från ${P}, Flyttbolagskollens rekommenderade flyttfirma i ${C}.`,
+        ["Kontorsflytt", "Magasinering", "Begär offert"], "Ska företaget byta kontor?",
+        `Planerar ni en kontorsflytt? ${P} är vår rekommenderade flyttfirma i ${C}. Begär offert direkt.`),
+      v("Dödsbotömning", "dodsbotomning", "dödsbotömning uppsala", `Dödsbotömning i ${C}`,
+        `Hjälp med att tömma ett dödsbo. Kontakta ${P}, vår rekommenderade flyttfirma i ${C}. ${BETYG}`,
+        ["Dödsbotömning", "Flyttstädning", "Begär offert"], "Behöver du hjälp med ett dödsbo?",
+        `Det kan vara tungt att ta hand om ett dödsbo. ${P} hjälper till med dödsbotömning i ${C} och är vår rekommenderade flyttfirma.`),
+    ],
   },
   taklaggare: {
-    brand: "Takläggarkollen", domain: "taklaggarkollen.se", owner: "Takläggarkollens", icon: `${ASSETS}/taklaggare/favicon-192-v1.png`,
-    color: "hsl(215 28% 24%)", noun: "takläggare", path: "taklaggare", query: "takläggare uppsala", headline: "Takläggare",
-    googleTail: "Begär offert på takbyte, takrenovering eller reparation.", chips: ["Takbyte", "Takrenovering", "Begär offert"],
-    metaOpen: "Dags att se över taket? 🏠", metaTail: "Begär offert direkt.", example: "en takläggare",
+    site: "Takläggarkollen.se", domain: "taklaggarkollen.se", icon: `${ASSETS}/taklaggare/favicon-192-v1.png`,
+    color: "hsl(215 28% 30%)", noun: "takläggare",
+    variants: [
+      v("Takläggare", "taklaggare", "takläggare uppsala", "Takläggare Uppsala",
+        `${P} är vår rekommenderade takläggare i ${C}. ${BETYG} Begär offert direkt.`,
+        ["Takbyte", "Takrenovering", "Begär offert"], `Letar du efter en takläggare i ${C}?`,
+        `Dags att se över taket? 🏠 ${P} är Takläggarkollens rekommenderade takläggare i ${C}, med betyget 4,8 från 190 omdömen.`),
+      v("Takbyte", "takbyte", "takbyte uppsala", `Takbyte i ${C}`,
+        `Planerar du takbyte? Begär offert från ${P}, vår rekommenderade takläggare i ${C}. Tegel, plåt och papp.`,
+        ["Tegeltak", "Plåttak", "Begär offert"], "Är det dags att byta tak?",
+        `Har taket gjort sitt? Begär offert på takbyte från ${P}, vår rekommenderade takläggare i ${C}.`),
+      v("Takreparation", "takreparation", "takreparation uppsala", `Takreparation i ${C}`,
+        `Läcker taket? Kontakta ${P}, vår rekommenderade takläggare i ${C}. ${BETYG}`,
+        ["Takreparation", "Takbesiktning", "Begär offert"], "Läcker det in genom taket?",
+        `Fukt eller läckage? 💧 Kontakta ${P}, Takläggarkollens rekommenderade takläggare i ${C}.`),
+      v("Takmålning", "takmalning", "takmålning uppsala", `Takmålning i ${C}`,
+        `Taktvätt eller takmålning? Begär offert från ${P}, vår rekommenderade takläggare i ${C}. ${BETYG}`,
+        ["Takmålning", "Taktvätt", "Begär offert"], "Vill du ge taket nytt liv?",
+        `Dags för taktvätt eller takmålning? Begär offert från ${P}, vår rekommenderade takläggare i ${C}.`),
+    ],
   },
   maklare: {
-    brand: "Mäklarbyråkollen", domain: "maklarbyrakollen.se", owner: "Mäklarbyråkollens", icon: `${ASSETS}/maklarbyra/favicon-192-v1.png`,
-    color: "hsl(350 55% 30%)", noun: "mäklare", path: "maklarbyra", query: "mäklare uppsala", headline: "Mäklare",
-    googleTail: "Boka en kostnadsfri värdering av din bostad.", chips: ["Värdering", "Sälja bostad", "Boka värdering"],
-    metaOpen: "Funderar du på att sälja i Uppsala? 🔑", metaTail: "Boka en värdering.", example: "en mäklare",
+    site: "Mäklarbyråkollen.se", domain: "maklarbyrakollen.se", icon: `${ASSETS}/maklarbyra/favicon-192-v1.png`,
+    color: "hsl(350 55% 30%)", noun: "mäklare",
+    variants: [
+      v("Mäklare", "maklarbyra", "mäklare uppsala", "Mäklare Uppsala",
+        `${P} är vår rekommenderade mäklare i ${C}. ${BETYG} Boka en värdering av din bostad.`,
+        ["Värdera bostad", "Sälja lägenhet", "Boka värdering"], `Letar du efter en mäklare i ${C}?`,
+        `Funderar du på att sälja? 🔑 ${P} är Mäklarbyråkollens rekommenderade mäklare i ${C}, med betyget 4,8 från 190 omdömen.`),
+      v("Sälja lägenhet", "salja-lagenhet", "sälja lägenhet uppsala", `Sälja Lägenhet i ${C}`,
+        `Ska du sälja? ${P} är vår rekommenderade mäklare i ${C}. ${BETYG}`,
+        ["Sälja lägenhet", "Boka värdering"], `Ska du sälja lägenheten i ${C}?`,
+        `Dags för nästa steg? ${P} är vår rekommenderade mäklare i ${C}. Boka en värdering av lägenheten.`),
+      v("Värdering", "vardera-bostad", "värdera bostad uppsala", `Värdera Din Bostad i ${C}`,
+        `Vad är din bostad värd? Kontakta ${P}, Mäklarbyråkollens rekommenderade mäklare i ${C}. ${BETYG}`,
+        ["Värdera bostad", "Boka värdering"], "Vad är din bostad värd?",
+        `Nyfiken på vad bostaden är värd? Boka en värdering hos ${P}, Mäklarbyråkollens rekommenderade mäklare i ${C}.`),
+      v("Sälja hus", "salja-hus", "sälja hus uppsala", `Sälja Hus i ${C}`,
+        `Ska huset säljas? ${P} är vår rekommenderade mäklare i ${C}. ${BETYG}`,
+        ["Sälja hus", "Värdera bostad", "Boka värdering"], "Dags att sälja huset?",
+        `Ska villan säljas? 🏡 ${P} är vår rekommenderade mäklare för hus i ${C}.`),
+    ],
   },
-  tandlakare: {
-    brand: "Tandläkarkollen", domain: "tandlakarkollen.nu", owner: "Tandläkarkollens", icon: `${ASSETS}/tandlakare/favicon-192-v1.png`,
-    color: "hsl(205 75% 30%)", noun: "tandläkarklinik", path: "tandlakare", query: "tandläkare uppsala", headline: "Tandläkare",
-    googleTail: "Boka tid för undersökning, akut tandvård eller tandblekning.", chips: ["Undersökning", "Akut tandvård", "Boka tid"],
-    metaOpen: "Dags för tandläkarbesök i Uppsala? 🦷", metaTail: "Boka tid direkt.", example: "en tandläkarklinik",
+  bilhandlare: {
+    site: "Bilhandlarkollen.se", domain: "bilhandlarkollen.se", color: "#1E3354", noun: "bilhandlare",
+    variants: [
+      v("Bilhandlare", "bilhandlare", "bilhandlare uppsala", "Bilhandlare Uppsala",
+        `${P} är vår rekommenderade bilhandlare i ${C}. ${BETYG} Se bilar i lager och boka provkörning.`,
+        ["Bilar i lager", "Inbyte", "Boka provkörning"], `Dags för ny bil i ${C}?`,
+        `Dags för ny bil i ${C}? 🚗 ${P} är Bilhandlarkollens rekommenderade bilhandlare i ${C}, med betyget 4,8 från 190 kundomdömen.`),
+      v("Begagnade bilar", "begagnade-bilar", "begagnade bilar uppsala", `Begagnade Bilar i ${C}`,
+        `Letar du efter din nästa bil? ${P} är vår rekommenderade bilhandlare i ${C}. ${BETYG}`,
+        ["Bilar i lager", "Boka provkörning"], "Letar du efter en begagnad bil?",
+        `Din nästa bil kanske står i ${C}. ${P} är vår rekommenderade bilhandlare för begagnade bilar.`),
+      v("Privatleasing", "privatleasing-bil", "privatleasing uppsala", `Privatleasing i ${C}`,
+        `Funderar du på privatleasing? Kontakta ${P}, Bilhandlarkollens rekommenderade bilhandlare i ${C}. ${BETYG}`,
+        ["Privatleasing", "Företagsleasing", "Kontakta oss"], "Funderar du på privatleasing?",
+        `Ny bil till fast månadskostnad? Kontakta ${P}, Bilhandlarkollens rekommenderade bilhandlare i ${C}.`),
+      v("Sälja bil", "salja-bil", "sälja bil uppsala", `Sälja Bilen i ${C}?`,
+        `Ska du sälja eller byta in bilen? Kontakta ${P}, vår rekommenderade bilhandlare i ${C}. ${BETYG}`,
+        ["Sälja bil", "Inbyte", "Kontakta oss"], `Vill du sälja din bil i ${C}?`,
+        `Ska bilen säljas eller bytas in? Kontakta ${P}, vår rekommenderade bilhandlare i ${C}.`),
+    ],
   },
   byggfirmor: {
-    brand: "Byggfirmakollen", domain: "byggfirmakollen.se", owner: "Byggfirmakollens", icon: `${ASSETS}/byggforetag/favicon-192-v2.png`,
-    color: "hsl(222 22% 20%)", noun: "byggfirma", path: "byggforetag", query: "byggfirma uppsala", headline: "Byggfirma",
-    googleTail: "Begär offert på renovering, tillbyggnad eller altan.", chips: ["Renovering", "Tillbyggnad", "Begär offert"],
-    metaOpen: "Planerar du att bygga eller renovera? 🔨", metaTail: "Begär offert direkt.", example: "en byggfirma",
+    site: "Byggfirmakollen.se", domain: "byggfirmakollen.se", icon: `${ASSETS}/byggforetag/favicon-192-v2.png`,
+    color: "hsl(222 22% 26%)", noun: "byggfirma",
+    variants: [
+      v("Byggfirma", "byggforetag", "byggfirma uppsala", "Byggfirma Uppsala",
+        `${P} är vår rekommenderade byggfirma i ${C}. ${BETYG} Begär offert direkt.`,
+        ["Renovering", "Tillbyggnad", "Begär offert"], `Söker du en byggfirma i ${C}?`,
+        `Planerar du att bygga eller renovera? 🔨 ${P} är Byggfirmakollens rekommenderade byggfirma i ${C}, med betyget 4,8 från 190 omdömen.`),
+      v("Badrum", "badrumsrenovering", "badrumsrenovering uppsala", `Badrumsrenovering i ${C}`,
+        `Drömmer du om ett nytt badrum? Begär offert från ${P}, vår rekommenderade byggfirma i ${C}. ${BETYG}`,
+        ["Badrumsrenovering", "Köksrenovering", "Begär offert"], "Dags att renovera badrummet?",
+        `Drömmer du om ett nytt badrum? 🛁 Begär offert från ${P}, vår rekommenderade byggfirma i ${C}.`),
+      v("Kök", "koksrenovering", "köksrenovering uppsala", `Köksrenovering i ${C}`,
+        `Dags för ett nytt kök? Begär offert från ${P}, Byggfirmakollens rekommenderade byggfirma i ${C}. ${BETYG}`,
+        ["Köksrenovering", "Begär offert"], "Är det dags för ett nytt kök?",
+        `Köket är hemmets hjärta. Begär offert på köksrenovering från ${P}, vår rekommenderade byggfirma i ${C}.`),
+      v("Altan", "altanbygge", "bygga altan uppsala", `Altanbygge i ${C}`,
+        `Vill du bygga altan? Begär offert från ${P}, vår rekommenderade byggfirma i ${C}. ${BETYG}`,
+        ["Altanbygge", "Tillbyggnad", "Begär offert"], "Drömmer du om en ny altan?",
+        `Mer plats för umgänge ☀️ Begär offert på altanbygge från ${P}, vår rekommenderade byggfirma i ${C}.`),
+    ],
   },
   kiropraktor: {
-    brand: "Kiropraktorkollen", domain: "kiropraktorkollen.se", owner: "Kiropraktorkollens", icon: `${ASSETS}/kiropraktor/favicon-192-v1.png`,
-    color: "hsl(232 42% 32%)", noun: "kiropraktor", path: "kiropraktor", query: "kiropraktor uppsala", headline: "Kiropraktor",
-    googleTail: "Boka tid för behandling av rygg, nacke eller leder.", chips: ["Ryggbesvär", "Nackspärr", "Boka tid"],
-    metaOpen: "Ont i ryggen eller nacken? 💆", metaTail: "Boka tid direkt.", example: "en kiropraktor",
+    site: "Kiropraktorkollen.se", domain: "kiropraktorkollen.se", icon: `${ASSETS}/kiropraktor/favicon-192-v1.png`,
+    color: "hsl(232 42% 36%)", noun: "kiropraktor",
+    variants: [
+      v("Kiropraktor", "kiropraktor", "kiropraktor uppsala", "Kiropraktor Uppsala",
+        `${P} är vår rekommenderade kiropraktor i ${C}. ${BETYG} Boka tid direkt.`,
+        ["Ryggbesvär", "Massage", "Boka tid"], `Letar du efter en kiropraktor i ${C}?`,
+        `Ont i ryggen eller nacken? 💆 ${P} är Kiropraktorkollens rekommenderade kiropraktor i ${C}, med betyget 4,8 från 190 omdömen.`),
+      v("Akut kiropraktor", "akut-kiropraktor", "akut kiropraktor uppsala", `Akut Kiropraktor i ${C}`,
+        `Ryggskott eller nackspärr? Boka tid hos ${P}, vår rekommenderade kiropraktor i ${C}. ${BETYG}`,
+        ["Akut kiropraktor", "Boka tid"], "Har du fått ryggskott?",
+        `Ryggskott eller nackspärr? Boka tid hos ${P}, vår rekommenderade kiropraktor i ${C}.`),
+      v("Gravida", "kiropraktor-for-gravida", "kiropraktor gravid uppsala", `Kiropraktor för Gravida i ${C}`,
+        `Gravid och ont i ryggen? Boka tid hos ${P}, vår rekommenderade kiropraktor i ${C}. ${BETYG}`,
+        ["Kiropraktor för gravida", "Boka tid"], "Ont i ryggen under graviditeten?",
+        `Gravid och ont i ryggen? ${P} är vår rekommenderade kiropraktor för gravida i ${C}.`),
+      v("Nacke och rygg", "kiropraktor", "kiropraktor nacke uppsala", `Nackbesvär? Kiropraktor i ${C}`,
+        `Stel efter långa dagar vid skrivbordet? Boka tid hos ${P}, Kiropraktorkollens rekommenderade kiropraktor i ${C}.`,
+        ["Nackbesvär", "Massage", "Boka tid"], "Sitter du still hela dagarna?",
+        `Stel efter långa dagar vid skrivbordet? Boka tid hos ${P}, Kiropraktorkollens rekommenderade kiropraktor i ${C}.`),
+    ],
   },
 };
 
-const SiteBadge = ({ p, size = 28 }: { p: AdProfile; size?: number }) => (
+/** Jespers Meta-mallar från Claude Design (public/annonsmallar/fb.html), alla 1080×1080 */
+const MALLAR = ["A", "C", "F", "G"];
+
+const SiteBadge = ({ p, size = 28 }: { p: Profile; size?: number }) => (
   <span
     className="shrink-0 rounded-full border border-[#e3e5e8] bg-white grid place-items-center overflow-hidden"
     style={{ width: size, height: size }}
@@ -115,7 +281,7 @@ const Skeleton = () => (
   </div>
 );
 
-const GoogleAd = ({ p }: { p: AdProfile }) => (
+const GoogleAd = ({ p, a }: { p: Profile; a: Variant }) => (
   <div className="mx-auto w-full max-w-[400px] rounded-[44px] border-[5px] border-[#d2d2d2] bg-white p-2.5 shadow-card">
     <div
       className="rounded-[32px] border border-[#e6e6e6] bg-white overflow-hidden text-left"
@@ -138,7 +304,7 @@ const GoogleAd = ({ p }: { p: AdProfile }) => (
 
       <div className="mx-5 mt-5 flex items-center gap-3 rounded-pill border border-[#eceef1] px-4 h-12 text-[16px] text-[#202124] shadow-[0_1px_6px_rgba(32,33,36,.18)]">
         <Search className="w-[18px] h-[18px] text-[#9aa0a6]" />
-        {p.query}
+        <span className="truncate">{a.query}</span>
       </div>
 
       <div className="mx-5 mt-4 flex gap-5 border-b border-[#e3e5e8] text-[13.5px] text-[#5f6368]">
@@ -154,18 +320,19 @@ const GoogleAd = ({ p }: { p: AdProfile }) => (
         <div className="flex items-center gap-2.5 mb-2.5">
           <SiteBadge p={p} />
           <div className="leading-tight min-w-0">
-            <div className="text-[14.5px] text-[#202124]">{p.brand.replace(/\.nu$/, "")}</div>
-            <div className="text-[12px] text-[#4d5156] truncate">https://{p.domain} › {p.path} › uppsala</div>
+            <div className="text-[14.5px] text-[#202124]">{p.site.replace(/\.(se|nu)$/, "")}</div>
+            <div className="text-[12px] text-[#4d5156] truncate">
+              https://{p.domain} › {a.path} › uppsala
+            </div>
           </div>
           <span className="ml-auto text-[#5f6368] text-lg leading-none">⋮</span>
         </div>
-        <div className="text-[20px] leading-[1.25] text-[#1a0dab] mb-2">{p.headline} {CITY} | {PARTNER}</div>
-        <p className="text-[14px] leading-[1.5] text-[#4d5156]">
-          {PARTNER} är vår rekommenderade {p.noun} i {CITY}. Betyg 4,8 av 5 från 190 omdömen.{" "}
-          {p.googleTail}
-        </p>
+        <div className="text-[20px] leading-[1.25] text-[#1a0dab] mb-2">
+          {a.headline} | {P}
+        </div>
+        <p className="text-[14px] leading-[1.5] text-[#4d5156]">{a.desc}</p>
         <div className="flex flex-wrap gap-2 mt-3.5">
-          {p.chips.map((c) => (
+          {a.chips.map((c) => (
             <span key={c} className="rounded-pill border border-[#dadce0] px-3 py-1.5 text-[13px] text-[#1a0dab]">
               {c}
             </span>
@@ -179,120 +346,167 @@ const GoogleAd = ({ p }: { p: AdProfile }) => (
   </div>
 );
 
-const MetaAd = ({ p }: { p: AdProfile }) => (
-  <div
-    className="mx-auto w-full max-w-[460px] rounded-lg border border-line-soft bg-white overflow-hidden shadow-card text-left"
-    style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
-  >
-    <div className="flex items-center gap-2.5 px-4 pt-3.5 pb-2.5">
-      <SiteBadge p={p} size={40} />
-      <div className="leading-tight">
-        <div className="text-[15px] font-bold text-[#050505]">{p.brand.includes(".") ? p.brand : `${p.brand}.${p.domain.split(".").pop()}`}</div>
-        <div className="text-[12.5px] text-[#65676b] flex items-center gap-1">
-          Sponsrad · <Globe className="w-3 h-3" />
-        </div>
-      </div>
-      <MoreHorizontal className="w-5 h-5 text-[#65676b] ml-auto" />
-      <X className="w-5 h-5 text-[#65676b]" />
+/** Mallbilden ritas i 1080 px och skalas ned till kortets bredd */
+const MetaImage = ({ src, title }: { src: string; title: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.4);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setScale(e.contentRect.width / 1080));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="relative w-full aspect-square overflow-hidden bg-[#F0F2F5]">
+      <iframe
+        src={src}
+        title={title}
+        loading="lazy"
+        scrolling="no"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 top-0 origin-top-left border-0"
+        style={{ width: 1080, height: 1080, transform: `scale(${scale})` }}
+      />
     </div>
-    <p className="px-4 pb-3 text-[14.5px] leading-[1.4] text-[#050505]">
-      {p.metaOpen} {PARTNER} är {p.owner} rekommenderade {p.noun} i {CITY}, med betyget 4,8 från 190
-      kundomdömen. {p.metaTail}
-    </p>
+  );
+};
 
-    <div className="grid grid-cols-[41%_1fr] aspect-square">
-      <div className="flex flex-col items-center justify-center text-center px-3" style={{ background: p.color }}>
-        <BadgeCheck className="w-10 h-10 text-[#8FB4F0]" strokeWidth={1.4} />
-        <div className="mt-4 text-[9.5px] font-semibold uppercase tracking-[0.22em] leading-[1.7] text-[#F1B45B]">
-          Rekommenderad
-          <br />
-          partner
-        </div>
-        <div className="mt-3 text-white text-[20px] sm:text-[23px] leading-[1.15]" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-          {PARTNER}
-        </div>
-        <span className="inline-flex gap-0.5 mt-3.5 text-[#F1B45B]">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <Star key={i} className="w-3.5 h-3.5" fill="currentColor" strokeWidth={0} />
-          ))}
-        </span>
-        <div className="mt-2 text-[11.5px] text-white/85">4,8 · 190 omdömen</div>
-      </div>
-      <div className="flex flex-col justify-center px-[7%] bg-[#F2F0EB]">
-        <div className="text-[9.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: p.color }}>{p.domain}</div>
-        <div
-          className="mt-3 text-[#16181d] text-[27px] sm:text-[34px] leading-[1.05] tracking-[-0.02em]"
-          style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-        >
-          Letar du efter {p.example} du kan lita på i {CITY}?
-        </div>
-        <div className="mt-4 text-[13.5px] leading-[1.45] text-[#4a4f57]">Vi rekommenderar {PARTNER}.</div>
-        <span className="mt-5 inline-flex w-fit items-center gap-2 px-4 py-2.5 text-white text-[13px] font-medium" style={{ background: p.color }}>
-          Se vår partner →
-        </span>
-      </div>
-    </div>
+const metaSrc = (p: Profile, a: Variant, mall: string) =>
+  `/annonsmallar/fb.html?mall=${mall}&d=${encodeURIComponent(
+    JSON.stringify({
+      sajt: p.site,
+      masthead: p.site.replace(/\.(se|nu)$/, ""),
+      plats: C,
+      ar: String(new Date().getFullYear()),
+      fraga: a.fraga,
+      partner: P,
+      betyg: "4,8",
+      omdomen: "190",
+      cta: "Se vår partner",
+      theme: { brand: p.color },
+    }),
+  )}`;
 
-    <div className="flex items-center justify-between gap-3 px-4 py-3 bg-[#f0f2f5]">
-      <div className="min-w-0">
-        <div className="text-[12px] uppercase text-[#65676b]">{p.domain}</div>
-        <div className="text-[15.5px] font-bold text-[#050505] leading-snug">{PARTNER}</div>
-        <div className="text-[13.5px] text-[#65676b]">Rekommenderad {p.noun} i {CITY}</div>
+const MetaAd = ({ p, active }: { p: Profile; active: number }) => {
+  const a = p.variants[active];
+  return (
+    <div
+      className="mx-auto w-full max-w-[460px] rounded-lg border border-line-soft bg-white overflow-hidden shadow-card text-left"
+      style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+    >
+      <div className="flex items-center gap-2.5 px-4 pt-3.5 pb-2.5">
+        <SiteBadge p={p} size={40} />
+        <div className="leading-tight">
+          <div className="text-[15px] font-bold text-[#050505]">{p.site}</div>
+          <div className="text-[12.5px] text-[#65676b] flex items-center gap-1">
+            Sponsrad · <Globe className="w-3 h-3" />
+          </div>
+        </div>
+        <MoreHorizontal className="w-5 h-5 text-[#65676b] ml-auto" />
+        <X className="w-5 h-5 text-[#65676b]" />
       </div>
-      <span className="shrink-0 rounded-md bg-[#e4e6eb] px-3.5 py-2 text-[14px] font-semibold text-[#050505]">Läs mer</span>
-    </div>
-    <div className="flex items-center justify-between px-4 py-2.5 text-[13.5px] text-[#65676b]">
-      <span className="inline-flex items-center gap-1.5">
-        <span className="w-[18px] h-[18px] rounded-full bg-[#1877F2] grid place-items-center">
-          <ThumbsUp className="w-2.5 h-2.5 text-white" fill="currentColor" />
+      <p className="px-4 pb-3 text-[14.5px] leading-[1.4] text-[#050505] min-h-[64px]">{a.meta}</p>
+
+      {/* Alla bilder ligger kvar i DOM:en så att byte av vinkel inte laddar om mallen */}
+      {p.variants.map((x, i) => (
+        <div key={x.label} className={i === active ? "" : "hidden"}>
+          <MetaImage src={metaSrc(p, x, MALLAR[i % MALLAR.length])} title={`Facebook-annons: ${x.fraga}`} />
+        </div>
+      ))}
+
+      <div className="flex items-center justify-between gap-3 px-4 py-3 bg-[#f0f2f5]">
+        <div className="min-w-0">
+          <div className="text-[12px] uppercase text-[#65676b]">{p.domain}</div>
+          <div className="text-[15.5px] font-bold text-[#050505] leading-snug">{P}</div>
+          <div className="text-[13.5px] text-[#65676b]">
+            Rekommenderad {p.noun} i {C}
+          </div>
+        </div>
+        <span className="shrink-0 rounded-md bg-[#e4e6eb] px-3.5 py-2 text-[14px] font-semibold text-[#050505]">Läs mer</span>
+      </div>
+      <div className="flex items-center justify-between px-4 py-2.5 text-[13.5px] text-[#65676b]">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="w-[18px] h-[18px] rounded-full bg-[#1877F2] grid place-items-center">
+            <ThumbsUp className="w-2.5 h-2.5 text-white" fill="currentColor" />
+          </span>
+          18
         </span>
-        18
-      </span>
-      <span>7 delningar</span>
+        <span>7 delningar</span>
+      </div>
+      <div className="flex justify-around border-t border-[#e4e6eb] px-4 py-2.5 text-[13.5px] font-semibold text-[#65676b]">
+        <span className="inline-flex items-center gap-1.5">
+          <ThumbsUp className="w-4 h-4" /> Gilla
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <MessageCircle className="w-4 h-4" /> Kommentera
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <Share2 className="w-4 h-4" /> Dela
+        </span>
+      </div>
     </div>
-    <div className="flex justify-around border-t border-[#e4e6eb] px-4 py-2.5 text-[13.5px] font-semibold text-[#65676b]">
-      <span className="inline-flex items-center gap-1.5"><ThumbsUp className="w-4 h-4" /> Gilla</span>
-      <span className="inline-flex items-center gap-1.5"><MessageCircle className="w-4 h-4" /> Kommentera</span>
-      <span className="inline-flex items-center gap-1.5"><Share2 className="w-4 h-4" /> Dela</span>
-    </div>
-  </div>
-);
+  );
+};
 
 /** Exemplet anpassas per nisch; utan profil (t.ex. VVS som saknar egen sajt) visas bilhandlarexemplet. */
 const AdMockupsSection = ({ niche }: { niche?: string }) => {
-  const p = (niche && AD_PROFILES[niche]) || AD_PROFILES.bilhandlare;
+  const p = (niche && PROFILES[niche]) || PROFILES.bilhandlare;
+  const [active, setActive] = useState(0);
+  const a = p.variants[active];
+
   return (
-  <section className="section bg-background-elevated border-y border-line-soft">
-    <div className="container mx-auto px-5 md:px-10 max-w-container">
-      <div className="head">
-        <div>
-          <div className="label mb-6">Så driver vi trafiken</div>
-          <h2 className="h-l">
-            Vi annonserar. <span className="italic-accent">Du</span> får kunderna.
-          </h2>
+    <section className="section bg-background-elevated border-y border-line-soft">
+      <div className="container mx-auto px-5 md:px-10 max-w-container">
+        <div className="head">
+          <div>
+            <div className="label mb-6">Så driver vi trafiken</div>
+            <h2 className="h-l">
+              Vi annonserar. <span className="italic-accent">Du</span> får kunderna.
+            </h2>
+          </div>
+          <p className="lede">
+            Vi kör Google Ads och Meta Ads för directory-sajten i din stad. Annonserna lyfter fram ditt
+            företag som rekommenderad partner, med namn och betyg, för flera av dina tjänster.
+          </p>
         </div>
-        <p className="lede">
-          Vi kör Google Ads och Meta Ads för directory-sajten i din stad. Annonserna lyfter fram ditt
-          företag som rekommenderad partner, med namn och betyg.
+
+        <div className="flex flex-wrap justify-center gap-2 mb-10" role="tablist" aria-label="Annonsvinkel">
+          {p.variants.map((x, i) => (
+            <button
+              key={x.label}
+              type="button"
+              role="tab"
+              aria-selected={i === active}
+              onClick={() => setActive(i)}
+              className={`h-10 px-4 rounded-pill border text-[14.5px] font-medium transition-colors ${
+                i === active
+                  ? "bg-primary border-primary text-white"
+                  : "bg-background border-line text-foreground hover:border-primary"
+              }`}
+            >
+              {x.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-10 md:gap-8 items-center">
+          <div className="min-w-0">
+            <div className="eyebrow mb-4 justify-center">Google Ads · sökannons</div>
+            <GoogleAd p={p} a={a} />
+          </div>
+          <div className="min-w-0">
+            <div className="eyebrow mb-4 justify-center">Meta Ads · Facebook och Instagram</div>
+            <MetaAd p={p} active={active} />
+          </div>
+        </div>
+
+        <p className="text-center text-sm text-ink-mute mt-10">
+          Exempel för en {p.noun} i {C}. Texter och bilder anpassas efter din bransch, dina tjänster och din stad.
         </p>
       </div>
-
-      <div className="grid md:grid-cols-2 gap-10 md:gap-8 items-center">
-        <div>
-          <div className="eyebrow mb-4 justify-center">Google Ads · sökannons</div>
-          <GoogleAd p={p} />
-        </div>
-        <div>
-          <div className="eyebrow mb-4 justify-center">Meta Ads · Facebook och Instagram</div>
-          <MetaAd p={p} />
-        </div>
-      </div>
-
-      <p className="text-center text-sm text-ink-mute mt-10">
-        Exempel med {p.example} i {CITY}. Texter och bilder anpassas efter din bransch och stad.
-      </p>
-    </div>
-  </section>
+    </section>
   );
 };
 
