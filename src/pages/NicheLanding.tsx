@@ -172,7 +172,7 @@ const NicheLanding = () => {
             <div className="text-center max-w-2xl mx-auto mb-16">
               <div className="eyebrow mb-5">Varför {niche.audienceTitle} väljer oss</div>
               <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05]">
-                Tre saker som <span className="italic-accent">flyttar nålen</span>.
+                Det här får du <span className="italic-accent">som partner</span>.
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
@@ -198,15 +198,15 @@ const NicheLanding = () => {
             <div className="text-center max-w-2xl mx-auto mb-16">
               <div className="eyebrow mb-5">Så fungerar det</div>
               <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05]">
-                Från avtal till leads på <span className="italic-accent">14 dagar</span>.
+                Leads från <span className="italic-accent">första dagen</span>.
               </h2>
             </div>
             <div className="grid md:grid-cols-4 gap-6">
               {[
-                { n: "01", t: "Du säkrar staden", d: "Välj din stad i checkout. Platsen reserveras till dig direkt." },
-                { n: "02", t: "Vi bygger sajten", d: `En lokal sajt för ${niche.nameSingular} i ${niche.city}, designad för konvertering.` },
-                { n: "03", t: "Annonser lanseras", d: "Google Ads och Meta Ads sätts upp och optimeras varje vecka." },
-                { n: "04", t: "Leads till dig", d: "Förfrågningar mejlas eller skickas via SMS direkt när de kommer in." },
+                { n: "01", t: "Du säkrar din stad", d: "Vi går igenom upplägget och bekräftar att staden är ledig. Sedan är platsen bara din." },
+                { n: "02", t: "Du syns direkt", d: `Sajten är redan byggd och har besökare. Du listas som rekommenderad ${niche.nameSingular} i ${niche.city} från dag ett.` },
+                { n: "03", t: "Vi driver trafiken", d: "Google Ads, Meta Ads och SEO riktas mot din stad och optimeras löpande." },
+                { n: "04", t: "Leads direkt till dig", d: "Samtal, mejl och förfrågningar går raka vägen till dig. Allt syns i din dashboard." },
               ].map((s) => (
                 <div key={s.n} className="bg-background-elevated rounded-[20px] p-7 border border-border/60">
                   <div className="text-ink-mute font-mono text-sm mb-4">{s.n}</div>
@@ -223,7 +223,7 @@ const NicheLanding = () => {
           <div className="container mx-auto px-4 max-w-container">
             <div className="bg-dark-section text-dark-section-foreground rounded-[28px] p-10 md:p-16 text-center">
               <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05] mb-5 max-w-2xl mx-auto">
-                Bara <span className="italic-accent">en {niche.nameSingular}</span> per stad. Är du den?
+                Bara en {niche.nameSingular} per stad. Är du den?
               </h2>
               <p className="text-lg opacity-80 max-w-xl mx-auto mb-8">
                 Vi släpper bara in ett företag per ort. När platsen är tagen är konkurrenterna utestängda.

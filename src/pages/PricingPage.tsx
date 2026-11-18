@@ -170,7 +170,7 @@ const PricingPage = () => {
           <div className="container mx-auto px-4 max-w-container">
             <div className="bg-dark-section rounded-[32px] p-10 md:p-16 text-center">
               <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05] mb-5 max-w-2xl mx-auto">
-                Osäker på vilket paket som <span className="italic-accent">passar</span>?
+                Osäker på vilket paket som passar?
               </h2>
               <p className="text-lg opacity-80 max-w-xl mx-auto mb-8">
                 Boka en demo så visar vi sajten i din bransch och räknar på vad som ger

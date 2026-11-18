@@ -69,7 +69,7 @@ const SeoNiche = () => {
     },
     {
       q: `Hur lång tid tar det innan jag syns?`,
-      a: `Sajten i din nisch är redan byggd och optimerad. Du listas som partner inom 14 dagar från avtal, och medan den organiska synligheten växer driver vi trafik med Google Ads och Meta Ads från start.`,
+      a: `Sajten i din nisch är redan byggd och optimerad. Du listas som partner direkt när avtalet är klart, och medan den organiska synligheten växer driver vi trafik med Google Ads och Meta Ads från start.`,
     },
     {
       q: `Vad kostar det jämfört med att anlita en SEO-byrå?`,
@@ -247,7 +247,7 @@ const SeoNiche = () => {
           <div className="container mx-auto px-4 max-w-container">
             <div className="bg-dark-section rounded-[28px] p-10 md:p-16 text-center">
               <h2 className="font-serif text-3xl md:text-5xl tracking-tightest leading-[1.05] mb-5 max-w-2xl mx-auto">
-                Slipp SEO-jobbet. Behåll <span className="italic-accent">resultaten</span>.
+                Slipp SEO-jobbet. Behåll resultaten.
               </h2>
               <p className="text-lg opacity-80 max-w-xl mx-auto mb-8">
                 En {niche.nameSingular} per stad får platsen som rekommenderad partner.
