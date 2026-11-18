@@ -57,7 +57,7 @@ export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultI
             <Check className="w-[22px] h-[22px]" />
           </div>
           <h3 className="h-m">Tack!</h3>
-          <p className="muted mt-2.5">
+          <p className="mt-2.5 text-ink-soft">
             Vi har tagit emot din förfrågan och hör av oss inom kort för att boka en tid.
           </p>
         </div>
