@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Arrow, Check } from "@/components/icons";
+import { trackLead } from "@/lib/metaPixel";
 
 const CONTACT_EMAIL = "kontakt@localrocket.se";
 const UNSURE = "Vet inte än";
@@ -41,6 +42,7 @@ export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultI
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
+      trackLead();
       setSent(true);
     } catch {
       setFailed(true);

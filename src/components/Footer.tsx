@@ -94,6 +94,13 @@ const Footer = () => {
             <Link to="/integritetspolicy" className="hover:text-primary transition-colors">Integritet</Link>
             <Link to="/villkor" className="hover:text-primary transition-colors">Villkor</Link>
             <Link to="/cookies" className="hover:text-primary transition-colors">Cookies</Link>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
+              className="hover:text-primary transition-colors"
+            >
+              Cookieinställningar
+            </button>
           </div>
         </div>
       </div>

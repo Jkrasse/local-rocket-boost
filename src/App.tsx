@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound.tsx";
 import NicheLanding from "./pages/NicheLanding.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
 import ScrollManager from "./components/ScrollManager.tsx";
+import CookieBanner from "./components/CookieBanner.tsx";
 
 const PORTAL_LOGIN = "https://app.localrocket.se/login";
 const PortalRedirect = () => {
@@ -34,6 +35,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
           <ScrollManager />
+          <CookieBanner />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/leadsgenerering" element={<LeadsPage />} />
