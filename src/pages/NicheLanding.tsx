@@ -223,7 +223,7 @@ const NicheLanding = () => {
             <div className="grid md:grid-cols-4 gap-6">
               {[
                 { n: "01", t: "Du säkrar din stad", d: "Vi går igenom upplägget och bekräftar att staden är ledig. Sedan är platsen bara din." },
-                { n: "02", t: "Du syns direkt", d: `Sajten är redan byggd och har besökare. Du listas som rekommenderad ${niche.nameSingular} i ${niche.city} från dag ett.` },
+                { n: "02", t: "Du syns direkt", d: `Sajten är redan byggd och har besökare. Du listas som rekommenderad ${niche.nameSingular} från dag ett.` },
                 { n: "03", t: "Vi driver trafiken", d: "Google Ads, Meta Ads och SEO riktas mot din stad och optimeras löpande." },
                 { n: "04", t: "Leads direkt till dig", d: "Samtal, mejl och förfrågningar går raka vägen till dig. Allt syns i din dashboard." },
               ].map((s) => (
