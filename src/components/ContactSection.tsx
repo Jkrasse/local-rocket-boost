@@ -5,10 +5,14 @@ import { Arrow, Check } from "@/components/icons";
 const CONTACT_EMAIL = "kontakt@localrocket.se";
 const UNSURE = "Vet inte än";
 const INTERESTS = ["Leads-generering", "Lokal SEO", "Google Ads", "Meta Ads", UNSURE];
+// Sparar förfrågan i Local Rockets databas och skickar notismejl (edge-funktionen demo-request)
+const DEMO_ENDPOINT = "https://lzefyygjrofswefrhbsd.supabase.co/functions/v1/demo-request";
 
 export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultInterest?: string }) => {
   const [sent, setSent] = useState(false);
-  const [v, setV] = useState({ name: "", company: "", email: "", phone: "" });
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [v, setV] = useState({ name: "", company: "", email: "", phone: "", website: "" });
   const [interests, setInterests] = useState<string[]>([defaultInterest]);
   const set = (k: keyof typeof v) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setV((s) => ({ ...s, [k]: e.target.value }));
@@ -21,14 +25,28 @@ export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultI
       return rest.includes(i) ? rest.filter((x) => x !== i) : [...rest, i];
     });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Demoförfrågan: ${v.company || v.name}`);
-    const body = encodeURIComponent(
-      `Namn: ${v.name}\nFöretag: ${v.company}\nE-post: ${v.email}\nTelefon: ${v.phone}\nIntresserad av: ${interests.length ? interests.join(", ") : UNSURE}\n\nJag vill boka en demo av Local Rocket.`,
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-    setSent(true);
+    if (sending) return;
+    setSending(true);
+    setFailed(false);
+    try {
+      const res = await fetch(DEMO_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...v,
+          interests: interests.length ? interests : [UNSURE],
+          source_path: window.location.pathname,
+        }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setSent(true);
+    } catch {
+      setFailed(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -40,11 +58,7 @@ export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultI
           </div>
           <h3 className="h-m">Tack!</h3>
           <p className="muted mt-2.5">
-            Ditt mejlprogram öppnas med förfrågan ifylld. Går det inte, mejla oss direkt på{" "}
-            <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary hover:text-primary-hover">
-              {CONTACT_EMAIL}
-            </a>
-            . Vi hör av oss inom kort.
+            Vi har tagit emot din förfrågan och hör av oss inom kort för att boka en tid.
           </p>
         </div>
       ) : (
@@ -97,8 +111,28 @@ export const ContactForm = ({ defaultInterest = "Leads-generering" }: { defaultI
               })}
             </div>
           </fieldset>
-          <Button type="submit" size="lg" className="w-full mt-2">
-            Boka demo <Arrow />
+          {/* Honungsfälla för botar, osynlig för besökare */}
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="absolute left-[-9999px] w-px h-px opacity-0"
+            value={v.website}
+            onChange={set("website")}
+          />
+          {failed && (
+            <p role="alert" className="text-[15px] text-destructive">
+              Något gick fel och förfrågan skickades inte. Försök igen eller mejla oss på{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="underline underline-offset-2">
+                {CONTACT_EMAIL}
+              </a>
+              .
+            </p>
+          )}
+          <Button type="submit" size="lg" className="w-full mt-2" disabled={sending}>
+            {sending ? "Skickar..." : <>Boka demo <Arrow /></>}
           </Button>
         </form>
       )}
