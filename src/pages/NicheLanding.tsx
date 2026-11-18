@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowRight, Check, MapPin, Megaphone, Search, Share2, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, BarChart3, Check, MapPin, Megaphone, PhoneCall, Search, Share2 } from "lucide-react";
 import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +8,25 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { getNiche, legacySlugRedirects } from "@/data/niches";
 
 const BASE_URL = "https://localrocket.se";
+
+/** Samma tre löften för alla branscher, det här är vad en partner faktiskt får. */
+const PARTNER_BENEFITS = [
+  {
+    Icon: PhoneCall,
+    title: "Leads direkt till dig",
+    body: "Kunderna når dig via din webbplats, din mejl eller din telefon. Ingen annan i din stad får samma förfrågan.",
+  },
+  {
+    Icon: Megaphone,
+    title: "Starkare varumärke",
+    body: "Annonser på Facebook och Instagram gör ditt företag känt lokalt. Att synas på vår sajt ökar också chansen att du nämns när kunder frågar AI-tjänster som ChatGPT.",
+  },
+  {
+    Icon: BarChart3,
+    title: "Dashboard med statistik",
+    body: "Följ trafik, klick och leads i din egen dashboard. Du ser exakt vad partnerskapet ger, månad för månad.",
+  },
+];
 
 const NicheLanding = () => {
   const { slug = "" } = useParams<{ slug: string }>();
@@ -176,8 +195,8 @@ const NicheLanding = () => {
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {niche.benefits.map((b, i) => {
-                const Icon = [Zap, ShieldCheck, MapPin][i];
+              {PARTNER_BENEFITS.map((b) => {
+                const Icon = b.Icon;
                 return (
                   <div key={b.title} className="bg-background-elevated rounded-[20px] p-7 border border-border/60">
                     <div className="w-11 h-11 rounded-xl bg-primary-soft flex items-center justify-center mb-5">
