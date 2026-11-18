@@ -3,6 +3,7 @@ import { ArrowRight, BarChart3, Check, MapPin, Megaphone, PhoneCall, Search, Sha
 import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AdMockupsSection from "@/components/AdMockupsSection";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getNiche, legacySlugRedirects } from "@/data/niches";
@@ -236,6 +237,8 @@ const NicheLanding = () => {
             </div>
           </div>
         </section>
+
+        <AdMockupsSection niche={niche.slug} />
 
         {/* CTA */}
         <section className="py-20 md:py-28">
